@@ -9,9 +9,9 @@ defmodule Golos.WS do
   def start_link(url) do
     :crypto.start
     :ssl.start
-    steem_wss_url = String.to_charlist(url)
+    golos_wss_url = String.to_charlist(url)
 
-    {:ok, sock_pid} = :websocket_client.start_link(steem_wss_url, __MODULE__, [])
+    {:ok, sock_pid} = :websocket_client.start_link(golos_wss_url, __MODULE__, [])
     # websocket_client doesn't pass options to the gen_server, so registering manually
     Process.register(sock_pid, Golos.WS)
     {:ok, sock_pid}

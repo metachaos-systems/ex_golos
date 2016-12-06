@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :steemex, key: :value
+#     config :golos, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:steemex, :key)
+#     Application.get_env(:golos, :key)
 #
 # Or configure a 3rd-party app:
 #
