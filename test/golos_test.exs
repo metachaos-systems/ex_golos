@@ -5,7 +5,7 @@ defmodule GolosTest do
 
   setup_all context do
 
-    url = Application.get_env(:golos, :url)
+    url = Application.get_env(:ex_golos, :url)
 
     Golos.IdStore.start_link
     Golos.WS.start_link(url)

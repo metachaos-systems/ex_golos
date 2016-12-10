@@ -17,7 +17,7 @@ defmodule Golos do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    url = Application.get_env(:golos, :url)
+    url = Application.get_env(:ex_golos, :url)
 
     unless url, do: throw("Golos WS url is NOT configured. ")
 

@@ -1,2 +1,2 @@
 ExUnit.start()
-Application.stop(:golos)
+Application.stop(:ex_golos)

@@ -29,5 +29,5 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :golos,
+config :ex_golos,
   url: System.get_env("GOLOS_URL")
