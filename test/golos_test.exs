@@ -68,4 +68,21 @@ defmodule GolosTest do
     assert %{"current_median_history" => %{"base" => _}} = data
   end
 
+  #ACCOUNTS
+  test "get_account_count" do
+    {:ok, data} = Golos.get_account_count()
+    assert 3141 < data
+  end
+
+  test "lookup_accounts" do
+    {:ok, data} =  Golos.lookup_accounts("razumgolosa", 10)
+    assert is_list(data)
+    assert is_bitstring(hd data)
+  end
+
+  test "lookup_account_names" do
+    {:ok, data} =  Golos.lookup_account_names(["ontofractal"])
+    assert %{"name" =>  "ontofractal"} = hd(data)
+  end
+
 end

@@ -3,7 +3,6 @@ defmodule Golos do
   alias Golos.IdStore
   defdelegate [
     get_content(author, permlink),
-    get_block(height),
     get_accounts(accounts),
     get_block_header(height),
     get_dynamic_global_properties,
@@ -11,6 +10,11 @@ defmodule Golos do
     get_feed_history,
     get_current_median_history_price
   ], to: Golos.DatabaseApi
+
+  defdelegate get_account_count(), to: Golos.DatabaseApi
+  defdelegate get_block(height), to: Golos.DatabaseApi
+  defdelegate lookup_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
+  defdelegate lookup_account_names(account_names), to: Golos.DatabaseApi
 
   @db_api "database_api"
 

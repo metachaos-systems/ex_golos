@@ -38,5 +38,16 @@ defmodule Golos.DatabaseApi do
   end
 
   # ACCOUNTS
+  def get_account_count() do
+   call("get_account_count", [])
+  end
+
+  def lookup_accounts(lower_bound_name, limit) do
+   call("lookup_accounts", [lower_bound_name,  limit])
+  end
+
+  def lookup_account_names(account_names) do
+   call("lookup_account_names", [account_names])
+  end
 
 end
