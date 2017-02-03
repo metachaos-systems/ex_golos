@@ -89,4 +89,8 @@ defmodule GolosTest do
     assert [_, %{"block" => _}] = hd(data)
   end
 
+  test "get_config" do
+    {:ok, data} = Golos.get_config()
+    assert %{"VESTS_SYMBOL" => _} = data
+  end
 end

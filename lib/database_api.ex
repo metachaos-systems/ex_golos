@@ -187,6 +187,9 @@ defmodule Golos.DatabaseApi do
     call("get_feed_history", [])
   end
 
+  def get_config() do
+    call("get_config", [])
+  end
   @doc """
   Return current median history price
   Example response:
