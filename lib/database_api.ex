@@ -212,6 +212,49 @@ defmodule Golos.DatabaseApi do
    call("lookup_accounts", [lower_bound_name,  limit])
   end
 
+  @doc """
+  Returns account data maps
+
+  Example response:
+    [%{"recovery_account" => "cyberfounder", "posting_rewards" => 83462628,
+     "created" => "1970-01-01T00:00:00",
+     "last_bandwidth_update" => "2017-02-03T11:57:06", "to_withdraw" => 0,
+     "last_active_proved" => "1970-01-01T00:00:00", "withdraw_routes" => 0,
+     "last_account_update" => "2017-01-21T11:34:30",
+     "sbd_last_interest_payment" => "2017-01-15T23:43:00",
+     "json_metadata" => "{\"created_at\":\"GENESIS\",\"ico_address\":\"1B9Khkti2bBPccSoNj6aiFCYhq5Rq5GAMb\",\"user_image\":\"https://avatars2.githubusercontent.com/u/4211840?v=3&u=97aeb67208068d457fad522a500b62f12908270c&s=400\"}",
+     "active_challenged" => false, "last_vote_time" => "2017-02-03T11:57:06",
+     "id" => "2.2.6836", "vesting_shares" => "386381769.644947 GESTS",
+     "reset_account" => "null", "sbd_balance" => "917.535 GBG",
+     "last_post" => "2017-02-02T19:11:57", "lifetime_vote_count" => 0,
+     "savings_sbd_last_interest_payment" => "1970-01-01T00:00:00",
+     "mined" => true, "owner_challenged" => false,
+     "vesting_withdraw_rate" => "0.000001 GESTS",
+     "active" => %{"account_auths" => [],
+       "key_auths" => [["GLS8NV2JNwtcTSCDSJDgr69PFueGTvnvGC2F8HPSyUxFWrnp9ATY6",
+         1]], "weight_threshold" => 1}, "proxy" => "",
+     "posting" => %{"account_auths" => [],
+       "key_auths" => [["GLS6qg3gEEkSz4i1T9WpjSxjFrVc6fNEps1QpvxsDCMATiaL5aRzx",
+         1]], "weight_threshold" => 1}, "last_root_post" => "2017-02-01T18:17:09",
+     "savings_balance" => "0.000 GOLOS", "average_bandwidth" => 308637164,
+     "last_account_recovery" => "1970-01-01T00:00:00",
+     "next_vesting_withdrawal" => "1969-12-31T23:59:59", "can_vote" => true,
+     "owner" => %{"account_auths" => [],
+       "key_auths" => [["GLS6Ms4HrGMCPsq3yoytJc8TEKuQb1Bk9HRxjUSa3wtyhnpA4fJZV",
+         1]], "weight_threshold" => 1}, "post_count" => 421,
+     "last_owner_proved" => "1970-01-01T00:00:00",
+     "sbd_seconds_last_update" => "2017-02-03T08:48:15",
+     "memo_key" => "GLS5frWAw3yukawhSEnQ7zK7N1LWM77JzjJvzAZx5JRMgPkoddXTv",
+     "name" => "ontofractal", "withdrawn" => 0, "savings_withdraw_requests" => 0,
+     "reset_request_time" => "1969-12-31T23:59:59", "savings_sbd_seconds" => "0",
+     "last_owner_update" => "1970-01-01T00:00:00",
+     "proxied_vsf_votes" => [0, 0, 0, 0], "sbd_seconds" => "4489659344784",
+     "savings_sbd_balance" => "0.000 GBG", "post_bandwidth" => 10000,
+     "curation_rewards" => 5484048,
+     "pending_reset_authority" => %{"account_auths" => [], "key_auths" => [],
+       ...}, "witnesses_voted_for" => 10, "comment_count" => 0, ...}]
+  """
+  @spec lookup_account_names([String.t]) :: [map] 
   def lookup_account_names(account_names) do
    call("lookup_account_names", [account_names])
   end
