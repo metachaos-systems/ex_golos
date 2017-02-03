@@ -8,6 +8,10 @@ defmodule Golos.DatabaseApi do
     call("get_block", [height])
   end
 
+  @doc """
+  Get content by author and permlink
+  """
+  @spec get_content(String.t, String.t) :: map
   def get_content(author, permlink) do
     call("get_content", [author, permlink])
   end
