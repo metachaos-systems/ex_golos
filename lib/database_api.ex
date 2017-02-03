@@ -357,4 +357,8 @@ defmodule Golos.DatabaseApi do
   def get_witness_schedule() do
    call("get_witness_schedule", [])
   end
+
+  def get_hardfork_version() do
+   call("get_hardfork_version", [])
+  end
 end

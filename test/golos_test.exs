@@ -98,4 +98,9 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_witness_schedule()
     assert %{"current_shuffled_witnesses" => _} = data
   end
+
+  test "get_hardfork_version" do
+    {:ok, data} = Golos.get_hardfork_version()
+    assert "0" <> minor_ver  = data
+  end
 end

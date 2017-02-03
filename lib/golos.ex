@@ -11,6 +11,7 @@ defmodule Golos do
   defdelegate get_content(author, permlink), to: Golos.DatabaseApi
   defdelegate get_witness_schedule(), to: Golos.DatabaseApi
   defdelegate get_config(), to: Golos.DatabaseApi
+  defdelegate get_hardfork_version(), to: Golos.DatabaseApi
   defdelegate get_account_count(), to: Golos.DatabaseApi
   defdelegate get_block(height), to: Golos.DatabaseApi
   defdelegate lookup_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
