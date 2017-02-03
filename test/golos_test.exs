@@ -103,4 +103,9 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_hardfork_version()
     assert "0" <> minor_ver  = data
   end
+
+  test "get_next_scheduled_hardfork" do
+    {:ok, data} = Golos.get_next_scheduled_hardfork()
+    assert %{"hf_version" => _, "live_time" => _}  = data
+  end
 end

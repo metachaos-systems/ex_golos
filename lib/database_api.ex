@@ -367,4 +367,8 @@ defmodule Golos.DatabaseApi do
   def get_hardfork_version() do
    call("get_hardfork_version", [])
   end
+
+  def get_next_scheduled_hardfork() do
+   call("get_next_scheduled_hardfork", [])
+  end
 end
