@@ -132,7 +132,7 @@ defmodule Golos.DatabaseApi do
   @doc """
   Unsurprisingly returns a map with dynamic global propeties.
   Example response:
-    
+
     %{"average_block_size" => 416, "confidential_sbd_supply" => "0.000 GBG",
     "confidential_supply" => "0.000 GOLOS", "current_aslot" => 3112003,
     "current_reserve_ratio" => 20000, "current_sbd_supply" => "504154.519 GBG",
@@ -159,6 +159,9 @@ defmodule Golos.DatabaseApi do
 
   @doc """
   Unsurprisingly returns a map with chain propeties.
+  Example result:
+    %{"account_creation_fee" => "1.000 GOLOS", "maximum_block_size" => 131072,
+   "sbd_interest_rate" => 1000}
   """
   @spec get_chain_properties() :: map
   def get_chain_properties do
