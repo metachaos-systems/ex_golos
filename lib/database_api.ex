@@ -339,7 +339,22 @@ defmodule Golos.DatabaseApi do
    call("get_account_history", [name, from, limit])
   end
 
-  def get_witness_schedule do
+  @doc """
+  Get witness schedule
+
+  Example response:
+    %{"current_shuffled_witnesses" => ["litrbooh", "gtx-1080-sc-0015",
+    "vitaly-lvov", "aleksandraz", "on0tole", "dark.sun", "jesta", "someguy123",
+    "pmartynov", "primus", "litvintech", "phenom", "hipster", "good-karma",
+    "arcange", "serejandmyself", "kuna", "dr2073", "lehard", "testz", "xtar"],
+    "current_virtual_time" => "2359603129137518468300462851", "id" => "2.7.0",
+    "majority_version" => "0.14.2",
+    "median_props" => %{"account_creation_fee" => "1.000 GOLOS",
+    "maximum_block_size" => 131072, "sbd_interest_rate" => 1000},
+    "next_shuffle_block_num" => 3108273}
+  """
+  @spec get_witness_schedule() :: map
+  def get_witness_schedule() do
    call("get_witness_schedule", [])
   end
 end
