@@ -368,6 +368,12 @@ defmodule Golos.DatabaseApi do
    call("get_hardfork_version", [])
   end
 
+  @doc """
+  Get next scheduled hardfork time
+
+  Example result: %{"hf_version" => "0.0.0", "live_time" => "2016-10-18T11:00:00"}
+  """
+  @spec get_next_scheduled_hardfork() :: map
   def get_next_scheduled_hardfork() do
    call("get_next_scheduled_hardfork", [])
   end
