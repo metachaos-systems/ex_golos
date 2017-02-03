@@ -338,4 +338,8 @@ defmodule Golos.DatabaseApi do
   def get_account_history(name, from, limit) do
    call("get_account_history", [name, from, limit])
   end
+
+  def get_witness_schedule do
+   call("get_witness_schedule", [])
+  end
 end

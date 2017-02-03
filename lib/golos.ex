@@ -9,6 +9,7 @@ defmodule Golos do
   defdelegate get_block_header(height), to: Golos.DatabaseApi
   defdelegate get_accounts(accounts), to: Golos.DatabaseApi
   defdelegate get_content(author, permlink), to: Golos.DatabaseApi
+  defdelegate get_witness_schedule(), to: Golos.DatabaseApi
   defdelegate get_config(), to: Golos.DatabaseApi
   defdelegate get_account_count(), to: Golos.DatabaseApi
   defdelegate get_block(height), to: Golos.DatabaseApi

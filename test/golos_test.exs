@@ -93,4 +93,9 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_config()
     assert %{"VESTS_SYMBOL" => _} = data
   end
+
+  test "get_witness_schedule" do
+    {:ok, data} = Golos.get_witness_schedule()
+    assert %{"current_shuffled_witnesses" => _} = data
+  end
 end
