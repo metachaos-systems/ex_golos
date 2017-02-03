@@ -5,24 +5,28 @@ defmodule Golos.DatabaseApi do
   end
 
   @doc """
-  %{"extensions" => [], "previous" => "0004cb2eff2f45b042e85563f76f24123b6dfdd2",
-  "timestamp" => "2016-10-29T09:23:33",
-  "transaction_merkle_root" => "8477010d8f8ade6f69744c6c28203f1b4a1690a2",
-  "transactions" => [%{"expiration" => "2016-10-29T09:23:42",
-     "extensions" => [],
-     "operations" => [["comment",
-       %{"author" => "kriptograf",
-         "body" => "@@ -187,16 +187,17 @@\n %D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BC%D0%B8 \n+%0A\n ( %D1%81%D1%83%D0%BC%D0%BC%D1%8B \n",
-         "json_metadata" => "{\"tags\":[\"ru--kriptovalyuty\"]}",
-         "parent_author" => "sept",
-         "parent_permlink" => "kak-kupit-bitkoin-s-minimalnoi-komissiei",
-         "permlink" => "re-sept-kak-kupit-bitkoin-s-minimalnoi-komissiei-20161029t091207449z",
-         "title" => ""}]], "ref_block_num" => 51994,
-     "ref_block_prefix" => 2572860361,
-     "signatures" => ["207fe62d3e6582819a24f5c2258a9d74f69ebab6c9a42b4d321fe08e559b4cd13b6486a429cb60176d40a5d46ee8b8e30b5c6c24d8facc2a7a779ade3f9139a470"]}],
-  "witness" => "misha",
-  "witness_signature" => "2047ea30c48247a67ff553986f221092d32985eea3e341d684f2d4c0aa09a0ec402582b06619fc5dc40192e2c311eeea3c}
+  Gets block data, accepts height.
+
+  Example response:
+    %{"extensions" => [], "previous" => "0004cb2eff2f45b042e85563f76f24123b6dfdd2",
+    "timestamp" => "2016-10-29T09:23:33",
+    "transaction_merkle_root" => "8477010d8f8ade6f69744c6c28203f1b4a1690a2",
+    "transactions" => [%{"expiration" => "2016-10-29T09:23:42",
+       "extensions" => [],
+       "operations" => [["comment",
+         %{"author" => "kriptograf",
+           "body" => "@@ -187,16 +187,17 @@\n %D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BC%D0%B8 \n+%0A\n ( %D1%81%D1%83%D0%BC%D0%BC%D1%8B \n",
+           "json_metadata" => "{\"tags\":[\"ru--kriptovalyuty\"]}",
+           "parent_author" => "sept",
+           "parent_permlink" => "kak-kupit-bitkoin-s-minimalnoi-komissiei",
+           "permlink" => "re-sept-kak-kupit-bitkoin-s-minimalnoi-komissiei-20161029t091207449z",
+           "title" => ""}]], "ref_block_num" => 51994,
+       "ref_block_prefix" => 2572860361,
+       "signatures" => ["207fe62d3e6582819a24f5c2258a9d74f69ebab6c9a42b4d321fe08e559b4cd13b6486a429cb60176d40a5d46ee8b8e30b5c6c24d8facc2a7a779ade3f9139a470"]}],
+    "witness" => "misha",
+    "witness_signature" => "2047ea30c48247a67ff553986f221092d32985eea3e341d684f2d4c0aa09a0ec402582b06619fc5dc40192e2c311eeea3c}
   """
+  @spec get_block(integer) :: map
   def get_block(height) do
     call("get_block", [height])
   end
