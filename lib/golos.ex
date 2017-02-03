@@ -1,16 +1,14 @@
 defmodule Golos do
   use Application
   alias Golos.IdStore
-  defdelegate [
-    get_content(author, permlink),
-    get_accounts(accounts),
-    get_block_header(height),
-    get_dynamic_global_properties,
-    get_chain_properties,
-    get_feed_history,
-    get_current_median_history_price
-  ], to: Golos.DatabaseApi
 
+  defdelegate get_current_median_history_price(), to: Golos.DatabaseApi
+  defdelegate get_feed_history(), to: Golos.DatabaseApi
+  defdelegate get_chain_properties(), to: Golos.DatabaseApi
+  defdelegate get_dynamic_global_properties(), to: Golos.DatabaseApi
+  defdelegate get_block_header(height), to: Golos.DatabaseApi
+  defdelegate get_accounts(accounts), to: Golos.DatabaseApi
+  defdelegate get_content(author, permlink), to: Golos.DatabaseApi
   defdelegate get_account_count(), to: Golos.DatabaseApi
   defdelegate get_block(height), to: Golos.DatabaseApi
   defdelegate lookup_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
