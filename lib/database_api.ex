@@ -117,6 +117,12 @@ defmodule Golos.DatabaseApi do
 
   @doc """
   Get block header data. Accepts block height.
+
+  Example response:
+   %{"extensions" => [], "previous" => "0000000000000000000000000000000000000000",
+   "timestamp" => "2016-10-18T11:01:48",
+   "transaction_merkle_root" => "0000000000000000000000000000000000000000",
+   "witness" => "cyberfounder"}
   """
   @spec get_block_header(pos_integer) :: map
   def get_block_header(height) do
