@@ -19,11 +19,15 @@ defmodule Golos.DatabaseApi do
   @doc """
   Get account data. Accepts either a list with up to 1000 account names
   """
-  @spec get_accounts([String.t]) :: [String.t]
+  @spec get_accounts([String.t]) :: [map]
   def get_accounts(accounts) when is_list(accounts) do
     call("get_accounts", accounts)
   end
 
+  @doc """
+  Get block header data. Accepts block height.
+  """
+  @spec get_block_header(pos_integer) :: map
   def get_block_header(height) do
     call("get_block_header", [height])
   end
