@@ -67,10 +67,52 @@ defmodule Golos.DatabaseApi do
 
   @doc """
   Get account data. Accepts either a list with up to 1000 account names
+
+  Example response:
+  [%{"recovery_account" => "cyberfounder", "posting_rewards" => 6041772,
+  "created" => "1970-01-01T00:00:00",
+  "last_bandwidth_update" => "2017-02-03T07:44:33",
+  "to_withdraw" => "5358033161499672",
+  "last_active_proved" => "1970-01-01T00:00:00", "withdraw_routes" => 0,
+  "last_account_update" => "2016-11-04T21:28:45",
+  "sbd_last_interest_payment" => "2017-01-15T11:19:27",
+  "json_metadata" => "{\"created_at\":\"GENESIS\",\"ico_address\":\"1FNnNWE3m4rsMWTaX76A4bN1uK4biERdVn\",\"user_image\":\"https://habrastorage.org/files/6b3/db5/587/6b3db55871e04985821e4c453a30c60c.jpg\"}",
+  "active_challenged" => false, "vesting_balance" => "0.000 GOLOS",
+  "last_vote_time" => "2017-02-03T07:44:33", "post_history" => [],
+  "blog_category" => %{}, "market_history" => [], "id" => "2.2.1993",
+  "vesting_shares" => "5405134010.995395 GESTS", "vote_history" => [],
+  "reset_account" => "null", "sbd_balance" => "12877.442 GBG",
+  "last_post" => "2017-02-03T07:42:09", "lifetime_vote_count" => 0,
+  "savings_sbd_last_interest_payment" => "1970-01-01T00:00:00",
+  "mined" => true, "owner_challenged" => false,
+  "vesting_withdraw_rate" => "51519549.629804 GESTS",
+  "active" => %{"account_auths" => [],
+    "key_auths" => [["GLS5vdTX6auUFyUwWEyzXAXhqo6LkCeCKAG2Tr9QaohRurcBouzHR",
+      1]], "weight_threshold" => 1}, "proxy" => "",
+  "posting" => %{"account_auths" => [],
+    "key_auths" => [["GLS574PtkDcrf5PE8QA8Uq1a4YLqer6vRT8WTgsxdYnx5LJDG7RCD",
+      1]], "weight_threshold" => 1}, "last_root_post" => "2017-02-02T13:37:45",
+  "savings_balance" => "0.000 GOLOS", "average_bandwidth" => 313586832,
+  "last_account_recovery" => "1970-01-01T00:00:00",
+  "next_vesting_withdrawal" => "2017-02-05T15:01:33", "can_vote" => true,
+  "owner" => %{"account_auths" => [],
+    "key_auths" => [["GLS6PturNHrX82R3b6ymKRksNWT9K3hPL377qGmgbwBn2W5zyZVtH",
+      1]], "weight_threshold" => 1},
+  "witness_votes" => ["aizensou", "aleksandraz", "arcange", "creator",
+   "dark.sun", "dervish0", "dr2073", "good-karma", "jesta", "kuna", "lehard",
+   ...], "reputation" => "24178458603348", "post_count" => 615,
+  "last_owner_proved" => "1970-01-01T00:00:00",
+  "sbd_seconds_last_update" => "2017-02-03T06:17:15",
+  "memo_key" => "GLS8dEWEGYtZj8hvcm7NVZjQKy637F2UMUK9RMMJKW4TowPX7FWFS",
+  "name" => "hipster", "withdrawn" => "103039099259608",
+  "savings_withdraw_requests" => 0,
+  "reset_request_time" => "1969-12-31T23:59:59", "savings_sbd_seconds" => "0",
+  "last_owner_update" => "2016-10-18T11:19:12", ...},
+  %{...}]
   """
   @spec get_accounts([String.t]) :: [map]
   def get_accounts(accounts) when is_list(accounts) do
-    call("get_accounts", accounts)
+    call("get_accounts", [accounts])
   end
 
   @doc """

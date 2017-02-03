@@ -28,7 +28,6 @@ defmodule GolosTest do
 
   test "get_content" do
     {:ok, data} = Golos.get_content("litvintech", "obyavlenie-kraudseil-i-sherdrop-distribyuciya")
-    IO.inspect  data
 
     assert %{"author" => "litvintech", "permlink" => _} = data
   end
@@ -39,7 +38,7 @@ defmodule GolosTest do
   end
 
   test "get_accounts with multiple args" do
-    {:ok, data} = Golos.get_accounts(["dan", "ned"])
+    {:ok, data} = Golos.get_accounts(["hipster", "creat0r"])
     assert %{"name" => _, "id" => _} = hd(data)
   end
 
