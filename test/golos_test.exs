@@ -28,13 +28,13 @@ defmodule GolosTest do
 
   test "get_content" do
     {:ok, data} = Golos.get_content("litvintech", "obyavlenie-kraudseil-i-sherdrop-distribyuciya")
+    IO.inspect  data
 
     assert %{"author" => "litvintech", "permlink" => _} = data
   end
 
   test "get_block" do
     {:ok, data} = Golos.get_block(314_159)
-
     assert %{"previous" => _, "transactions" => _} = data
   end
 
