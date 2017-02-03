@@ -91,6 +91,7 @@ defmodule GolosTest do
 
   test "get_config" do
     {:ok, data} = Golos.get_config()
+    IO.inspect data
     assert %{"VESTS_SYMBOL" => _} = data
   end
 end
