@@ -194,10 +194,20 @@ defmodule Golos.DatabaseApi do
   end
 
   # ACCOUNTS
+  @doc """
+  Get account count
+  Example response: 25290
+  """
+  @spec get_account_count() :: integer
   def get_account_count() do
    call("get_account_count", [])
   end
 
+  @doc """
+  Lookup accounts
+  Example response:
+    ["razumnica", "razumova-l", "razvanelulmarin", "razved1", "razzewille", "rbaron", "rbc", "rbi", "rbrown", "rbur93"]
+  """
   def lookup_accounts(lower_bound_name, limit) do
    call("lookup_accounts", [lower_bound_name,  limit])
   end
