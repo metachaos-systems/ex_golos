@@ -63,8 +63,9 @@ defmodule GolosTest do
   end
 
   test "get_current_median_history_price" do
-    {:ok, data} = Golos.get_feed_history()
-    assert %{"current_median_history" => %{"base" => _}} = data
+    {:ok, data} = Golos.get_current_median_history_price()
+    IO.inspect data
+    assert %{"base" => _, "quote" => _} = data
   end
 
   #ACCOUNTS
