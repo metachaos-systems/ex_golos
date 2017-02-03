@@ -13,6 +13,7 @@ defmodule Golos do
   defdelegate get_block(height), to: Golos.DatabaseApi
   defdelegate lookup_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
   defdelegate lookup_account_names(account_names), to: Golos.DatabaseApi
+  defdelegate get_account_history(name, from, limit), to: Golos.DatabaseApi
 
   @db_api "database_api"
 

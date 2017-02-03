@@ -84,4 +84,9 @@ defmodule GolosTest do
     assert %{"name" =>  "ontofractal"} = hd(data)
   end
 
+  test "get_account_history" do
+    {:ok, data} = Golos.get_account_history("ontofractal", -1, 10)
+    assert [_, %{"block" => _}] = hd(data)
+  end
+
 end

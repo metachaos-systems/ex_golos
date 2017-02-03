@@ -254,9 +254,12 @@ defmodule Golos.DatabaseApi do
      "pending_reset_authority" => %{"account_auths" => [], "key_auths" => [],
        ...}, "witnesses_voted_for" => 10, "comment_count" => 0, ...}]
   """
-  @spec lookup_account_names([String.t]) :: [map] 
+  @spec lookup_account_names([String.t]) :: [map]
   def lookup_account_names(account_names) do
    call("lookup_account_names", [account_names])
   end
 
+  def get_account_history(name, from, limit) do
+   call("get_account_history", [name, from, limit])
+  end
 end
