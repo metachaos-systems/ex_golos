@@ -16,9 +16,12 @@ defmodule Golos.DatabaseApi do
     call("get_content", [author, permlink])
   end
 
-  def get_accounts(accounts) do
-    accounts = List.wrap(accounts)
-    call("get_accounts", [accounts])
+  @doc """
+  Get account data. Accepts either a list with up to 1000 account names
+  """
+  @spec get_accounts([String.t]) :: [String.t]
+  def get_accounts(accounts) when is_list(accounts) do
+    call("get_accounts", accounts)
   end
 
   def get_block_header(height) do
