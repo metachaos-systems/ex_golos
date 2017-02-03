@@ -131,6 +131,26 @@ defmodule Golos.DatabaseApi do
 
   @doc """
   Unsurprisingly returns a map with dynamic global propeties.
+  Example response:
+    
+    %{"average_block_size" => 416, "confidential_sbd_supply" => "0.000 GBG",
+    "confidential_supply" => "0.000 GOLOS", "current_aslot" => 3112003,
+    "current_reserve_ratio" => 20000, "current_sbd_supply" => "504154.519 GBG",
+    "current_supply" => "96227889.854 GOLOS", "current_witness" => "on0tole",
+    "head_block_id" => "002f68ff4d75004b06539669e77ce6f5967c2afa",
+    "head_block_number" => 3107071, "id" => "2.0.0",
+    "last_irreversible_block_num" => 3107056,
+    "max_virtual_bandwidth" => "5986734968066277376",
+    "maximum_block_size" => 65536, "num_pow_witnesses" => 97,
+    "participation_count" => 128,
+    "recent_slots_filled" => "340282366920938463463374607431768211455",
+    "sbd_interest_rate" => 1000, "sbd_print_rate" => 10000,
+    "time" => "2017-02-03T12:20:09", "total_pow" => 148587,
+    "total_reward_fund_steem" => "69239.698 GOLOS",
+    "total_reward_shares2" => "1030808747260116624181406420498",
+    "total_vesting_fund_steem" => "95566422.906 GOLOS",
+    "total_vesting_shares" => "448830750142.483827 GESTS",
+    "virtual_supply" => "96509712.230 GOLOS", "vote_regeneration_per_day" => 40}
   """
   @spec get_dynamic_global_properties() :: map
   def get_dynamic_global_properties do

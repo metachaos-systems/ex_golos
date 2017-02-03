@@ -44,7 +44,6 @@ defmodule GolosTest do
 
   test "get_block_header" do
     {:ok, data} = Golos.get_block_header(1)
-    IO.inspect  data
     assert %{"timestamp" => "2016-10-18T11:01:48"} = data
   end
 
