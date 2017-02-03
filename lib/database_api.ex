@@ -32,10 +32,18 @@ defmodule Golos.DatabaseApi do
     call("get_block_header", [height])
   end
 
+  @doc """
+  Unsurprisingly returns a map with dynamic global propeties.
+  """
+  @spec get_dynamic_global_properties() :: map
   def get_dynamic_global_properties do
     call("get_dynamic_global_properties", [])
   end
 
+  @doc """
+  Unsurprisingly returns a map with chain propeties.
+  """
+  @spec get_chain_properties() :: map
   def get_chain_properties do
     call("get_chain_properties", [])
   end
