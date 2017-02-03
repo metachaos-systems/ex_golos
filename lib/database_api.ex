@@ -4,10 +4,11 @@ defmodule Golos.DatabaseApi do
     Golos.call(["database_api", method, params])
   end
 
-  @doc """
-  Gets block data, accepts height.
+  @doc"""
+  Returns block data, accepts block height.
 
   Example response:
+  ```
     %{"extensions" => [], "previous" => "0004cb2eff2f45b042e85563f76f24123b6dfdd2",
     "timestamp" => "2016-10-29T09:23:33",
     "transaction_merkle_root" => "8477010d8f8ade6f69744c6c28203f1b4a1690a2",
@@ -15,8 +16,8 @@ defmodule Golos.DatabaseApi do
        "extensions" => [],
        "operations" => [["comment",
          %{"author" => "kriptograf",
-           "body" => "@@ -187,16 +187,17 @@\n %D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BC%D0%B8 \n+%0A\n ( %D1%81%D1%83%D0%BC%D0%BC%D1%8B \n",
-           "json_metadata" => "{\"tags\":[\"ru--kriptovalyuty\"]}",
+           "body" => "@@ -187,16 +187,17 @@ %D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BC%D0%B8 +%0A ( %D1%81%D1%83%D0%BC%D0%BC%D1%8B ",
+           "json_metadata" => "{"tags":["ru--kriptovalyuty"]}",
            "parent_author" => "sept",
            "parent_permlink" => "kak-kupit-bitkoin-s-minimalnoi-komissiei",
            "permlink" => "re-sept-kak-kupit-bitkoin-s-minimalnoi-komissiei-20161029t091207449z",
@@ -25,27 +26,29 @@ defmodule Golos.DatabaseApi do
        "signatures" => ["207fe62d3e6582819a24f5c2258a9d74f69ebab6c9a42b4d321fe08e559b4cd13b6486a429cb60176d40a5d46ee8b8e30b5c6c24d8facc2a7a779ade3f9139a470"]}],
     "witness" => "misha",
     "witness_signature" => "2047ea30c48247a67ff553986f221092d32985eea3e341d684f2d4c0aa09a0ec402582b06619fc5dc40192e2c311eeea3c}
+  ```
   """
   @spec get_block(integer) :: map
   def get_block(height) do
     call("get_block", [height])
   end
 
-  @doc """
-  Get content by author and permlink.
+  @doc"""
+  Returns content data, accepts author and permlink.
 
   Example response:
+  ```
     %{"max_accepted_payout" => "1000000.000 GBG",
     "title" => "[объявление] Краудсейл и Шэрдроп. Дистрибьюция",
     "category" => "ru--kraudseijl", "promoted" => "0.000 GBG",
     "last_update" => "2016-12-06T15:36:54", "created" => "2016-12-05T16:43:03",
     "parent_permlink" => "ru--kraudseijl", "total_vote_weight" => 0,
-    "json_metadata" => "{\"tags\":[\"ru--kraudseijl\",\"ru--shyerdrop\",\"ru--golos\"],\"users\":[\"golos\",\"crowdsale\",\"cyberdrop\",\"misha\",\"ether\",\"bender\",\"hipster\",\"litvintech\",\"vitaly-lvov\"],\"image\":[\"https://dl.dropboxusercontent.com/u/52209381/golos/golos.png\",\"https://dl.dropboxusercontent.com/u/52209381/golos/Screenshot%202016-12-05%2018.30.00.png\",\"https://dl.dropboxusercontent.com/u/52209381/golos/ico_final-min.jpg\",\"https://dl.dropboxusercontent.com/u/52209381/golos/Screenshot%202016-12-06%2002.25.05.png\",\"https://dl.dropboxusercontent.com/u/52209381/golos/card.png\"],\"links\":[\"https://docs.google.com/spreadsheets/d/1JwCAeRwsu4NzCG20UDM_CnEEsskl0wtvQ7VYjqi233A/edit?usp=sharing\",\"https://golos.io/@litvintech\"]}",
+    "json_metadata" => "{"tags":["ru--kraudseijl","ru--shyerdrop","ru--golos"],"users":["golos","crowdsale","cyberdrop","misha","ether","bender","hipster","litvintech","vitaly-lvov"],"image":["https://dl.dropboxusercontent.com/u/52209381/golos/golos.png","https://dl.dropboxusercontent.com/u/52209381/golos/Screenshot%202016-12-05%2018.30.00.png","https://dl.dropboxusercontent.com/u/52209381/golos/ico_final-min.jpg","https://dl.dropboxusercontent.com/u/52209381/golos/Screenshot%202016-12-06%2002.25.05.png","https://dl.dropboxusercontent.com/u/52209381/golos/card.png"],"links":["https://docs.google.com/spreadsheets/d/1JwCAeRwsu4NzCG20UDM_CnEEsskl0wtvQ7VYjqi233A/edit?usp=sharing","https://golos.io/@litvintech"]}",
     "last_payout" => "2017-01-15T11:00:06",
     "total_payout_value" => "2412.784 GBG", "allow_replies" => true,
     "children_rshares2" => "0", "id" => "2.8.30160",
     "pending_payout_value" => "0.000 GBG", "children" => 15, "replies" => [],
-    "body" => "![wow](https://dl.dropboxusercontent.com/u/52209381/golos/golos.png)\n\n**Добрый день. В данный момент начинается дистрибьюция токенов Голоса**\n\n### 19.00 МСК - Шэрдроп. Начало дистрибьюции\n1. В соответствии с данной таблицей переведено 333 818 Голосов с аккаунта @golos на аккаунт @crowdsale, а также 300 Голосов в Силу Голоса для осуществления транзакций.\n**Баланс аккаунта: 27 405 818 Голосов**\n2. В соответствии с этой же таблицей переведено 97 356 Голосов с аккаунта @golos на аккаунт @cyberdrop, а также 200 Голосов в Силу Голоса для осуществления транзакций. Баланс аккаунта составил 10% от общего количества токенов. Так как после генезиса аккаунтам, которые попали в шэрдроп на генезис, было переведено 5 Голосов в Силу Голоса (в качестве регистрации), то с этого аккаунта обратно на @golos было переведено 41 720 Голосов в Голосах.\n**Баланс аккаунта: 4 535 096 Голосов**\n3. Переведено 197 134 Голосов в Силу Голоса @misha - последняя часть вознаграждения как сооснователя Голоса. \n\n\n![progress](https://dl.dropboxusercontent.com/u/52209381/golos/Screenshot%202016-12-05%2018.30.00.png)\n\n4. Запущено два скрипта для процессинга результатов краудсейла, которые подготовили две группы в команде разработчиков. Процесс займет около четырех-пяти часов. После результаты будут провалидированны всей командой основателей и опубликованы в этом посте.\n5. Запущен скрипт для распределения Силы Голоса по результатам шэрдропа. С аккаунта @cyberdrop в данный момент переводится 4 525 543 Голосов в Силу Голоса 4551 аккаунт. \n\n### 00.00 МСК - Шэрдроп. Конец дистрибьюции\n1. Закончена дистрибьюция шэрдроп Голосов в Силу Голоса 4551 аккаунтам. \nОстальные аккаунты, 3823, по расчетам, должны были получить меньше пяти Голосов - и им было начислено по 5 Голосов в Силу Голоса на старте сети. Перечислены 9551 Голос обратно на аккаунт @golos, в связи с перерасчетом в большую сторону при проведении дополнительной транзакции с @golos на @cyberdrop.\n\n2. Получено два снэпшота краудсейла. Сейчас команда обрабатывает данные, происходит кросс-валидация. В течении двух часов будет подготовлен массив транзакций по результатам краудсейла.\n\n* обновлено количество аккаунтов, а также токенов на правильные значения в соответствующие моменты времени\n\n* 6 декабря, около начало второго по МСК, **в блоке 1 411 200 включается Вестинг**\n\n* обнаружен аккаунт  @ether, который записал в свой json_metadata ico_address аккаунта @bender, соответственно @ether не участвовал в краудсейле\n\n* решена инфраструктурная проблема, которая приводила к перебоям в работе сайта\n\n### 03.00 МСК\n**[Результаты краудсейла. Таблица с дистрибьюцией. Список транзакций на ICO Голос](https://docs.google.com/spreadsheets/d/1JwCAeRwsu4NzCG20UDM_CnEEsskl0wtvQ7VYjqi233A/edit?usp=sharing)**\n\n### 03.15 МСК - Краудсейл. Начало дистрибьюции \n![ico final](https://dl.dropboxusercontent.com/u/52209381/golos/ico_final-min.jpg)\n**Запуск дистрибьюции @hipster @litvintech @vitaly-lvov**\n\n![start](https://dl.dropboxusercontent.com/u/52209381/golos/Screenshot%202016-12-06%2002.25.05.png)\n**Начало дистрибьюции Голосов в Силу Голоса инвесторам краудсейла.**\n\n### 04.30 МСК - Сделано 50% транзакций \n\n### 05.05 МСК - Сделано 75% транзакций\n\n### 05.15 МСК - Сделано 100% транзакций. Дистрибьюция закончена.\n* сделан снэпшот блокчейна\n\n**Да прибудет с вами Сила!**\n\n**Краудсейл окончен.**\n\nВнимание. Сейчас в личном кабинете вы видите расчет по краудсейлу и количество токенов, которые сейчас не актуальна. Актуальные данные о вашем количестве токенов вы можете увидеть (и проверить) в **[данной таблице](https://docs.google.com/spreadsheets/d/1JwCAeRwsu4NzCG20UDM_CnEEsskl0wtvQ7VYjqi233A/edit?usp=sharing)**.\n\n[![follow litvintech](https://dl.dropboxusercontent.com/u/52209381/golos/card.png)](https://golos.io/@litvintech)",
+    "body" => "...",
     "active" => "2016-12-06T22:23:06", "net_rshares" => 0,
     "author_rewards" => 10011558, "total_pending_payout_value" => "0.000 GBG",
     "root_comment" => "2.8.30160", "max_cashout_time" => "1969-12-31T23:59:59",
@@ -63,16 +66,18 @@ defmodule Golos.DatabaseApi do
        "voter" => "val", "weight" => "99631990926249375"}, %{...}, ...], "depth" => 0,
     "mode" => "second_payout", "abs_rshares" => 0,
     "author_reputation" => "22784203010137"}
+  ```
   """
   @spec get_content(String.t, String.t) :: map
   def get_content(author, permlink) do
     call("get_content", [author, permlink])
   end
 
-  @doc """
-  Get account data. Accepts either a list with up to 1000 account names
+  @doc"""
+  Returns account data. Accepts a list of up to 1000 account names
 
   Example response:
+  ```
   [%{"recovery_account" => "cyberfounder", "posting_rewards" => 6041772,
   "created" => "1970-01-01T00:00:00",
   "last_bandwidth_update" => "2017-02-03T07:44:33",
@@ -80,7 +85,7 @@ defmodule Golos.DatabaseApi do
   "last_active_proved" => "1970-01-01T00:00:00", "withdraw_routes" => 0,
   "last_account_update" => "2016-11-04T21:28:45",
   "sbd_last_interest_payment" => "2017-01-15T11:19:27",
-  "json_metadata" => "{\"created_at\":\"GENESIS\",\"ico_address\":\"1FNnNWE3m4rsMWTaX76A4bN1uK4biERdVn\",\"user_image\":\"https://habrastorage.org/files/6b3/db5/587/6b3db55871e04985821e4c453a30c60c.jpg\"}",
+  "json_metadata" => "{"created_at":"GENESIS","ico_address":"1FNnNWE3m4rsMWTaX76A4bN1uK4biERdVn","user_image":"https://habrastorage.org/files/6b3/db5/587/6b3db55871e04985821e4c453a30c60c.jpg"}",
   "active_challenged" => false, "vesting_balance" => "0.000 GOLOS",
   "last_vote_time" => "2017-02-03T07:44:33", "post_history" => [],
   "blog_category" => %{}, "market_history" => [], "id" => "2.2.1993",
@@ -113,30 +118,34 @@ defmodule Golos.DatabaseApi do
   "reset_request_time" => "1969-12-31T23:59:59", "savings_sbd_seconds" => "0",
   "last_owner_update" => "2016-10-18T11:19:12", ...},
   %{...}]
+  ```
   """
   @spec get_accounts([String.t]) :: [map]
   def get_accounts(accounts) when is_list(accounts) do
     call("get_accounts", [accounts])
   end
 
-  @doc """
-  Get block header data. Accepts block height.
+  @doc"""
+  Returns block header data. Accepts block height.
 
   Example response:
+  ```
    %{"extensions" => [], "previous" => "0000000000000000000000000000000000000000",
    "timestamp" => "2016-10-18T11:01:48",
    "transaction_merkle_root" => "0000000000000000000000000000000000000000",
    "witness" => "cyberfounder"}
+  ```
   """
   @spec get_block_header(pos_integer) :: map
   def get_block_header(height) do
     call("get_block_header", [height])
   end
 
-  @doc """
+  @doc"""
   Unsurprisingly returns a map with dynamic global propeties.
   Example response:
 
+  ```
     %{"average_block_size" => 416, "confidential_sbd_supply" => "0.000 GBG",
     "confidential_supply" => "0.000 GOLOS", "current_aslot" => 3112003,
     "current_reserve_ratio" => 20000, "current_sbd_supply" => "504154.519 GBG",
@@ -155,42 +164,47 @@ defmodule Golos.DatabaseApi do
     "total_vesting_fund_steem" => "95566422.906 GOLOS",
     "total_vesting_shares" => "448830750142.483827 GESTS",
     "virtual_supply" => "96509712.230 GOLOS", "vote_regeneration_per_day" => 40}
+  ```
   """
   @spec get_dynamic_global_properties() :: map
   def get_dynamic_global_properties do
     call("get_dynamic_global_properties", [])
   end
 
-  @doc """
+  @doc"""
   Unsurprisingly returns a map with chain propeties.
   Example result:
-    %{"account_creation_fee" => "1.000 GOLOS", "maximum_block_size" => 131072,
-   "sbd_interest_rate" => 1000}
+  ```
+  %{"account_creation_fee" => "1.000 GOLOS", "maximum_block_size" => 131072, "sbd_interest_rate" => 1000}
+  ```
   """
   @spec get_chain_properties() :: map
   def get_chain_properties do
     call("get_chain_properties", [])
   end
 
-  @doc """
-  Return feed history
+  @doc"""
+  Returns feed history
   Example response:
+  ```
     %{"current_median_history" => %{"base" => "1.000 GBG",
     "quote" => "0.559 GOLOS"}, "id" => "2.14.0",
     "price_history" => [%{"base" => "1.379 GBG", "quote" => "1.000 GOLOS"},
      %{"base" => "1.379 GBG", "quote" => "1.000 GOLOS"},
      %{"base" => "1.379 GBG", "quote" => "1.000 GOLOS"},
      %{"base" => "1.000 GBG", ...}, %{...}, ...]}
+  ```
   """
   @spec get_feed_history() :: map
   def get_feed_history do
     call("get_feed_history", [])
   end
 
-  @doc """
-  Get node client config
+  @doc"""
+  Returns node client config
 
   Example response:
+  ```
     %{"STEEMIT_MINER_ACCOUNT" => "miners",
     "STEEMIT_MIN_CONTENT_REWARD" => "1.500 GOLOS",
     "STEEMIT_BLOCKCHAIN_HARDFORK_VERSION" => "0.14.0",
@@ -230,15 +244,19 @@ defmodule Golos.DatabaseApi do
     "STEEMIT_MIN_LIQUIDITY_REWARD_PERIOD_SEC" => 60000000,
     "STEEMIT_MINING_REWARD" => "1.000 GOLOS",
     "STEEMIT_FREE_TRANSACTIONS_WITH_NEW_ACCOUNT" => 100, ...}
+  ```
   """
   @spec get_config() :: map
   def get_config() do
     call("get_config", [])
   end
-  @doc """
-  Return current median history price
+
+  @doc"""
+  Returns current median history price.
   Example response:
+  ```
     %{"base" => "1.000 GBG", "quote" => "0.559 GOLOS"}
+  ```
   """
   @spec get_current_median_history_price() :: map
   def get_current_median_history_price() do
@@ -246,7 +264,7 @@ defmodule Golos.DatabaseApi do
   end
 
   # ACCOUNTS
-  @doc """
+  @doc"""
   Get account count
   Example response: 25290
   """
@@ -255,26 +273,29 @@ defmodule Golos.DatabaseApi do
    call("get_account_count", [])
   end
 
-  @doc """
+  @doc"""
   Lookup accounts
   Example response:
+  ```
     ["razumnica", "razumova-l", "razvanelulmarin", "razved1", "razzewille", "rbaron", "rbc", "rbi", "rbrown", "rbur93"]
+  ```
   """
   def lookup_accounts(lower_bound_name, limit) do
    call("lookup_accounts", [lower_bound_name,  limit])
   end
 
-  @doc """
-  Returns account data maps
+  @doc"""
+  Returns list of maps of account data.
 
   Example response:
+  ```
     [%{"recovery_account" => "cyberfounder", "posting_rewards" => 83462628,
      "created" => "1970-01-01T00:00:00",
      "last_bandwidth_update" => "2017-02-03T11:57:06", "to_withdraw" => 0,
      "last_active_proved" => "1970-01-01T00:00:00", "withdraw_routes" => 0,
      "last_account_update" => "2017-01-21T11:34:30",
      "sbd_last_interest_payment" => "2017-01-15T23:43:00",
-     "json_metadata" => "{\"created_at\":\"GENESIS\",\"ico_address\":\"1B9Khkti2bBPccSoNj6aiFCYhq5Rq5GAMb\",\"user_image\":\"https://avatars2.githubusercontent.com/u/4211840?v=3&u=97aeb67208068d457fad522a500b62f12908270c&s=400\"}",
+     "json_metadata" => "{"created_at":"GENESIS","ico_address":"1B9Khkti2bBPccSoNj6aiFCYhq5Rq5GAMb","user_image":"https://avatars2.githubusercontent.com/u/4211840?v=3&u=97aeb67208068d457fad522a500b62f12908270c&s=400"}",
      "active_challenged" => false, "last_vote_time" => "2017-02-03T11:57:06",
      "id" => "2.2.6836", "vesting_shares" => "386381769.644947 GESTS",
      "reset_account" => "null", "sbd_balance" => "917.535 GBG",
@@ -305,44 +326,30 @@ defmodule Golos.DatabaseApi do
      "curation_rewards" => 5484048,
      "pending_reset_authority" => %{"account_auths" => [], "key_auths" => [],
        ...}, "witnesses_voted_for" => 10, "comment_count" => 0, ...}]
+  ```
   """
   @spec lookup_account_names([String.t]) :: [map]
   def lookup_account_names(account_names) do
    call("lookup_account_names", [account_names])
   end
 
-  @doc """
-  Get account operations history
+  @doc"""
+  Returns account operations history
   Example response:
-    [
-    [7817, %{"block" => 3107388, "id" => "2.17.1197661",
-      "op" => ["vote",
-       %{"author" => "vik",
-         "permlink" => "dostupnyi-javascript-na-prikladnom-primere-sozdaniya-stranicy-saita-s-deistviyami-polzovatelei-golosa-v-realnom-vremeni",
-         "voter" => "ontofractal", "weight" => 10000}], "op_in_trx" => 0,
-      "timestamp" => "2017-02-03T12:36:06",
-      "trx_id" => "dc866b17ba80fa0ca0fe283ca19ebea9193987bc", "trx_in_block" => 0,
-      "virtual_op" => 0}],
-    [7816,
-    %{"block" => 3107390, "id" => "2.17.1197663",
-      "op" => ["vote",
-       %{"author" => "pro.bitcoin",
-         "permlink" => "podkast-pro-bitkoin-samye-glavnye-novosti-iz-mira-kriptovalyut-vypusk-27",
-         "voter" => "ontofractal", "weight" => 10000}], "op_in_trx" => 0,
-      "timestamp" => "2017-02-03T12:36:12",
-      "trx_id" => "a7ce75dcd43641edd498d77bb4a938c9cdeb7405", "trx_in_block" => 0,
-      "virtual_op" => 0}]]
-
+  ```
+    [[7817, %{"block" => 3107388, "id" => "2.17.1197661", "op" => ["vote", %{"author" => "vik", "permlink" => "dostupnyi-javascript-na-prikladnom-primere-sozdaniya-stranicy-saita-s-deistviyami-polzovatelei-golosa-v-realnom-vremeni", "voter" => "ontofractal", "weight" => 10000}], "op_in_trx" => 0, "timestamp" => "2017-02-03T12:36:06", "trx_id" => "dc866b17ba80fa0ca0fe283ca19ebea9193987bc", "trx_in_block" => 0, "virtual_op" => 0}], [7816, %{"block" => 3107390, "id" => "2.17.1197663", "op" => ["vote", %{"author" => "pro.bitcoin", "permlink" => "podkast-pro-bitkoin-samye-glavnye-novosti-iz-mira-kriptovalyut-vypusk-27", "voter" => "ontofractal", "weight" => 10000}], "op_in_trx" => 0, "timestamp" => "2017-02-03T12:36:12", "trx_id" => "a7ce75dcd43641edd498d77bb4a938c9cdeb7405", "trx_in_block" => 0, "virtual_op" => 0}]]
+  ```
   """
   @spec get_account_history(String.t, integer, integer) :: [map]
   def get_account_history(name, from, limit) do
    call("get_account_history", [name, from, limit])
   end
 
-  @doc """
-  Get witness schedule
+  @doc"""
+  Returns witness schedule
 
   Example response:
+  ```
     %{"current_shuffled_witnesses" => ["litrbooh", "gtx-1080-sc-0015",
     "vitaly-lvov", "aleksandraz", "on0tole", "dark.sun", "jesta", "someguy123",
     "pmartynov", "primus", "litvintech", "phenom", "hipster", "good-karma",
@@ -352,26 +359,27 @@ defmodule Golos.DatabaseApi do
     "median_props" => %{"account_creation_fee" => "1.000 GOLOS",
     "maximum_block_size" => 131072, "sbd_interest_rate" => 1000},
     "next_shuffle_block_num" => 3108273}
+  ```
   """
   @spec get_witness_schedule() :: map
   def get_witness_schedule() do
    call("get_witness_schedule", [])
   end
 
-  @doc """
+  @doc"""
   Gets hardfork version
 
-  Example response: "0.14.0"
+  Example response: `"0.14.0"`
   """
   @spec get_hardfork_version() :: String.t
   def get_hardfork_version() do
    call("get_hardfork_version", [])
   end
 
-  @doc """
+  @doc"""
   Get next scheduled hardfork time
 
-  Example result: %{"hf_version" => "0.0.0", "live_time" => "2016-10-18T11:00:00"}
+  Example result: `%{"hf_version" => "0.0.0", "live_time" => "2016-10-18T11:00:00"}`
   """
   @spec get_next_scheduled_hardfork() :: map
   def get_next_scheduled_hardfork() do
