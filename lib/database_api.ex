@@ -77,7 +77,7 @@ defmodule Golos.DatabaseApi do
 
 
   @doc"""
-  Returns content data, accepts author and permlink.
+  Returns a list of replies to the given content, accepts author and permlink.
 
   Example response:
   ```
@@ -118,6 +118,23 @@ defmodule Golos.DatabaseApi do
   @spec get_content_replies(String.t, String.t) :: map
   def get_content_replies(author, permlink) do
     call("get_content_replies", [author, permlink])
+  end
+
+
+  @doc"""
+  If start_permlink is empty then only before_date will be considered. If both are specified the eariler to the two metrics will be used.
+  before_date format is: `2017-02-07T14:34:11`
+  Example response:
+  ```
+  ContentResult has the same shape as a result returned by get_content.
+  Example result:
+  ```
+  [ContentResult, ContentResult, ...]
+  ```
+  """
+  @spec get_discussions_by_author_before_date(String.t, String.t, String.t, integer) :: map
+  def get_discussions_by_author_before_date(author, start_permlink, before_date, limit) do
+    call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit])
   end
 
 

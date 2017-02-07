@@ -36,6 +36,12 @@ defmodule GolosTest do
     assert [%{"author" => _, "permlink" => _} | _ ] = data
   end
 
+  test "get_discussions_by_author_before_update" do
+    {:ok, data} = Golos.get_discussions_by_author_before_date("ontofractal",
+     "zapusk-razumgolosa-com-v0-1-beta-statistika-i-instrumenty-dlya-kollektivnogo-razuma-golosa", "2017-02-01T12:00:00", 10)
+    assert [%{"author" => _, "permlink" => _} | _ ] = data
+  end
+
   test "get_block" do
     {:ok, data} = Golos.get_block(314_159)
     assert %{"previous" => _, "transactions" => _} = data
