@@ -10,17 +10,11 @@ defmodule GolosTest do
     Golos.IdStore.start_link
     Golos.WS.start_link(url)
 
-    %{
-      params:
-      %{
-        glob_dyn_prop: [@db_api, "get_dynamic_global_properties", []],
-        get_block: [@db_api, "get_block", [3_141_592]]
-      }
-    }
+    :ok
   end
 
   test "get_dynamic_global_properties call succeeds", context do
-    params = context.params.glob_dyn_prop
+    params = [@db_api, "get_dynamic_global_properties", []]
     {:ok, result} = Golos.call(params)
 
     assert %{"head_block_id" => _} = result
@@ -36,13 +30,13 @@ defmodule GolosTest do
     assert [%{"author" => _, "permlink" => _} | _ ] = data
   end
 
-  @skip
   test "get_discussions_by_author_before_update" do
     {:ok, data} = Golos.get_discussions_by_author_before_date("ontofractal",
      "zapusk-razumgolosa-com-v0-1-beta-statistika-i-instrumenty-dlya-kollektivnogo-razuma-golosa", "2017-02-01T12:00:00", 10)
     assert [%{"author" => _, "permlink" => _} | _ ] = data
   end
 
+  @tag :skip
   test "get_replies_by_last_update" do
     {:ok, data} = Golos.get_replies_by_last_update("ontofractal",
      "zapusk-razumgolosa-com-v0-1-beta-statistika-i-instrumenty-dlya-kollektivnogo-razuma-golosa", "2016-12-13T12:00:00", 10)
