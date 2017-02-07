@@ -28,8 +28,12 @@ defmodule GolosTest do
 
   test "get_content" do
     {:ok, data} = Golos.get_content("litvintech", "obyavlenie-kraudseil-i-sherdrop-distribyuciya")
-
     assert %{"author" => "litvintech", "permlink" => _} = data
+  end
+
+  test "get_content_replies" do
+    {:ok, data} = Golos.get_content_replies("litvintech", "obyavlenie-kraudseil-i-sherdrop-distribyuciya")
+    assert [%{"author" => _, "permlink" => _} | _ ] = data
   end
 
   test "get_block" do

@@ -33,6 +33,8 @@ defmodule Golos.DatabaseApi do
     call("get_block", [height])
   end
 
+  # CONTENT
+
   @doc"""
   Returns content data, accepts author and permlink.
 
@@ -72,6 +74,54 @@ defmodule Golos.DatabaseApi do
   def get_content(author, permlink) do
     call("get_content", [author, permlink])
   end
+
+
+  @doc"""
+  Returns content data, accepts author and permlink.
+
+  Example response:
+  ```
+  [%{"max_accepted_payout" => "1000000.000 GBG", "title" => "",
+  "category" => "ru--kraudseijl", "promoted" => "0.000 GBG",
+  "last_update" => "2016-12-05T16:50:09",
+  "created" => "2016-12-05T16:50:09",
+  "parent_permlink" => "obyavlenie-kraudseil-i-sherdrop-distribyuciya",
+  "total_vote_weight" => 0,
+  "json_metadata" => "{\"tags\":[\"ru--kraudseijl\"]}",
+  "last_payout" => "2017-01-15T11:00:06",
+  "total_payout_value" => "12.892 GBG", "allow_replies" => true,
+  "children_rshares2" => "0", "id" => "2.8.30165",
+  "pending_payout_value" => "0.000 GBG", "children" => 1,
+  "replies" => [],
+  "body" => "И он сказал поехали...",
+  "active" => "2016-12-06T01:57:24", "net_rshares" => 0,
+  "author_rewards" => 53499,
+  "total_pending_payout_value" => "0.000 GBG",
+  "root_comment" => "2.8.30160",
+  "max_cashout_time" => "1969-12-31T23:59:59",
+  "root_title" => "[объявление] Краудсейл и Шэрдроп. Дистрибьюция",
+  "allow_votes" => true, "percent_steem_dollars" => 10000,
+  "children_abs_rshares" => 0, "net_votes" => 6,
+  "author" => "dmilash", "curator_payout_value" => "4.296 GBG",
+  "permlink" => "re-litvintech-obyavlenie-kraudseil-i-sherdrop-distribyuciya-20161205t165002890z",
+  "url" => "/ru--kraudseijl/@litvintech/obyavlenie-kraudseil-i-sherdrop-distribyuciya#@dmilash/re-litvintech-obyavlenie-kraudseil-i-sherdrop-distribyuciya-20161205t165002890z",
+  "cashout_time" => "1969-12-31T23:59:59",
+  "parent_author" => "litvintech",
+  "allow_curation_rewards" => true, "vote_rshares" => 0,
+  "reward_weight" => 10000, "active_votes" => [], "depth" => 1,
+  "mode" => "second_payout", "abs_rshares" => 0,
+  "author_reputation" => "37110534901202"},
+  %{...},
+  ...]
+  ```
+  """
+  @spec get_content_replies(String.t, String.t) :: map
+  def get_content_replies(author, permlink) do
+    call("get_content_replies", [author, permlink])
+  end
+
+
+  # ACCOUNTS
 
   @doc"""
   Returns account data. Accepts a list of up to 1000 account names
