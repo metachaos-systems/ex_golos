@@ -25,6 +25,7 @@ defmodule Golos do
   defdelegate get_state(path), to: Golos.DatabaseApi
   defdelegate get_content_replies(author,permlink), to: Golos.DatabaseApi
   defdelegate get_discussions_by_author_before_date(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
+  defdelegate get_replies_by_last_update(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
 
   @db_api "database_api"
 
