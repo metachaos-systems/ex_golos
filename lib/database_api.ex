@@ -413,4 +413,17 @@ defmodule Golos.DatabaseApi do
    call("get_trending_tags", [after_tag, limit])
   end
 
+  @doc"""
+  Get discussions by trending. Accepts a map with a following query params: %{tag: `String.t`, limit: `integer`}
+  ContentResult has the same shape as a result returned by get_content.
+  Example result:
+  ```
+  [ContentResult, ContentResult, ...]
+  ```
+  """
+  @spec get_discussions_by_trending(map) :: map
+  def get_discussions_by_trending(query) do
+   call("get_discussions_by_trending", [query])
+  end
+
 end
