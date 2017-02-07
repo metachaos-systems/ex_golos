@@ -22,6 +22,7 @@ defmodule Golos do
   defdelegate get_trending_tags(after_tag, limit), to: Golos.DatabaseApi
   defdelegate get_discussions_by_created(query), to: Golos.DatabaseApi
   defdelegate get_discussions_by_trending(query), to: Golos.DatabaseApi
+  defdelegate get_discussions_by(metric, query), to: Golos.DatabaseApi
 
   @db_api "database_api"
 

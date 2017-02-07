@@ -414,29 +414,17 @@ defmodule Golos.DatabaseApi do
   end
 
   @doc"""
-  Get discussions by trending. Accepts a map with a following query params: %{tag: `String.t`, limit: `integer`}
+  Get discussions by the wanted metric. Accepts a metric atom and a map with a following query params: %{tag: `String.t`, limit: `integer`}
   ContentResult has the same shape as a result returned by get_content.
   Example result:
   ```
   [ContentResult, ContentResult, ...]
   ```
   """
-  @spec get_discussions_by_trending(map) :: map
-  def get_discussions_by_trending(query) do
-   call("get_discussions_by_trending", [query])
-  end
-
-  @doc"""
-  Get discussions by created. Accepts a map with a following query params: %{tag: `String.t`, limit: `integer`}
-  ContentResult has the same shape as a result returned by get_content.
-  Example result:
-  ```
-  [ContentResult, ContentResult, ...]
-  ```
-  """
-  @spec get_discussions_by_created(map) :: map
-  def get_discussions_by_created(query) do
-   call("get_discussions_by_created", [query])
+  @spec get_discussions_by(atom, map) :: map
+  def get_discussions_by(metric, query) do
+   method = "get_discussions_by_" <> Atom.to_string(metric)
+   call(method, [query])
   end
 
 end

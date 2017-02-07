@@ -114,13 +114,13 @@ defmodule GolosTest do
     assert [%{"comments" => _, "id" => _} | _]  = data
   end
 
-  test "get_discussions_by_trending" do
-    {:ok, data} = Golos.get_discussions_by_trending(%{tag: "golos", limit: 20})
+  test "get_discussions_by_created" do
+    {:ok, data} = Golos.get_discussions_by(:created, %{tag: "golos", limit: 20})
     assert [%{"title" => _, "id" => _, "created" => _} | _]  = data
   end
 
-  test "get_discussions_by_created" do
-    {:ok, data} = Golos.get_discussions_by_created(%{tag: "golos", limit: 20})
+  test "get_discussions_by trending metric" do
+    {:ok, data} = Golos.get_discussions_by(:trending, %{tag: "golos", limit: 20})
     assert [%{"title" => _, "id" => _, "created" => _} | _]  = data
   end
 end
