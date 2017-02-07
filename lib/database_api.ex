@@ -408,7 +408,7 @@ defmodule Golos.DatabaseApi do
   ...]
   ```
   """
-  @spec get_trending_tags(String.t, integer) :: map
+  @spec get_trending_tags(String.t, integer) :: [map]
   def get_trending_tags(after_tag, limit) do
    call("get_trending_tags", [after_tag, limit])
   end
@@ -421,7 +421,7 @@ defmodule Golos.DatabaseApi do
   [ContentResult, ContentResult, ...]
   ```
   """
-  @spec get_discussions_by(atom, map) :: map
+  @spec get_discussions_by(atom, map) :: [map]
   def get_discussions_by(metric, query) do
    method = "get_discussions_by_" <> Atom.to_string(metric)
    call(method, [query])
