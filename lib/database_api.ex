@@ -426,4 +426,17 @@ defmodule Golos.DatabaseApi do
    call("get_discussions_by_trending", [query])
   end
 
+  @doc"""
+  Get discussions by created. Accepts a map with a following query params: %{tag: `String.t`, limit: `integer`}
+  ContentResult has the same shape as a result returned by get_content.
+  Example result:
+  ```
+  [ContentResult, ContentResult, ...]
+  ```
+  """
+  @spec get_discussions_by_created(map) :: map
+  def get_discussions_by_created(query) do
+   call("get_discussions_by_created", [query])
+  end
+
 end
