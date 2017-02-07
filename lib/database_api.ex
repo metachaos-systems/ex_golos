@@ -385,4 +385,32 @@ defmodule Golos.DatabaseApi do
   def get_next_scheduled_hardfork() do
    call("get_next_scheduled_hardfork", [])
   end
+
+
+  @doc"""
+  Get trending tags
+
+  Example result:
+  ```
+  [
+    %{"comments" => 386, "id" => "5.4.29", "net_votes" => 16361,
+    "tag" => "golos", "top_posts" => 448,
+    "total_children_rshares2" => "263770002351940021381162037540",
+    "total_payout" => "1210679.260 GBG"},
+    %{"comments" => 0, "id" => "5.4.6338", "net_votes" => 59,
+    "tag" => "golos-io", "top_posts" => 1,
+    "total_children_rshares2" => "7597368466598778563409",
+    "total_payout" => "1533.724 GBG"},
+    %{"comments" => 1, "id" => "5.4.741", "net_votes" => 39,
+    "tag" => "golos-soft", "top_posts" => 2,
+    "total_children_rshares2" => "87745768291122276983586401",
+    "total_payout" => "12.812 GBG"},
+  ...]
+  ```
+  """
+  @spec get_trending_tags(String.t, integer) :: map
+  def get_trending_tags(after_tag, limit) do
+   call("get_trending_tags", [after_tag, limit])
+  end
+
 end

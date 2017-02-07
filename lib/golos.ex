@@ -19,6 +19,8 @@ defmodule Golos do
   defdelegate lookup_account_names(account_names), to: Golos.DatabaseApi
   defdelegate get_account_history(name, from, limit), to: Golos.DatabaseApi
 
+  defdelegate get_trending_tags(after_tag, limit), to: Golos.DatabaseApi
+
   @db_api "database_api"
 
   def start(_type, _args) do

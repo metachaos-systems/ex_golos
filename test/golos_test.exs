@@ -108,4 +108,9 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_next_scheduled_hardfork()
     assert %{"hf_version" => _, "live_time" => _}  = data
   end
+
+  test "get_trending_tags" do
+    {:ok, data} = Golos.get_trending_tags("golos", 10)
+    assert [%{"comments" => _, "id" => _} | _]  = data
+  end
 end
