@@ -20,8 +20,6 @@ defmodule Golos do
   defdelegate get_account_history(name, from, limit), to: Golos.DatabaseApi
 
   defdelegate get_trending_tags(after_tag, limit), to: Golos.DatabaseApi
-  defdelegate get_discussions_by_created(query), to: Golos.DatabaseApi
-  defdelegate get_discussions_by_trending(query), to: Golos.DatabaseApi
   defdelegate get_discussions_by(metric, query), to: Golos.DatabaseApi
   defdelegate get_categories(metric, after_category, query), to: Golos.DatabaseApi
   defdelegate get_state(path), to: Golos.DatabaseApi
