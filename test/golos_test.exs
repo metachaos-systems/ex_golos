@@ -123,4 +123,9 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_discussions_by(:trending, %{tag: "golos", limit: 20})
     assert [%{"title" => _, "id" => _, "created" => _} | _]  = data
   end
+
+  test "get_state" do
+    {:ok, data} = Golos.get_state("/trending")
+    assert %{"props" => _, "witness_schedule" => _}  = data
+  end
 end

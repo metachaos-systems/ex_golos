@@ -427,4 +427,27 @@ defmodule Golos.DatabaseApi do
    call(method, [query])
   end
 
+  @doc"""
+  Get state for the provided path.
+  Example result:
+  ```
+  %{
+    "accounts" => ...,
+    "categories" => ...,
+    "category_idx" => ...,
+    "content" => ...,
+    "current_route" => ...,
+    "discussion_idx" => ...,
+    "error" => ...,
+    "feed_price" => ...,
+    "pow_queue" => ...,
+    "props" => ...,
+    "witness_schedule" => ...,
+    "witnesses" => ... }
+  ```
+  """
+  @spec get_state(String.t) :: map
+  def get_state(path) do
+   call("get_state", [path])
+  end
 end

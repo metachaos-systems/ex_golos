@@ -23,6 +23,7 @@ defmodule Golos do
   defdelegate get_discussions_by_created(query), to: Golos.DatabaseApi
   defdelegate get_discussions_by_trending(query), to: Golos.DatabaseApi
   defdelegate get_discussions_by(metric, query), to: Golos.DatabaseApi
+  defdelegate get_state(path), to: Golos.DatabaseApi
 
   @db_api "database_api"
 
