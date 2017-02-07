@@ -128,4 +128,10 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_state("/trending")
     assert %{"props" => _, "witness_schedule" => _}  = data
   end
+
+  test "get_trending_categories" do
+    {:ok, data} = Golos.get_categories(:trending, "golos", 10)
+    assert %{"props" => _, "categories" => _, "witness_schedule" => _}  = data
+  end
+
 end
