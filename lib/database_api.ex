@@ -1,5 +1,8 @@
 defmodule Golos.DatabaseApi do
-
+  @moduledoc """
+  Contains all functions to call Golos database_api methods
+  """
+  
   def call(method, params) do
     Golos.call(["database_api", method, params])
   end
@@ -137,7 +140,7 @@ defmodule Golos.DatabaseApi do
     call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit])
   end
 
-  # UNKNOWN parse error 
+  # UNKNOWN parse error
   # @doc"""
   # If start_permlink is empty then only before_date will be considered. If both are specified the earlier of the two metrics will be used.
   # before_date format is: `2017-02-07T14:34:11`
