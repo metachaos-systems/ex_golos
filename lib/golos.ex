@@ -29,6 +29,7 @@ defmodule Golos do
   defdelegate get_owner_history(name), to: Golos.DatabaseApi
   defdelegate get_conversion_requests(), to: Golos.DatabaseApi
   defdelegate get_order_book(limit), to: Golos.DatabaseApi
+  defdelegate get_open_orders(name), to: Golos.DatabaseApi
 
   @db_api "database_api"
 

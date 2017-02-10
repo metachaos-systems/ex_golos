@@ -165,4 +165,15 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_order_book(100)
     assert %{"asks" => _, "bids" => _} = data
   end
+
+  test "get_open_orders" do
+    {:ok, data} = Golos.get_open_orders("ontofractal")
+    passes = case data do
+      [] -> true
+      [%{"created" => _, "expiration" => _, "for_sale" => _, "id" => _,
+       "orderid" => _, "real_price" => _, "rewarded" => _, "sell_price" => _, "seller" => _} | _ ] -> true
+      _ -> false
+    end
+    assert passes
+  end
 end
