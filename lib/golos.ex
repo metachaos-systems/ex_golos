@@ -35,6 +35,7 @@ defmodule Golos do
   defdelegate lookup_witness_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
   defdelegate get_witness_count(), to: Golos.DatabaseApi
   defdelegate get_active_witnesses(), to: Golos.DatabaseApi
+  defdelegate get_miner_queue(), to: Golos.DatabaseApi
 
   @db_api "database_api"
 
