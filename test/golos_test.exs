@@ -176,4 +176,9 @@ defmodule GolosTest do
     end
     assert passes
   end
+
+  test "get_witnesses" do
+    {:ok, data} = Golos.get_witnesses(["0.0.0","0.0.0","0.0.0"])
+    assert nil == data
+  end
 end

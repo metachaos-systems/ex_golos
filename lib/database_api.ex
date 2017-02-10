@@ -621,10 +621,25 @@ defmodule Golos.DatabaseApi do
      "real_price" => "2.00000000000000000", "rewarded" => false,
      "sell_price" => %{"base" => "6.280 GBG",
        "quote" => "3.140 GOLOS"}, "seller" => "ontofractal"},
- ...]  ```
+       ...]
+  ```
   """
   @spec get_open_orders(String.t) :: [map]
   def get_open_orders(name) do
    call("get_open_orders", [name])
   end
+
+  @doc"""
+  Get witnesses by ids
+
+  ## Example response
+  ```
+
+  ```
+  """
+  @spec get_witnesses([String.t]) :: [map]
+  def get_witnesses(ids) do
+   call("get_witnesses", [ids])
+  end
+
 end
