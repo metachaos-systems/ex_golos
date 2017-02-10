@@ -634,19 +634,6 @@ defmodule Golos.DatabaseApi do
 
   ## Example response
   ```
-
-  ```
-  """
-  @spec get_witnesses([String.t]) :: [map]
-  def get_witnesses(ids) do
-   call("get_witnesses", [ids])
-  end
-
-  @doc"""
-  Get witnesses by votes
-
-  ## Example response
-  ```
   [%{"created" => "2016-10-18T11:21:18",
      "hardfork_time_vote" => "2016-10-18T11:00:00",
      "hardfork_version_vote" => "0.0.0", "id" => "2.3.101",
@@ -668,6 +655,14 @@ defmodule Golos.DatabaseApi do
      "votes" => "102787791122912956"},
   %{...} ]
   ```
+  """
+  @spec get_witnesses([String.t]) :: [map]
+  def get_witnesses(ids) do
+   call("get_witnesses", [ids])
+  end
+
+  @doc"""
+  Get witnesses by votes. Example response is the same as get_witnesses.
   """
   @spec get_witnesses_by_vote(integer, integer) :: [map]
   def get_witnesses_by_vote(from, limit) do
