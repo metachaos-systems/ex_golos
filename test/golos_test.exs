@@ -186,4 +186,10 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_witnesses_by_vote("hipster", 2)
     assert [%{"owner" => _, "signing_key" => _, "pow_worker" => _} | _] = data
   end
+
+  test "lookup_witness_accounts" do
+    {:ok, data} =  Golos.lookup_witness_accounts("creator", 10)
+    assert is_list(data)
+    assert is_bitstring(hd data)
+  end
 end

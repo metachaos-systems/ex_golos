@@ -668,4 +668,18 @@ defmodule Golos.DatabaseApi do
   def get_witnesses_by_vote(from, limit) do
    call("get_witnesses_by_vote", [from, limit])
   end
+
+
+  @doc"""
+  Lookup witness accounts
+
+  Example response:
+  ```
+  ["creator", "creatorgalaxy", "crypto", "cryptocat", "cyberfounder", "cybertech-01", "d00m", "dacom", "dance", "danet"]
+  ```
+  """
+  @spec lookup_witness_accounts(String.t, integer) :: [String.t]
+  def lookup_witness_accounts(lower_bound_name, limit) do
+   call("lookup_witness_accounts", [lower_bound_name,  limit])
+  end
 end
