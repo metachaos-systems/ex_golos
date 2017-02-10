@@ -18,7 +18,6 @@ defmodule Golos do
   defdelegate lookup_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
   defdelegate lookup_account_names(account_names), to: Golos.DatabaseApi
   defdelegate get_account_history(name, from, limit), to: Golos.DatabaseApi
-
   defdelegate get_trending_tags(after_tag, limit), to: Golos.DatabaseApi
   defdelegate get_discussions_by(metric, query), to: Golos.DatabaseApi
   defdelegate get_categories(metric, after_category, query), to: Golos.DatabaseApi
@@ -26,6 +25,8 @@ defmodule Golos do
   defdelegate get_content_replies(author,permlink), to: Golos.DatabaseApi
   defdelegate get_discussions_by_author_before_date(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
   defdelegate get_replies_by_last_update(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
+
+  defdelegate get_conversion_requests(), to: Golos.DatabaseApi
 
   @db_api "database_api"
 

@@ -2,7 +2,7 @@ defmodule Golos.DatabaseApi do
   @moduledoc """
   Contains all functions to call Golos database_api methods
   """
-  
+
   def call(method, params) do
     Golos.call(["database_api", method, params])
   end
@@ -562,7 +562,21 @@ defmodule Golos.DatabaseApi do
   """
   @spec get_categories(atom, String.t, integer) :: [map]
   def get_categories(metric, after_category, limit) do
-   method = "get" <> (Atom.to_string(metric) |> String.upcase) <> "Categories"
-   call("get_state", [after_category, limit])
+   method = "get_" <> Atom.to_string(metric)  <> "_categories"
+   call(method, [after_category, limit])
   end
+
+  @doc"""
+  Gets current GBG to GOLOS conversion requests for given account.
+  Example result:
+  ```
+  [%{"amount" => "100.000 GBG", "conversion_date" => "2017-02-17T18:59:42",
+     "id" => "2.15.696", "owner" => "ontofractal", "requestid" => 1486753166}]
+  ```
+  """
+  @spec get_conversion_requests() :: [map]
+  def get_conversion_requests() do
+   call("get_conversion_requests", ["ontofractal"])
+  end
+
 end
