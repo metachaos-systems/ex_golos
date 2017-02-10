@@ -692,4 +692,22 @@ defmodule Golos.DatabaseApi do
   def get_witness_count() do
    call("get_witness_count", [])
   end
+
+
+  @doc"""
+  Get active witnesses
+
+  Example response:
+  ```
+  ["primus", "litvintech", "yaski", "serejandmyself", "dark.sun", "phenom",
+   "hipster", "gtx-1080-sc-0048", "lehard", "aleksandraz", "dr2073", "smailer",
+   "on0tole", "roelandp", "arcange", "testz", "vitaly-lvov", "xtar", "anyx",
+   "kuna", "creator"]
+  ```
+  """
+  @spec get_active_witnesses() :: [String.t]
+  def get_active_witnesses() do
+   call("get_active_witnesses", [])
+  end
+
 end
