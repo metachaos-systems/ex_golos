@@ -192,4 +192,9 @@ defmodule GolosTest do
     assert is_list(data)
     assert is_bitstring(hd data)
   end
+
+  test "get_witness_count" do
+    {:ok, data} =  Golos.get_witness_count()
+    asset is_integer(data)
+  end
 end

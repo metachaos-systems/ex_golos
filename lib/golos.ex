@@ -33,6 +33,7 @@ defmodule Golos do
   defdelegate get_witnesses(names), to: Golos.DatabaseApi
   defdelegate get_witnesses_by_vote(from, limit), to: Golos.DatabaseApi
   defdelegate lookup_witness_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
+  defdelegate get_witness_count(), to: Golos.DatabaseApi
 
   @db_api "database_api"
 

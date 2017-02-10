@@ -682,4 +682,14 @@ defmodule Golos.DatabaseApi do
   def lookup_witness_accounts(lower_bound_name, limit) do
    call("lookup_witness_accounts", [lower_bound_name,  limit])
   end
+
+  @doc"""
+  Get witness count
+
+  Example response: `997`
+  """
+  @spec get_witness_count() :: [String.t]
+  def get_witness_count() do
+   call("get_witness_count", [])
+  end
 end
