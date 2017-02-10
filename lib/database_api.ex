@@ -579,4 +579,16 @@ defmodule Golos.DatabaseApi do
    call("get_conversion_requests", ["ontofractal"])
   end
 
+
+  @doc"""
+  Returns past owner authorities that are valid for account recovery.
+  Doesn't seem to work at this moment.
+  ```
+  ```
+  """
+  @spec get_owner_history(String.t) :: [map]
+  def get_owner_history(name) do
+   call("get_owner_history", [name])
+  end
+
 end

@@ -154,4 +154,10 @@ defmodule GolosTest do
     end
     assert passes
   end
+
+  @tag :skip
+  test "get_owner_history" do
+    {:ok, data} = Golos.get_owner_history("ontofractal")
+    assert [] == data
+  end
 end

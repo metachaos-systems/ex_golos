@@ -26,6 +26,7 @@ defmodule Golos do
   defdelegate get_discussions_by_author_before_date(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
   defdelegate get_replies_by_last_update(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
 
+  defdelegate get_owner_history(name), to: Golos.DatabaseApi
   defdelegate get_conversion_requests(), to: Golos.DatabaseApi
 
   @db_api "database_api"
