@@ -158,6 +158,11 @@ defmodule GolosTest do
   @tag :skip
   test "get_owner_history" do
     {:ok, data} = Golos.get_owner_history("ontofractal")
-    assert [] == data
+    assert [] != data
+  end
+
+  test "get_order_book" do
+    {:ok, data} = Golos.get_order_book(100)
+    assert %{"asks" => _, "bids" => _} = data
   end
 end

@@ -591,4 +591,21 @@ defmodule Golos.DatabaseApi do
    call("get_owner_history", [name])
   end
 
+  @doc"""
+  Returns order book.
+
+  ## Example response
+  ```
+  %{"asks" => [%{"created" => "2017-02-10T18:19:24",
+                 "order_price" => %{"base" => "250.000 GOLOS",
+                   "quote" => "555.975 GBG"},
+                 "real_price" => "2.22389999999999999", "sbd" => 549152,
+                 "steem" => 246932},...],
+  "bids" => [%{...}, ...]
+  ```
+  """
+  @spec get_order_book(integer) :: [map]
+  def get_order_book(limit) do
+   call("get_order_book", [limit])
+  end
 end
