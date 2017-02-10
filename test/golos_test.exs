@@ -3,7 +3,7 @@ defmodule GolosTest do
   doctest Golos
   @db_api "database_api"
 
-  setup_all context do
+  setup_all do
 
     url = Application.get_env(:ex_golos, :url)
 
@@ -13,7 +13,7 @@ defmodule GolosTest do
     :ok
   end
 
-  test "get_dynamic_global_properties call succeeds", context do
+  test "get_dynamic_global_properties call succeeds" do
     params = [@db_api, "get_dynamic_global_properties", []]
     {:ok, result} = Golos.call(params)
 
@@ -112,7 +112,7 @@ defmodule GolosTest do
 
   test "get_hardfork_version" do
     {:ok, data} = Golos.get_hardfork_version()
-    assert "0" <> minor_ver  = data
+    assert "0" <> _  = data
   end
 
   test "get_next_scheduled_hardfork" do
