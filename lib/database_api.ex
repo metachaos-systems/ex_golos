@@ -642,4 +642,35 @@ defmodule Golos.DatabaseApi do
    call("get_witnesses", [ids])
   end
 
+  @doc"""
+  Get witnesses by votes
+
+  ## Example response
+  ```
+  [%{"created" => "2016-10-18T11:21:18",
+     "hardfork_time_vote" => "2016-10-18T11:00:00",
+     "hardfork_version_vote" => "0.0.0", "id" => "2.3.101",
+     "last_aslot" => 3323895, "last_confirmed_block_num" => 3318746,
+     "last_sbd_exchange_update" => "2017-02-09T06:10:33",
+     "last_work" => "0000000000000000000000000000000000000000000000000000000000000000",
+     "owner" => "hipster", "pow_worker" => 0,
+     "props" => %{"account_creation_fee" => "1.000 GOLOS",
+       "maximum_block_size" => 65536, "sbd_interest_rate" => 1000},
+     "running_version" => "0.14.2",
+     "sbd_exchange_rate" => %{"base" => "1.742 GBG",
+       "quote" => "1.000 GOLOS"},
+     "signing_key" => "GLS6oRsauXhqxhpXbK3dJzFBGEWVoX6BjVT5z8BwNzgV38DzFat9E",
+     "total_missed" => 10,
+     "url" => "https://golos.io/ru--delegaty/@hipster/delegat-hipster",
+     "virtual_last_update" => "2363092957490310521961963807",
+     "virtual_position" => "186709431624610119071729411416709427966",
+     "virtual_scheduled_time" => "2363094451567901047152350987",
+     "votes" => "102787791122912956"},
+  %{...} ]
+  ```
+  """
+  @spec get_witnesses_by_vote(integer, integer) :: [map]
+  def get_witnesses_by_vote(from, limit) do
+   call("get_witnesses_by_vote", [from, limit])
+  end
 end

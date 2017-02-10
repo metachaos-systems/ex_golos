@@ -31,6 +31,7 @@ defmodule Golos do
   defdelegate get_order_book(limit), to: Golos.DatabaseApi
   defdelegate get_open_orders(name), to: Golos.DatabaseApi
   defdelegate get_witnesses(names), to: Golos.DatabaseApi
+  defdelegate get_witnesses_by_vote(from, limit), to: Golos.DatabaseApi
 
 
   @db_api "database_api"
