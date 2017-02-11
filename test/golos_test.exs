@@ -209,4 +209,9 @@ defmodule GolosTest do
     assert is_list(data)
     assert is_bitstring(hd data)
   end
+
+  test "get_account_votes" do
+    {:ok, data} =  Golos.get_account_votes("academy")
+    assert [%{"authorperm" => _, "rshares" => _}| _ ] = data
+  end
 end

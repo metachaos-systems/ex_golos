@@ -725,4 +725,20 @@ defmodule Golos.DatabaseApi do
   def get_miner_queue() do
    call("get_miner_queue", [])
   end
+
+
+  @doc"""
+  Get *all* account votes
+
+  Example response:
+  ```
+  [%{"authorperm" => "rusldv/programmiruem-na-php-vvedenie", "percent" => 10000,
+     "rshares" => 130036223, "time" => "2017-01-26T20:06:03", "weight" => 0},
+     %{...}, ...] ```
+  """
+  @spec get_account_votes(String.t) :: [map]
+  def get_account_votes(name) do
+   call("get_account_votes", [name])
+  end
+
 end
