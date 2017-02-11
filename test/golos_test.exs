@@ -214,4 +214,9 @@ defmodule GolosTest do
     {:ok, data} =  Golos.get_account_votes("academy")
     assert [%{"authorperm" => _, "rshares" => _}| _ ] = data
   end
+
+  test "get_active_votes" do
+    {:ok, data} =  Golos.get_active_votes("academy", "zapusk-akademii-golosa")
+    assert [%{"percent" => _, "rshares" => _, "weight" => _}| _ ] = data
+  end
 end

@@ -741,4 +741,18 @@ defmodule Golos.DatabaseApi do
    call("get_account_votes", [name])
   end
 
+  @doc"""
+  Get active votes on the given content. Accepts author and permlink.
+
+  Example response:
+  ```
+  [%{"percent" => 6900, "reputation" => "28759071217014",
+               "rshares" => "18897453242648", "time" => "2017-01-27T09:20:21",
+               "voter" => "hipster", "weight" => "51460692508758354"},
+     %{...}, ...] ```
+  """
+  @spec get_active_votes(String.t, String.t) :: [map]
+  def get_active_votes(account, permlink) do
+   call("get_active_votes", [account, permlink])
+  end
 end
