@@ -39,6 +39,7 @@ defmodule Golos do
   defdelegate get_account_votes(name), to: Golos.DatabaseApi
   defdelegate get_active_votes(author, permlink), to: Golos.DatabaseApi
   defdelegate get_followers(account, start_follower, follow_type, limit), to: Golos.DatabaseApi
+  defdelegate get_following(account, start_following, follow_type, limit), to: Golos.DatabaseApi
 
   @db_api "database_api"
 

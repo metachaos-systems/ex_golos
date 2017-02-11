@@ -772,4 +772,15 @@ defmodule Golos.DatabaseApi do
   def get_followers(account, start_follower, follow_type, limit) do
    Golos.call(["follow_api", "get_followers", [account, start_follower, follow_type, limit]])
   end
+
+  @doc"""
+  Get followings. Accepts account, starting following, follow type (blog, ignore), limit of results.
+  Returns followings in ascending alphabetical order.
+
+  Example response is the same as in get_followers.
+  """
+  @spec get_following(String.t, String.t, String.t, integer) :: [map]
+  def get_following(account, start_follower, follow_type, limit) do
+   Golos.call(["follow_api", "get_following", [account, start_follower, follow_type, limit]])
+  end
 end
