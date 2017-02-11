@@ -755,4 +755,21 @@ defmodule Golos.DatabaseApi do
   def get_active_votes(account, permlink) do
    call("get_active_votes", [account, permlink])
   end
+
+  @doc"""
+  Get followers. Accepts account, starting follower, follow type (blog, ignore), limit of results.
+  Returns followers in ascending alphabetical order.
+
+  Example response:
+  ```
+  %{"follower" => "aim", "following" => "academy",
+            "id" => "8.0.21098", "what" => ["blog"]},
+  %{"follower" => "aleco", "following" => "academy",
+            "id" => "8.0.20183", "what" => ["blog"]},
+     %{...}, ...] ```
+  """
+  @spec get_followers(String.t, String.t, String.t, integer) :: [map]
+  def get_followers(account, start_follower, follow_type, limit) do
+   Golos.call(["follow_api", "get_followers", [account, start_follower, follow_type, limit]])
+  end
 end
