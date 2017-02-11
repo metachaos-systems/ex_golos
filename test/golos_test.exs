@@ -226,7 +226,7 @@ defmodule GolosTest do
   end
 
   test "get_following" do
-    {:ok, data} =  Golos.get_followers("academy", "", "blog", 10)
+    {:ok, data} =  Golos.get_following("ontofractal", "", "blog", 10)
     assert [%{"follower" => _, "following" => _}| _ ] = data
   end
 end
