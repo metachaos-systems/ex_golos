@@ -41,7 +41,7 @@ defmodule Golos.Streamer do
         parsed_json = Poison.Parser.parse!(op_data[:json])
         op_data = Map.put(op_data, :json, parsed_json)
         struct(CustomJson, op_data)
-      "pow" -> struct(POW2, op_data)
+      "pow2" -> struct(POW2, op_data)
       "feed_publish" -> struct(FeedPublish, op_data)
       "transfer" -> struct(Transfer, op_data)
       "account_create" -> struct(AccountCreate, op_data)
