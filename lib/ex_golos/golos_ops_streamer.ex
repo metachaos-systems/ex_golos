@@ -36,20 +36,20 @@ defmodule Golos.Streamer do
     op_data = AtomicMap.convert(op_data, safe: false)
     build_struct_from_op = fn x -> struct(x, op_data) end
     case op_type do
-      "comment" -> build_struct_from_op(Comment)
-      "vote" -> build_struct_from_op(Vote)
+      "comment" -> build_struct_from_op.(Comment)
+      "vote" -> build_struct_from_op.(Vote)
       "custom_json" ->
         parsed_json = Poison.Parser.parse!(op_data[:json])
         op_data = Map.put(op_data, :json, parsed_json)
-        build_struct_from_op(CustomJson)
-      "pow2" -> build_struct_from_op(POW2)
-      "feed_publish" -> build_struct_from_op(FeedPublish)
-      "transfer" -> build_struct_from_op(Transfer)
-      "account_create" -> build_struct_from_op(AccountCreate)
-      "transfer_to_vesting" -> build_struct_from_op(TransferToVesting)
-      "limit_order_create" -> build_struct_from_op(LimitOrderCreate)
-      "limit_order_cancel" -> build_struct_from_op(LimitOrderCancel)
-      "comment_options" -> build_struct_from_op(CommentOptions)
+        build_struct_from_op.(CustomJson)
+      "pow2" -> build_struct_from_op.(POW2)
+      "feed_publish" -> build_struct_from_op.(FeedPublish)
+      "transfer" -> build_struct_from_op.(Transfer)
+      "account_create" -> build_struct_from_op.(AccountCreate)
+      "transfer_to_vesting" -> build_struct_from_op.(TransferToVesting)
+      "limit_order_create" -> build_struct_from_op.(LimitOrderCreate)
+      "limit_order_cancel" -> build_struct_from_op.(LimitOrderCancel)
+      "comment_options" -> build_struct_from_op.(CommentOptions)
       _ ->
         IO.inspect op_type
         IO.inspect op_data
