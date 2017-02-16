@@ -44,7 +44,13 @@ defmodule Golos.Streamer do
       |> parse_json_strings.(:json)
       |> parse_json_strings.(:json_metadata)
 
-    op_struct = case op_type do
+    op_struct = select_struct(op_type)
+    {String.to_atom(op_type), struct(op_struct, op_data)}
+  end
+
+
+  def select_struct(op_type) do
+    case op_type do
       "comment" -> Comment
       "vote" -> Vote
       "custom_json" ->
@@ -59,8 +65,6 @@ defmodule Golos.Streamer do
       "comment_options" -> CommentOptions
       _ ->
         IO.inspect op_type
-        IO.inspect op_data
     end
-    {String.to_atom(op_type), struct(op_struct, op_data)}
   end
 end
