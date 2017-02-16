@@ -16,7 +16,7 @@ defmodule Golos.Streamer do
 
   def handle_info(:tick, state) do
     {:ok, data} = Golos.get_block(state.last_height)
-    IO.inspect unpack_operations(data)
+    unpack_operations(data)
     Process.send_after(self(), :tick, 3_000)
     state = put_in(state.last_height, state.last_height + 1)
     {:noreply, state}
@@ -39,6 +39,8 @@ defmodule Golos.Streamer do
         parsed_json = Poison.Parser.parse!(op_data[:json])
         op_data = Map.put(op_data, :json, parsed_json)
         struct(Golos.Ops.CustomJson, op_data)
+      "pow" -> struct(Golos.Ops.POW2, op_data)
+      _ -> IO.inspect op_data
     end
   end
 end
