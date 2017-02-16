@@ -10,7 +10,7 @@ defmodule Golos.Streamer do
 
   def init(config) do
     {:ok, %{"head_block_number" => last_height}} = Golos.get_dynamic_global_properties
-    Process.send_after(self(), :tick, 3_000)
+    Process.send_after(self(), :tick, 1_000)
     {:ok, %{last_height: last_height, stream_to: config.stream_to}}
   end
 
@@ -22,6 +22,7 @@ defmodule Golos.Streamer do
     else
       state
     end
+    # TODO identify a best interval or timer solution
     Process.send_after(self(), :tick, 3_000)
     {:noreply, state}
   end

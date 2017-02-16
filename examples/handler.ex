@@ -12,11 +12,11 @@ defmodule GolosOpsHandler do
     {:ok, %{}}
   end
 
-  def handle_cast({:golos, :comment}, state) do
+  def handle_cast({:comment, data}, state) do
     #
   end
 
-  def handle_cast({:golos, :vote}, state) do
+  def handle_cast({:vote, data}, state) do
     #
   end
 
