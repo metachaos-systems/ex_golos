@@ -16,9 +16,13 @@ defmodule Golos.Streamer do
 
   def handle_info(:tick, state) do
     {:ok, data} = Golos.get_block(state.last_height)
-    for t <- unpack_operations(data), do: Process.send(state.stream_to, t, [])
+    state = if data do
+      for t <- unpack_operations(data), do: Process.send(state.stream_to, t, [])
+      put_in(state.last_height, state.last_height + 1)
+    else
+      state
+    end
     Process.send_after(self(), :tick, 3_000)
-    state = put_in(state.last_height, state.last_height + 1)
     {:noreply, state}
   end
 
