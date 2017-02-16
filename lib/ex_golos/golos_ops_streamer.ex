@@ -25,9 +25,12 @@ defmodule Golos.Streamer do
   def unpack_operations(block) do
      for tx <- block["transactions"] do
       for op <- tx["operations"] do
-        op
+        convert_to_tuple(op)
       end
      end
   end
 
+  def convert_to_tuple([op_type, op_data]) do
+    {String.to_atom(op_type), op_data}
+  end
 end
