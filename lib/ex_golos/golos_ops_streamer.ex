@@ -11,12 +11,12 @@ defmodule Golos.Streamer do
   def init(config) do
     {:ok, %{"head_block_number" => last_height}} = Golos.get_dynamic_global_properties
     Process.send_after(self(), :tick, 3_000)
-    {:ok, %{last_height: last_height}}
+    {:ok, %{last_height: last_height, stream_to: config.stream_to}}
   end
 
   def handle_info(:tick, state) do
     {:ok, data} = Golos.get_block(state.last_height)
-    IO.inspect unpack_operations(data)
+    for t <- unpack_operations(data), do: Process.send(state.stream_to, t, [])
     Process.send_after(self(), :tick, 3_000)
     state = put_in(state.last_height, state.last_height + 1)
     {:noreply, state}
@@ -32,9 +32,10 @@ defmodule Golos.Streamer do
 
   def convert_to_tuple(op = [op_type, op_data]) do
     parse_json_strings = fn x, key ->
-      case x[key] do
+      val = x[key]
+      case val do
          nil -> x
-         _ -> put_in(x[key], Poison.Parser.parse!(x[key]))
+         _ -> put_in(x, [key], Poison.Parser.parse!(val))
       end
     end
     op_data = op_data
