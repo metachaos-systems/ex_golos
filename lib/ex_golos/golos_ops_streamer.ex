@@ -31,7 +31,7 @@ defmodule Golos.Streamer do
   end
 
   def convert_to_struct(op = [op_type, op_data]) do
-    alias Golos.Ops.{Comment, Vote, CustomJson, POW2,
+    alias Golos.Ops.{Comment, Vote, CustomJson, POW2, CommentOptions
       FeedPublish, Transfer, AccountCreate,TransferToVesting, LimitOrderCreate, LimitOrderCancel}
     op_data = AtomicMap.convert(op_data, safe: false)
     case op_type do
@@ -48,6 +48,7 @@ defmodule Golos.Streamer do
       "transfer_to_vesting" -> struct(TransferToVesting, op_data)
       "limit_order_create" -> struct(LimitOrderCreate, op_data)
       "limit_order_cancel" -> struct(LimitOrderCancel, op_data)
+      "comment_options" -> struct(CommentOptions, op_data)
       _ ->
         IO.inspect op_type
         IO.inspect op_data
