@@ -40,6 +40,7 @@ defmodule Golos.Streamer do
         op_data = Map.put(op_data, :json, parsed_json)
         struct(Golos.Ops.CustomJson, op_data)
       "pow" -> struct(Golos.Ops.POW2, op_data)
+      "feed_publish" -> struct(Golos.Ops.FeedPublish, op_data)
       _ -> IO.inspect op_data
     end
   end
