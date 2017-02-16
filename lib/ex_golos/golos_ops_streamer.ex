@@ -41,6 +41,7 @@ defmodule Golos.Streamer do
         struct(Golos.Ops.CustomJson, op_data)
       "pow" -> struct(Golos.Ops.POW2, op_data)
       "feed_publish" -> struct(Golos.Ops.FeedPublish, op_data)
+      "transfer" -> struct(Golos.Ops.Transfer, op_data)
       _ -> IO.inspect op_data
     end
   end
