@@ -31,14 +31,14 @@ defmodule Golos.Streamer do
   end
 
   def convert_to_struct(op = [op_type, op_data]) do
-    import AtomicMap, only: [convert: 2]
+    op_data = AtomicMap.convert(op_data, safe: false)
     case op_type do
-      "comment" -> struct(Golos.Ops.Comment, AtomicMap.convert(op_data, safe: false))
-      "vote" -> struct(Golos.Ops.Vote, AtomicMap.convert(op_data, safe: false))
+      "comment" -> struct(Golos.Ops.Comment, op_data)
+      "vote" -> struct(Golos.Ops.Vote, op_data)
       "custom_json" ->
-        parsed_json = Poison.Parser.parse!(op_data["json"])
-        op_data = Map.put(op_data, "json", parsed_json)
-        struct(Golos.Ops.CustomJson, AtomicMap.convert(op_data, safe: false))
+        parsed_json = Poison.Parser.parse!(op_data[:json])
+        op_data = Map.put(op_data, :json, parsed_json)
+        struct(Golos.Ops.CustomJson, op_data)
     end
   end
 end
