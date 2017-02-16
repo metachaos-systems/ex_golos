@@ -44,7 +44,10 @@ defmodule Golos.Streamer do
       "transfer" -> struct(Golos.Ops.Transfer, op_data)
       "account_create" -> struct(Golos.Ops.AccountCreate, op_data)
       "transfer_to_vesting" -> struct(Golos.Ops.TransferToVesting, op_data)
-      _ -> IO.inspect op_data
+      "limit_order_create" -> struct(Golos.Ops.LimitOrderCreate, op_data)
+      _ ->
+        IO.inspect op_type
+        IO.inspect op_data
     end
   end
 end
