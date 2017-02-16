@@ -42,6 +42,7 @@ defmodule Golos.Streamer do
       "pow" -> struct(Golos.Ops.POW2, op_data)
       "feed_publish" -> struct(Golos.Ops.FeedPublish, op_data)
       "transfer" -> struct(Golos.Ops.Transfer, op_data)
+      "account_create" -> struct(Golos.Ops.AccountCreate, op_data)
       _ -> IO.inspect op_data
     end
   end
