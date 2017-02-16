@@ -31,20 +31,22 @@ defmodule Golos.Streamer do
   end
 
   def convert_to_struct(op = [op_type, op_data]) do
+    alias Golos.Ops.{Comment, Vote, CustomJson, POW2,
+      FeedPublish, Transfer, AccountCreate,TransferToVesting, LimitOrderCreate}
     op_data = AtomicMap.convert(op_data, safe: false)
     case op_type do
-      "comment" -> struct(Golos.Ops.Comment, op_data)
-      "vote" -> struct(Golos.Ops.Vote, op_data)
+      "comment" -> struct(Comment, op_data)
+      "vote" -> struct(Vote, op_data)
       "custom_json" ->
         parsed_json = Poison.Parser.parse!(op_data[:json])
         op_data = Map.put(op_data, :json, parsed_json)
-        struct(Golos.Ops.CustomJson, op_data)
-      "pow" -> struct(Golos.Ops.POW2, op_data)
-      "feed_publish" -> struct(Golos.Ops.FeedPublish, op_data)
-      "transfer" -> struct(Golos.Ops.Transfer, op_data)
-      "account_create" -> struct(Golos.Ops.AccountCreate, op_data)
-      "transfer_to_vesting" -> struct(Golos.Ops.TransferToVesting, op_data)
-      "limit_order_create" -> struct(Golos.Ops.LimitOrderCreate, op_data)
+        struct(CustomJson, op_data)
+      "pow" -> struct(POW2, op_data)
+      "feed_publish" -> struct(FeedPublish, op_data)
+      "transfer" -> struct(Transfer, op_data)
+      "account_create" -> struct(AccountCreate, op_data)
+      "transfer_to_vesting" -> struct(TransferToVesting, op_data)
+      "limit_order_create" -> struct(LimitOrderCreate, op_data)
       _ ->
         IO.inspect op_type
         IO.inspect op_data
