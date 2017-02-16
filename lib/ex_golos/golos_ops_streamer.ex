@@ -30,10 +30,11 @@ defmodule Golos.Streamer do
      end
   end
 
-  def convert_to_struct([op_type, op_data]) do
+  def convert_to_struct(op = [op_type, op_data]) do
+    import AtomicMap, only: [convert: 2]
     case op_type do
-      "comment" -> struct(Golos.Ops.Comment, op_data)
-      "vote" -> struct(Golos.Ops.Vote, op_data)
+      "comment" -> struct(Golos.Ops.Comment, AtomicMap.convert(op_data, safe: false))
+      "vote" -> struct(Golos.Ops.Vote, AtomicMap.convert(op_data, safe: false))
     end
   end
 end
