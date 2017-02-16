@@ -35,6 +35,10 @@ defmodule Golos.Streamer do
     case op_type do
       "comment" -> struct(Golos.Ops.Comment, AtomicMap.convert(op_data, safe: false))
       "vote" -> struct(Golos.Ops.Vote, AtomicMap.convert(op_data, safe: false))
+      "custom_json" ->
+        parsed_json = Poison.Parser.parse!(op_data["json"])
+        op_data = Map.put(op_data, "json", parsed_json)
+        struct(Golos.Ops.CustomJson, AtomicMap.convert(op_data, safe: false))
     end
   end
 end
