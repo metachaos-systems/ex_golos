@@ -1,4 +1,4 @@
-defmodule SteemOpsHandler do
+defmodule GolosOpsHandler do
   use GenServer
 
   @doc """
@@ -10,6 +10,14 @@ defmodule SteemOpsHandler do
 
   def init(:ok) do
     {:ok, %{}}
+  end
+
+  def handle_cast({:golos, :comment}, state) do
+    #
+  end
+
+  def handle_cast({:golos, :vote}, state) do
+    #
   end
 
 
