@@ -31,8 +31,6 @@ defmodule Golos.Streamer do
   end
 
   def convert_to_tuple(op = [op_type, op_data]) do
-    alias Golos.Ops.{Comment, Vote, CustomJson, POW2, CommentOptions,
-      FeedPublish, Transfer, AccountCreate,TransferToVesting, LimitOrderCreate, LimitOrderCancel}
     parse_json_strings = fn x, key ->
       case x[key] do
          nil -> x
@@ -50,6 +48,8 @@ defmodule Golos.Streamer do
 
 
   def select_struct(op_type) do
+    alias Golos.Ops.{Comment, Vote, CustomJson, POW2, CommentOptions,
+      FeedPublish, Transfer, AccountCreate,TransferToVesting, LimitOrderCreate, LimitOrderCancel}
     case op_type do
       "comment" -> Comment
       "vote" -> Vote
