@@ -25,12 +25,15 @@ defmodule Golos.Streamer do
   def unpack_operations(block) do
      for tx <- block["transactions"] do
       for op <- tx["operations"] do
-        convert_to_tuple(op)
+        convert_to_struct(op)
       end
      end
   end
 
-  def convert_to_tuple([op_type, op_data]) do
-    {String.to_atom(op_type), op_data}
+  def convert_to_struct([op_type, op_data]) do
+    case op_type do
+      "comment" -> struct(Golos.Ops.Comment, op_data)
+      "vote" -> struct(Golos.Ops.Vote, op_data)
+    end
   end
 end
