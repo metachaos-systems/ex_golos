@@ -3,7 +3,7 @@ defmodule Golos.OpsHandlerExample do
   require Logger
 
   @doc """
-  Starts the handle module
+  Starts the handler module
   """
   def start_link do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)

@@ -1,6 +1,7 @@
 defmodule Golos.Streamer do
   use GenServer
   require Logger
+  @tick_interval 1_500
 
   @doc """
   Starts the handler module
@@ -11,11 +12,12 @@ defmodule Golos.Streamer do
 
   def init(config) do
     {:ok, %{"head_block_number" => last_height}} = Golos.get_dynamic_global_properties
-    Process.send_after(self(), :tick, 1_000)
+    Process.send_after(self(), :tick, @tick_interval)
     {:ok, %{last_height: last_height, stream_to: config.stream_to}}
   end
 
   def handle_info(:tick, state) do
+    IO.inspect "last height is #{state.last_height}"
     {:ok, data} = Golos.get_block(state.last_height)
     state = if data do
       for t <- unpack_and_convert_operations(data), do: Process.send(state.stream_to, t, [])
@@ -23,8 +25,7 @@ defmodule Golos.Streamer do
     else
       state
     end
-    # TODO identify a best interval or timer solution
-    Process.send_after(self(), :tick, 3_000)
+    Process.send_after(self(), :tick, @tick_interval)
     {:noreply, state}
   end
 

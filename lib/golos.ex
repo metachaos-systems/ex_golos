@@ -47,13 +47,15 @@ defmodule Golos do
     import Supervisor.Spec, warn: false
 
     url = Application.get_env(:ex_golos, :url)
-
+    stream_to = Application.get_env(:ex_golos, :stream_to)
     unless url, do: throw("Golos WS url is NOT configured. ")
 
+    streamer_worker = if stream_to, do: [worker(Golos.Streamer, [stream_to])], else: []
     children = [
       worker(IdStore, []),
-      worker(Golos.WS, [url])
+      worker(Golos.WS, [url]),
     ]
+    children = children ++ streamer_worker
     opts = [strategy: :one_for_one, name: Golos.Supervisor]
     Supervisor.start_link(children, opts)
   end

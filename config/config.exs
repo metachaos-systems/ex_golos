@@ -31,3 +31,10 @@ use Mix.Config
 
 config :ex_golos,
   url: System.get_env("GOLOS_URL")
+
+
+# Example config
+
+# config :ex_golos,
+#   url: System.get_env("GOLOS_URL")
+#   stream_to: Golos.OpsHandlerExample
