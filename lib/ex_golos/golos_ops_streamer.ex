@@ -1,5 +1,6 @@
 defmodule Golos.Streamer do
   use GenServer
+  require Logger
 
   @doc """
   Starts the handler module
@@ -17,7 +18,7 @@ defmodule Golos.Streamer do
   def handle_info(:tick, state) do
     {:ok, data} = Golos.get_block(state.last_height)
     state = if data do
-      for t <- unpack_operations(data), do: Process.send(state.stream_to, t, [])
+      for t <- unpack_and_convert_operations(data), do: Process.send(state.stream_to, t, [])
       put_in(state.last_height, state.last_height + 1)
     else
       state
@@ -27,12 +28,13 @@ defmodule Golos.Streamer do
     {:noreply, state}
   end
 
-  def unpack_operations(block) do
+  def unpack_and_convert_operations(block) do
      for tx <- block["transactions"] do
       for op <- tx["operations"] do
         convert_to_tuple(op)
       end
      end
+     |> List.flatten
   end
 
   def convert_to_tuple(op = [op_type, op_data]) do
@@ -49,7 +51,8 @@ defmodule Golos.Streamer do
       |> parse_json_strings.(:json_metadata)
 
     op_struct = select_struct(op_type)
-    {String.to_atom(op_type), struct(op_struct, op_data)}
+    op_data = if op_struct, do: struct(op_struct,op_data), else: op_data
+    {String.to_atom(op_type), op_data}
   end
 
 
@@ -59,8 +62,7 @@ defmodule Golos.Streamer do
     case op_type do
       "comment" -> Comment
       "vote" -> Vote
-      "custom_json" ->
-       CustomJson
+      "custom_json" -> CustomJson
       "pow2" -> POW2
       "feed_publish" -> FeedPublish
       "transfer" -> Transfer
@@ -70,7 +72,8 @@ defmodule Golos.Streamer do
       "limit_order_cancel" -> LimitOrderCancel
       "comment_options" -> CommentOptions
       _ ->
-        IO.inspect op_type
+        Logger.info("Unknown op_type encountered: #{op_type}")
+        nil
     end
   end
 end

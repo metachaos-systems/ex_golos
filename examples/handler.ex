@@ -1,23 +1,32 @@
-defmodule GolosOpsHandler do
+defmodule Golos.OpsHandlerExample do
   use GenServer
+  require Logger
 
   @doc """
   Starts the handle module
   """
   def start_link do
-    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
-  def init(:ok) do
-    {:ok, %{}}
+  def init(config \\ %{}) do
+    {:ok, config}
   end
 
-  def handle_cast({:comment, data}, state) do
-    #
+  def handle_info({:comment, data}, state) do
+    Logger.info("Новый пост или комментарий:  #{inspect(data)}" )
+    {:noreply, state}
   end
 
-  def handle_cast({:vote, data}, state) do
-    #
+  def handle_info({:vote, data}, state) do
+    Logger.info("Новый голос:  #{inspect(data)}" )
+    {:noreply, state}
+  end
+
+
+  def handle_info({op_type, op_data}, state) do
+    Logger.info("Новая операция #{op_type}:  #{inspect(op_data)}" )
+    {:noreply, state}
   end
 
 
