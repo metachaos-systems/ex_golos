@@ -17,7 +17,6 @@ defmodule Golos.Streamer do
   end
 
   def handle_info(:tick, state) do
-    IO.inspect "last height is #{state.last_height}"
     {:ok, data} = Golos.get_block(state.last_height)
     state = if data do
       for t <- unpack_and_convert_operations(data), do: Process.send(state.stream_to, t, [])
