@@ -72,7 +72,7 @@ defmodule Golos.Streamer do
       "limit_order_cancel" -> LimitOrderCancel
       "comment_options" -> CommentOptions
       _ ->
-        Logger.info("Unknown op_type encountered: #{op_type}")
+        Logger.info("ExGolos Streamer encountered unknown op_type: #{op_type}")
         nil
     end
   end
