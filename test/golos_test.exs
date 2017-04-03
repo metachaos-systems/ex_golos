@@ -122,7 +122,7 @@ defmodule GolosTest do
 
   test "get_trending_tags" do
     {:ok, data} = Golos.get_trending_tags("golos", 10)
-    assert [%{"comments" => _, "id" => _} | _]  = data
+    assert [%{"comments" => _, "name" => _} | _]  = data
   end
 
   test "get_discussions_by_created" do
