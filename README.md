@@ -27,15 +27,20 @@ ExGolos -- это Elixir библиотека для взаимодействи�
 
 ```elixir
 config :golos,
-  url: System.get_env("GOLOS_URL"),
-  stream_to: YourOpHandlerModule
+  url: System.get_env("GOLOS_URL")
 ```
 
-Внимание: GenServer стриминга транзакций запускается при старте модуля ExGolos, если в настройках конфинга добавлен ключ `stream_to`. Процесс должен существовать, а имя процесса `YourOpHandlerModule` быть зарегистрированым.  
+В модуле присутствует стракты для каждого типа операции. Операции записанные в блоке обрабатываются и превращаются в соостветсвующий struct с известными ключами (которые можно посмотреть в документации).
 
-Альтернативой может быть запуск стримера вручную с помощью `Golos.Streamer.start_link(%{stream_to: YourOpHandlerModule})`
+## GenStage
 
-В модуле присутствует struct для каждого типа операции. Каждая операция на блокчейне обрабатывается и превращается в соостветсвующий struct с известными ключами (которые можно посмотреть в документации).
+В ExGolos интегрирован GenStage, [новый стандарт спецификации](http://elixir-lang.org/blog/2016/07/14/announcing-genstage/) для обработки и обмена ивентами между процессами Elixir/Erlang.
+
+При запуске модуля активируются два GenStage процесса и регистрируется следующие имена:
+
+* Golos.Stage.Blocks.Producer производящий блоки
+* Golos.Stage.Ops.ProducerConsumer получающий блоки и производящий операции
+
 
 ## Пример использования
 
@@ -45,40 +50,30 @@ config :golos,
 
 Такие функции API как `get_dynamic_global_properties` также блокируют процесс и возвращают success tuple. Информация о поддерживаемых функциях API находится в документации.
 
-## Пример использования модуля для обработки стрима операций
+## Пример GenStage consumer для обработки стрима операций
 
 ```
-defmodule Golos.OpsHandlerExample do
-  use GenServer
+defmodule Golos.Stage.Ops.ExampleConsumer do
+  use GenStage
   require Logger
 
-  @doc"""
-  Starts the handler module
-  """
-  def start_link do
-    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
+  def start_link(args, options \\ []) do
+    GenStage.start_link(__MODULE__, args, options)
   end
 
-  def init(config \\ %{}) do
-    {:ok, config}
+  def init(state) do
+    {:consumer, state, subscribe_to: state.subscribe_to}
   end
 
-  def handle_info({:comment, data}, state) do
-    Logger.info("Новый пост или комментарий:  #{inspect(data)}" )
-    {:noreply, state}
+  def handle_events(events, _from, state) do
+    for op <- events do
+      Logger.info """
+      New operation:
+      #{inspect op}
+      """
+    end
+    {:noreply, [], state}
   end
-
-  def handle_info({:vote, data}, state) do
-    Logger.info("Новый голос:  #{inspect(data)}" )
-    {:noreply, state}
-  end
-
-
-  def handle_info({op_type, op_data}, state) do
-    Logger.info("Новая операция #{op_type}:  #{inspect(op_data)}" )
-    {:noreply, state}
-  end
-
 
 end
 ```
@@ -87,8 +82,7 @@ end
 
 ExGolos находится в активной разработке.
 
-* Исследовать использование GenStage
-* Добавить функции для всех типов вызвовов
+* ~~Исследовать использование GenStage~~
 * Улучшить документацию
 * Добавить оставшиеся стракты
 * Добавить возможность броадкаста транзакций
@@ -130,9 +124,8 @@ The most imporant module function is `Golos.call`. It will block the calling pro
 
 Golos is under active development.
 
-* Implement subscriptions
-* Investigate using GenStage
-* Add more utility functions
+* ~~Implement subscriptions~~
+* ~~Investigate using GenStage~~
 * Add more types and structs
 * Add more tests and docs
 * Add transaction broadcast
