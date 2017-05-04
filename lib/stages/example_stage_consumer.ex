@@ -1,4 +1,4 @@
-defmodule Golos.Stage.Txs.ExampleConsumer do
+defmodule Golos.Stage.Ops.ExampleConsumer do
   use GenStage
   require Logger
 
