@@ -7,8 +7,12 @@ defmodule Golos.ProducerSupervisor do
 
   def init(:ok) do
     children = [
-      worker(Golos.Stage.Blocks.Producer, [[], [name: Golos.Stage.Blocks.Producer]]),
-      worker(Golos.Stage.Ops.ProducerConsumer, [%{subscribe_to: [Golos.Stage.Blocks.Producer]}, [name: Golos.Stage.Ops.ProducerConsumer]]),
+      worker(
+        Golos.Stage.Blocks.Producer, [[], [name: Golos.Stage.Blocks.Producer] ]
+      ),
+      worker(
+        Golos.Stage.Ops.ProducerConsumer, [%{subscribe_to: [Golos.Stage.Blocks.Producer]}, [name: Golos.Stage.Ops.ProducerConsumer] ]
+      ),
     ]
     supervise(children, strategy: :one_for_all)
   end
