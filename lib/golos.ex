@@ -25,7 +25,6 @@ defmodule Golos do
   defdelegate get_content_replies(author,permlink), to: Golos.DatabaseApi
   defdelegate get_discussions_by_author_before_date(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
   defdelegate get_replies_by_last_update(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
-
   defdelegate get_owner_history(name), to: Golos.DatabaseApi
   defdelegate get_conversion_requests(), to: Golos.DatabaseApi
   defdelegate get_order_book(limit), to: Golos.DatabaseApi
@@ -47,15 +46,13 @@ defmodule Golos do
     import Supervisor.Spec, warn: false
 
     url = Application.get_env(:ex_golos, :url)
-    stream_to = Application.get_env(:ex_golos, :stream_to)
-    unless url, do: throw("Golos WS url is NOT configured. ")
+    unless url, do: throw("Golos WS url is NOT configured.")
 
-    streamer_worker = if stream_to, do: [worker(Golos.Streamer, [%{stream_to: stream_to}])], else: []
     children = [
       worker(IdStore, []),
       worker(Golos.WS, [url]),
+      supervisor(Golos.ProducerSupervisor, []),
     ]
-    children = children ++ streamer_worker
     opts = [strategy: :one_for_one, name: Golos.Supervisor]
     Supervisor.start_link(children, opts)
   end

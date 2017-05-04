@@ -30,7 +30,7 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 config :ex_golos,
-  url: System.get_env("GOLOS_URL")
+  url: System.get_env("GOLOS_URL") || "wss://ws.golos.io"
 
 # Example config
 
