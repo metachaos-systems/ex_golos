@@ -1,4 +1,4 @@
-defmodule Golos.Stage.Txs.ProducerConsumer do
+defmodule Golos.Stage.Ops.ProducerConsumer do
   use GenStage
   require Logger
 
