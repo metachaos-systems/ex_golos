@@ -1,4 +1,8 @@
-defmodule Golos.Stage.Block.Producer do
+defmodule Golos.Stage.Blocks.Producer do
+  @moduledoc """
+  Produces Golos block data with @tick_interval
+  """
+  @tick_interval 1_000
   use GenStage
 
   def start_link(args, options) do
@@ -6,7 +10,7 @@ defmodule Golos.Stage.Block.Producer do
   end
 
   def init(state)  do
-    :timer.send_interval(1_000, :tick)
+    :timer.send_interval(@tick_interval, :tick)
     {:producer, state, dispatcher: GenStage.BroadcastDispatcher}
   end
 
