@@ -24,6 +24,7 @@ defmodule Golos.Stage.Blocks.Producer do
       {:noreply, [], state}
     else
       {:ok, block} = Golos.get_block(height)
+      block = put_in(block, ["height"], height)
       {:noreply, [block], put_in(state, [:previous_height], height)}
     end
   end
