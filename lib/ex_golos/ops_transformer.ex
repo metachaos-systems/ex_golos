@@ -1,17 +1,27 @@
 defmodule Golos.Ops.Transform do
-  alias Golos.Ops.{Transfer,Comment, CustomJson}
+  alias Golos.Ops.{Transfer,Comment, CustomJson, TransferToVesting}
 
   def prepare_for_db(%Transfer{} = op) do
-    {int, remaining_token_string} = Float.parse(op.amount)
-    token = cond do
-      String.match?(remaining_token_string, ~r"GBG") -> "GBG"
-      String.match?(remaining_token_string, ~r"GOLOS") -> "GOLOS"
-    end
+    parsed = %{token: _, amount: _} =
+      op.amount
+      |> parse_steemlike_token_amount()
+
     op
       |> Map.delete(:__struct__)
-      |> Map.put(:amount, int)
-      |> Map.put(:token, token)
+      |> Map.merge(parsed)
   end
+
+
+  def prepare_for_db(%TransferToVesting{} = op) do
+    parsed = %{token: _, amount: _} =
+      op.amount
+      |> parse_steemlike_token_amount()
+
+    op
+      |> Map.delete(:__struct__)
+      |> Map.merge(parsed)
+  end
+
 
   def prepare_for_db(%Comment{} = op) do
     op
@@ -42,5 +52,14 @@ defmodule Golos.Ops.Transform do
   end
 
   def prepare_for_db(op), do: op
+
+  def parse_steemlike_token_amount(binary) do
+    {int, remaining_token_string} = Float.parse(binary)
+    token = cond do
+      String.match?(remaining_token_string, ~r"GBG") -> "GBG"
+      String.match?(remaining_token_string, ~r"GOLOS") -> "GOLOS"
+    end
+    %{token: token, amount: int}
+  end
 
 end
