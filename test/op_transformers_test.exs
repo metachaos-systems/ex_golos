@@ -1,26 +1,27 @@
 defmodule Golos.Ops.TransformersTest do
   use ExUnit.Case, async: true
   alias Golos.Ops
+  alias Golos.StructuredOps
   doctest Golos
 
   test "transfer op cleaned correctly " do
     op = %Ops.Transfer{to: "bob", from: "alice", amount: "100 GBG", memo: "nice cypher you've got there"}
     prepared = Ops.Transform.prepare_for_db(op)
-    assert prepared == %{to: "bob", from: "alice", amount: 100.0, token: "GBG", memo: "nice cypher you've got there"}
+    assert prepared == %StructuredOps.Transfer{to: "bob", from: "alice", amount: 100.0, token: "GBG", memo: "nice cypher you've got there"}
   end
 
   test "comment op cleaned correctly " do
     op = %Ops.Comment{body: "body1", title: "", author: "alice", permlink: "permlink1", json_metadata: "{\"tags\":[\"tag1\"],\"app\":\"glasnost/0.1\"}", parent_author: "parent_author1", parent_permlink: "parent_permlink1"}
     prepared = Ops.Transform.prepare_for_db(op)
     json_metadata = %{tags: ["tag1"], app: "glasnost/0.1"}
-    assert prepared == %{body: "body1", title: nil, author: "alice", permlink: "permlink1", tags: json_metadata.tags, app: json_metadata.app, json_metadata: json_metadata, parent_author: "parent_author1", parent_permlink: "parent_permlink1"}
+    assert prepared == %StructuredOps.Comment{body: "body1", title: nil, author: "alice", permlink: "permlink1", tags: json_metadata.tags, app: json_metadata.app, json_metadata: json_metadata, parent_author: "parent_author1", parent_permlink: "parent_permlink1"}
   end
 
   test "comment with no parent_author op cleaned correctly " do
     op = %Ops.Comment{body: "body1", title: "", author: "alice", permlink: "permlink1", json_metadata: "{\"tags\":[\"tag1\"],\"app\":\"steemit/0.1\"}", parent_author: "", parent_permlink: "category"}
     prepared = Ops.Transform.prepare_for_db(op)
     json_metadata = %{tags: ["tag1"], app: "steemit/0.1"}
-    assert prepared == %{body: "body1", title: nil, author: "alice", permlink: "permlink1", tags: json_metadata.tags, app: json_metadata.app, json_metadata: json_metadata, parent_author: nil, parent_permlink: "category"}
+    assert prepared == %StructuredOps.Comment{body: "body1", title: nil, author: "alice", permlink: "permlink1", tags: json_metadata.tags, app: json_metadata.app, json_metadata: json_metadata, parent_author: nil, parent_permlink: "category"}
   end
 
   test "follow op cleaned and parsed correctly " do

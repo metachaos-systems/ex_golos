@@ -1,14 +1,17 @@
 defmodule Golos.Ops.Transform do
   alias Golos.Ops.{Transfer,Comment, CustomJson, TransferToVesting, FeedPublish}
+  alias Golos.StructuredOps
 
   def prepare_for_db(%Transfer{} = op) do
     parsed = %{token: _, amount: _} =
       op.amount
       |> parse_steemlike_token_amount()
 
-    op
+    op = op
       |> Map.delete(:__struct__)
       |> Map.merge(parsed)
+
+    struct(StructuredOps.Transfer, op)
   end
 
 
@@ -24,7 +27,7 @@ defmodule Golos.Ops.Transform do
 
 
   def prepare_for_db(%Comment{} = op) do
-    op
+    op = op
       |> Map.delete(:__struct__)
       |> Map.update!(:json_metadata, &Poison.Parser.parse!(&1))
       |> Map.update!(:title, &(if &1 == "", do: nil, else: &1))
@@ -32,6 +35,7 @@ defmodule Golos.Ops.Transform do
       |> AtomicMap.convert(safe: false)
       |> (&Map.put(&1, :tags, &1.json_metadata.tags)).()
       |> (&Map.put(&1, :app, &1.json_metadata.app)).()
+    struct(StructuredOps.Comment, op)
   end
 
   def prepare_for_db(%FeedPublish{exchange_rate: %{base: base, quote: quote}} = op) do
