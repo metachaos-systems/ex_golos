@@ -20,9 +20,10 @@ defmodule Golos.Ops.Transform do
       op.amount
       |> parse_steemlike_token_amount()
 
-    op
+    op = op
       |> Map.delete(:__struct__)
       |> Map.merge(parsed)
+    struct(StructuredOps.TransferToVesting, op)
   end
 
 
