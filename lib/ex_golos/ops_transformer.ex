@@ -43,11 +43,12 @@ defmodule Golos.Ops.Transform do
     base = base |> parse_steemlike_token_amount()
     quote = quote |> parse_steemlike_token_amount()
 
-    op
+    op = op
       |> Map.from_struct
       |> Map.delete(:exchange_rate)
       |> Map.merge(%{base_amount: base.amount, base_token: base.token })
       |> Map.merge(%{quote_amount: quote.amount, quote_token: quote.token})
+    struct(StructuredOps.FeedPublish, op)
   end
 
   def prepare_for_db(%CustomJson{json: json} = op) when is_binary(json) do
