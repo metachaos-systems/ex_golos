@@ -1,5 +1,5 @@
 defmodule Golos.Ops.Transform do
-  alias Golos.Ops.{Transfer,Comment, CustomJson, TransferToVesting}
+  alias Golos.Ops.{Transfer,Comment, CustomJson, TransferToVesting, FeedPublish}
 
   def prepare_for_db(%Transfer{} = op) do
     parsed = %{token: _, amount: _} =
@@ -34,6 +34,16 @@ defmodule Golos.Ops.Transform do
       |> (&Map.put(&1, :app, &1.json_metadata.app)).()
   end
 
+  def prepare_for_db(%FeedPublish{exchange_rate: %{base: base, quote: quote}} = op) do
+    base = base |> parse_steemlike_token_amount()
+    quote = quote |> parse_steemlike_token_amount()
+
+    op
+      |> Map.from_struct
+      |> Map.delete(:exchange_rate)
+      |> Map.merge(%{base_amount: base.amount, base_token: base.token })
+      |> Map.merge(%{quote_amount: quote.amount, quote_token: quote.token})
+  end
 
   def prepare_for_db(%CustomJson{json: json} = op) when is_binary(json) do
     prepare_for_db(%{op | json: Poison.Parser.parse!(json)})
