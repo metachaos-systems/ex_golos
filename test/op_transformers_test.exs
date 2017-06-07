@@ -42,5 +42,12 @@ defmodule Golos.Ops.TransformersTest do
     assert prepared == %{to: "account1", from: "account2", amount: 3.14, token: "GOLOS"}
   end
 
+  test "feed_publish op cleaned and parsed correctly " do
+    op = %Ops.FeedPublish{publisher: "account1", exchange_rate: %{"base": "2.295 GBG", "quote": "1.000 GOLOS"}}
+    prepared = Ops.Transform.prepare_for_db(op)
+    assert prepared == %{publisher: "account1", base_token: "GBG", base_amount: 2.295, quote_token: "GOLOS", quote_amount: 1.0}
+  end
+
+
 
 end
