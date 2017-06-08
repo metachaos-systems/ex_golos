@@ -1,7 +1,7 @@
 defmodule Golos do
   use Application
-  alias Golos.IdStore
-
+  alias Golos.{IdStore, Stage}
+  
   defdelegate get_current_median_history_price(), to: Golos.DatabaseApi
   defdelegate get_feed_history(), to: Golos.DatabaseApi
   defdelegate get_chain_properties(), to: Golos.DatabaseApi
