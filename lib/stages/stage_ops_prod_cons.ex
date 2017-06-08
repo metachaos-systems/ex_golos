@@ -7,24 +7,24 @@ defmodule Golos.Stage.Ops.ProducerConsumer do
   end
 
   def init(state) do
-    {:producer_consumer, state, subscribe_to: state.subscribe_to, dispatcher: GenStage.BroadcastDispatcher}
+    Logger.info("Golos ops producer initializing...")
+    {:producer_consumer, state, subscribe_to: state[:subscribe_to], dispatcher: GenStage.BroadcastDispatcher}
   end
 
   def handle_events(events, _from, number) do
-    events = for block <- events, do: unpack_and_convert_operations(block)
+    events = for block <- events, do: unpack_and_convert_operations(block) |> List.flatten
     {:noreply, events, number}
   end
 
   def unpack_and_convert_operations(block) do
      for tx <- block["transactions"] do
       for op <- tx["operations"] do
-        convert_to_tuple(op)
+        convert_to_tuple(op, block)
       end
      end
-     |> List.flatten
   end
 
-  def convert_to_tuple(op = [op_type, op_data]) do
+  def convert_to_tuple(op = [op_type, op_data], block) do
     parse_json_strings = fn x, key ->
       val = x[key] || "{}"
       case Poison.Parser.parse(val) do
@@ -39,9 +39,8 @@ defmodule Golos.Stage.Ops.ProducerConsumer do
 
     op_struct = select_struct(op_type)
     op_data = if op_struct, do: struct(op_struct,op_data), else: op_data
-    {String.to_atom(op_type), op_data}
+    {String.to_atom(op_type), op_data, %{height: block["height"], timestamp: block["timestamp"]}}
   end
-
 
   def select_struct(op_type) do
     alias Golos.Ops.{Comment, Vote, CustomJson, POW2, CommentOptions,
