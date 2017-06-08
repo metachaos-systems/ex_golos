@@ -51,7 +51,7 @@ defmodule Golos do
     children = [
       worker(IdStore, []),
       worker(Golos.WS, [url]),
-      supervisor(Golos.ProducerSupervisor, []),
+      supervisor(Golos.Stage.ProducerSupervisor, []),
     ]
     opts = [strategy: :one_for_one, name: Golos.Supervisor]
     Supervisor.start_link(children, opts)
