@@ -2,6 +2,7 @@ defmodule Golos.Stage.Blocks.Producer do
   @moduledoc """
   Produces Golos block data with @tick_interval
   """
+  require Logger
   @tick_interval 1_000
   use GenStage
 
@@ -10,6 +11,7 @@ defmodule Golos.Stage.Blocks.Producer do
   end
 
   def init(state)  do
+    Logger.info("Golos blocks producer initializing...")
     :timer.send_interval(@tick_interval, :tick)
     {:producer, state, dispatcher: GenStage.BroadcastDispatcher}
   end
@@ -24,8 +26,13 @@ defmodule Golos.Stage.Blocks.Producer do
       {:noreply, [], state}
     else
       {:ok, block} = Golos.get_block(height)
-      block = put_in(block, ["height"], height)
-      {:noreply, [block], put_in(state, [:previous_height], height)}
+      if block do
+        block = put_in(block, ["height"], height)
+        state = put_in(state, [:previous_height], height)
+        {:noreply, [block], state}
+      else
+        {:noreply, [], state}
+      end
     end
   end
 end
