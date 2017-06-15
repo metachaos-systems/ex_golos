@@ -1,4 +1,4 @@
-defmodule Golos.Stage.Blocks.Producer do
+defmodule Golos.Stage.Blocks do
   @moduledoc """
   Produces Golos block data with @tick_interval
   """
