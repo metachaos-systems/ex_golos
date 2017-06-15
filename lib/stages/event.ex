@@ -1,4 +1,7 @@
 defmodule Golos.Event do
-  @enforce_keys [:type, :data, :metadata]
-  defstruct [:type, :data, :metadata]
+  @moduledoc """
+  A generic blockchain container
+  """
+  @enforce_keys [:data, :metadata]
+  defstruct [:data, :metadata]
 end
