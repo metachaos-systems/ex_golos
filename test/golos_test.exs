@@ -55,7 +55,7 @@ defmodule GolosTest do
 
   test "get_block_header" do
     {:ok, data} = Golos.get_block_header(1)
-    assert %{:"timestamp" => :"2016-10-18T11:01:48"} = data
+    assert %{:"timestamp" => "2016-10-18T11:01:48"} = data
   end
 
   test "get_dynamic_global_properties" do
