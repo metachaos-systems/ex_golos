@@ -18,7 +18,7 @@ defmodule Golos.Stage.Ops do
 
   def unpack_and_convert_operations(block) do
      for tx <- block.transactions do
-      for op <- tx["operations"] do
+      for op <- tx.operations do
         convert_to_event(op, block)
       end
      end

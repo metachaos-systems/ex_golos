@@ -13,6 +13,7 @@ defmodule Golos.Stage.Blocks do
   def init(state)  do
     Logger.info("Golos blocks producer initializing...")
     :timer.send_interval(@tick_interval, :tick)
+    state = if state === [], do: %{}
     {:producer, state, dispatcher: GenStage.BroadcastDispatcher}
   end
 
@@ -21,14 +22,15 @@ defmodule Golos.Stage.Blocks do
   end
 
   def handle_info(:tick, state) do
-    {:ok, %{"head_block_number" => height}} = Golos.get_dynamic_global_properties()
-    if height === state[:previous_height] do
+    {:ok, %{head_block_number: height}} = Golos.get_dynamic_global_properties()
+    previous_height = Map.get(state, :previous_height, nil)
+    if height === previous_height do
       {:noreply, [], state}
     else
       {:ok, block} = Golos.get_block(height)
       if block do
-        block = put_in(block, :height, height)
-        state = put_in(state, [:previous_height], height)
+        block = Map.put(block, :height, height)
+        state = Map.put(state, :previous_height, height)
         {:noreply, [block], state}
       else
         {:noreply, [], state}
