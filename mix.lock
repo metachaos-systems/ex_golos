@@ -6,4 +6,4 @@
   "exconstructor": {:hex, :exconstructor, "1.0.2", "46c60fa258d3893c2c7d0d45f80b9c830919c38eea2a19c61acaf17f0851b902", [:mix], []},
   "gen_stage": {:hex, :gen_stage, "0.12.0", "74ec6f84ea0e0e81aa26b745870495094de1c59bfdbd012ae3103208ea124623", [:mix], [], "hexpm"},
   "poison": {:hex, :poison, "2.2.0", "4763b69a8a77bd77d26f477d196428b741261a761257ff1cf92753a0d4d24a63", [:mix], [], "hexpm"},
-  "websocket_client": {:hex, :websocket_client, "1.2.1", "a965ce0be5583c90347400bceca66629e4debd5feb9bd516107e2924bdf39dad", [:rebar3], [], "hexpm"}}
+  "websocket_client": {:hex, :websocket_client, "1.2.3", "531c929b14965b82a62fe402fd4638926a8ed283df3aae7ba23cec47ec205c78", [:rebar3], [], "hexpm"}}
