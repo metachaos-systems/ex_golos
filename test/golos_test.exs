@@ -5,10 +5,10 @@ defmodule GolosTest do
 
   setup_all do
 
-    url = Application.get_env(:ex_golos, :url)
-
+    # url = Application.get_env(:ex_golos, :url)
+    # IO.inspect "Test GOLOS url is #{url}"
     Golos.IdStore.start_link
-    Golos.WS.start_link(url)
+    Golos.WS.start_link("wss://ws.golos.io")
 
     :ok
   end
@@ -45,7 +45,7 @@ defmodule GolosTest do
 
   test "get_block" do
     {:ok, data} = Golos.get_block(314_159)
-    assert %{"previous" => _, "transactions" => _} = data
+    assert %{previous: _, transactions: _} = data
   end
 
   test "get_accounts with multiple args" do
