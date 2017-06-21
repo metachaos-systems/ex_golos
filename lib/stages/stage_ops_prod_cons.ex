@@ -38,14 +38,14 @@ defmodule Golos.Stage.Ops do
       |> parse_json_strings.(:json_metadata)
 
     op_struct = select_struct(op_type)
-    op_data = if op_struct, do: struct(op_struct,op_data), else: op_data
-    metadata = %{height: block["height"], timestamp: block["timestamp"], source: :golos, type: String.to_atom(op_type),}
+    op_data = if op_struct, do: struct(op_struct, op_data), else: op_data
+    metadata = %{height: block["height"], timestamp: block["timestamp"], source: :golos, type: String.to_atom(op_type)}
     %Golos.Event{data: op_data, metadata: metadata}
   end
 
   def select_struct(op_type) do
     alias Golos.Ops.{Comment, Vote, CustomJson, POW2, CommentOptions,
-      FeedPublish, Transfer, AccountCreate,TransferToVesting, LimitOrderCreate, LimitOrderCancel}
+      FeedPublish, Transfer, AccountCreate, TransferToVesting, LimitOrderCreate, LimitOrderCancel}
     case op_type do
       "comment" -> Comment
       "vote" -> Vote
