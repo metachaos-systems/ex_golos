@@ -17,7 +17,7 @@ defmodule Golos.Stage.Ops do
   end
 
   def unpack_and_convert_operations(block) do
-     for tx <- block["transactions"] do
+     for tx <- block.transactions do
       for op <- tx["operations"] do
         convert_to_event(op, block)
       end
@@ -39,7 +39,7 @@ defmodule Golos.Stage.Ops do
 
     op_struct = select_struct(op_type)
     op_data = if op_struct, do: struct(op_struct, op_data), else: op_data
-    metadata = %{height: block["height"], timestamp: block["timestamp"], source: :golos, type: String.to_atom(op_type)}
+    metadata = %{height: block.height, timestamp: block.timestamp, source: :golos, type: String.to_atom(op_type) }
     %Golos.Event{data: op_data, metadata: metadata}
   end
 

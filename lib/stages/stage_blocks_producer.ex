@@ -27,7 +27,7 @@ defmodule Golos.Stage.Blocks do
     else
       {:ok, block} = Golos.get_block(height)
       if block do
-        block = put_in(block, ["height"], height)
+        block = put_in(block, :height, height)
         state = put_in(state, [:previous_height], height)
         {:noreply, [block], state}
       else
