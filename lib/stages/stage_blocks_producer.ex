@@ -31,7 +31,7 @@ defmodule Golos.Stage.Blocks do
       if block do
         block = Map.put(block, :height, height)
         state = Map.put(state, :previous_height, height)
-        {:noreply, [block], state}
+        {:noreply, [%Golos.Event{data: block, metadata: %{source: :golos}}], state}
       else
         {:noreply, [], state}
       end
