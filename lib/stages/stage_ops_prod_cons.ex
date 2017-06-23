@@ -39,7 +39,7 @@ defmodule Golos.Stage.Ops do
 
     op_struct = select_struct(op_type)
     op_data = if op_struct, do: struct(op_struct, op_data), else: op_data
-    metadata = %{height: block.height, timestamp: block.timestamp, source: :golos, type: String.to_atom(op_type) }
+    metadata = %{block_height: block.height, timestamp: block.timestamp, source: :golos, type: String.to_atom(op_type) }
     %Golos.Event{data: op_data, metadata: metadata}
   end
 
@@ -59,7 +59,7 @@ defmodule Golos.Stage.Ops do
       "limit_order_cancel" -> LimitOrderCancel
       "comment_options" -> CommentOptions
       _ ->
-        Logger.info("ExGolos Ops ProducerConsumer encountered unknown op_type: #{op_type}")
+        # Logger.info("ExGolos Ops ProducerConsumer encountered unknown op_type: #{op_type}")
         nil
     end
   end
