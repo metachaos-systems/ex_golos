@@ -16,7 +16,7 @@ defmodule Golos.Stage.Ops do
     {:noreply, events, number}
   end
 
-  def unpack_and_convert_operations(block) do
+  def unpack_and_convert_operations(%Golos.Event{data: block}) do
      for tx <- block.transactions do
       for op <- tx.operations do
         convert_to_event(op, block)
