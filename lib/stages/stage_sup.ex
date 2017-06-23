@@ -8,8 +8,8 @@ defmodule Golos.Stage.Supervisor do
 
   def init(:ok) do
     blocks_producer = Stage.Blocks
-    stage_ops_prod_cons = Stage.Ops
-    stage_structured_ops_prod_cons = Stage.StructuredOps
+    stage_ops_prod_cons = Stage.RawOps
+    stage_structured_ops_prod_cons = Stage.MungedOps
     children = [
       worker(blocks_producer, [[], [name: blocks_producer]]),
       worker(stage_ops_prod_cons, [[subscribe_to: [blocks_producer]], [name: stage_ops_prod_cons]]),

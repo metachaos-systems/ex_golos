@@ -1,4 +1,4 @@
-defmodule Golos.Stage.Ops do
+defmodule Golos.Stage.RawOps do
   use GenStage
   require Logger
 

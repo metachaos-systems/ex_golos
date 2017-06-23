@@ -1,4 +1,4 @@
-defmodule Golos.Stage.StructuredOps do
+defmodule Golos.Stage.MungedOps do
   use GenStage
   require Logger
   alias Golos.Ops
