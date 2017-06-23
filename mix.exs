@@ -16,7 +16,7 @@
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :websocket_client],
+    [applications: [:logger, :exconstructor, :websocket_client],
     mod: {Golos, []}]
   end
 
@@ -37,7 +37,7 @@
       {:atomic_map, ">= 0.0.0"},
       {:credo, ">= 0.0.0", only: [:test, :dev]},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:exconstructor, ">= 0.0.0"},
+      {:exconstructor, "~> 1.1.0"},
     ]
   end
 

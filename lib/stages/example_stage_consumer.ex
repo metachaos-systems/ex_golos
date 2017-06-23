@@ -19,7 +19,7 @@ defmodule Golos.Stage.StructuredOps.ExampleConsumer do
     {:noreply, [], state}
   end
 
-  def process_event(%{data: %StructuredOps.Reblog{} = op_data, metadata: op_metadata = %{height: h, timestamp: t} }) do
+  def process_event(%{data: %StructuredOps.Reblog{} = op_data, metadata: op_metadata = %{height: h, timestamp: t}}) do
       Logger.info """
       Новый реблог:
       #{inspect op_data} в блоке #{h}, время: #{t}
