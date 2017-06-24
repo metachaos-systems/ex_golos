@@ -1,5 +1,5 @@
-defmodule Golos.Ops.Transform do
-  alias Golos.Ops.{Transfer,Comment, CustomJson, TransferToVesting, FeedPublish}
+defmodule Golos.RawOps.Transform do
+  alias Golos.RawOps.{Transfer,Comment, CustomJson, TransferToVesting, FeedPublish}
   alias Golos.MungedOps
 
   def prepare_for_db(%Transfer{} = op) do

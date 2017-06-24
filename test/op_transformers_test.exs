@@ -1,4 +1,4 @@
-defmodule Golos.Ops.TransformersTest do
+defmodule Golos.RawOps.TransformersTest do
   use ExUnit.Case, async: true
   alias Golos.Ops
   alias Golos.MungedOps

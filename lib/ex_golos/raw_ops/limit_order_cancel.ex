@@ -1,4 +1,4 @@
-defmodule Golos.Ops.LimitOrderCancel do
+defmodule Golos.RawOps.LimitOrderCancel do
   @enforce_keys [:orderid, :owner]
   defstruct [:orderid, :owner]
 end

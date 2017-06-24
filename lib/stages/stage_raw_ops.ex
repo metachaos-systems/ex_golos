@@ -44,7 +44,7 @@ defmodule Golos.Stage.RawOps do
   end
 
   def select_struct(op_type) do
-    alias Golos.Ops.{Comment, Vote, CustomJson, POW2, CommentOptions,
+    alias Golos.RawOps.{Comment, Vote, CustomJson, POW2, CommentOptions,
       FeedPublish, Transfer, AccountCreate, TransferToVesting, LimitOrderCreate, LimitOrderCancel}
     case op_type do
       "comment" -> Comment
