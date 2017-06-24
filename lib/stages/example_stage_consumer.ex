@@ -1,6 +1,6 @@
-defmodule Golos.Stage.StructuredOps.ExampleConsumer do
+defmodule Golos.Stage.MungedOps.ExampleConsumer do
   use GenStage
-  alias Golos.StructuredOps
+  alias Golos.MungedOps
   require Logger
 
   def start_link(args, options \\ []) do
@@ -19,7 +19,7 @@ defmodule Golos.Stage.StructuredOps.ExampleConsumer do
     {:noreply, [], state}
   end
 
-  def process_event(%{data: %StructuredOps.Reblog{} = op_data, metadata: op_metadata = %{block_height: h, timestamp: t}}) do
+  def process_event(%{data: %MungedOps.Reblog{} = op_data, metadata: op_metadata = %{block_height: h, timestamp: t}}) do
       Logger.info """
       Новый реблог:
       #{inspect op_data} в блоке #{h}, время: #{t}

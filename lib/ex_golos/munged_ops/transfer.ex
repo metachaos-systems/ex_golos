@@ -1,4 +1,4 @@
-defmodule Golos.StructuredOps.Transfer do
+defmodule Golos.MungedOps.Transfer do
   @enforce_keys [:amount, :from, :to, :memo, :token]
   defstruct [:amount, :from, :to, :memo, :token]
 end

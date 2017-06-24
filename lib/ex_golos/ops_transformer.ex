@@ -1,6 +1,6 @@
 defmodule Golos.Ops.Transform do
   alias Golos.Ops.{Transfer,Comment, CustomJson, TransferToVesting, FeedPublish}
-  alias Golos.StructuredOps
+  alias Golos.MungedOps
 
   def prepare_for_db(%Transfer{} = op) do
     parsed = %{token: _, amount: _} =
@@ -11,7 +11,7 @@ defmodule Golos.Ops.Transform do
       |> Map.delete(:__struct__)
       |> Map.merge(parsed)
 
-    struct(StructuredOps.Transfer, op)
+    struct(MungedOps.Transfer, op)
   end
 
 
@@ -23,7 +23,7 @@ defmodule Golos.Ops.Transform do
     op = op
       |> Map.delete(:__struct__)
       |> Map.merge(parsed)
-    struct(StructuredOps.TransferToVesting, op)
+    struct(MungedOps.TransferToVesting, op)
   end
 
 
@@ -35,7 +35,7 @@ defmodule Golos.Ops.Transform do
       |> AtomicMap.convert(safe: false)
       |> (&Map.put(&1, :tags, &1.json_metadata[:tags] || [])).()
       |> (&Map.put(&1, :app, &1.json_metadata[:app] || nil)).()
-    struct(StructuredOps.Comment, op)
+    struct(MungedOps.Comment, op)
   end
 
   def prepare_for_db(%FeedPublish{exchange_rate: %{base: base, quote: quote}} = op) do
@@ -47,7 +47,7 @@ defmodule Golos.Ops.Transform do
       |> Map.delete(:exchange_rate)
       |> Map.merge(%{base_amount: base.amount, base_token: base.token})
       |> Map.merge(%{quote_amount: quote.amount, quote_token: quote.token})
-    struct(StructuredOps.FeedPublish, op)
+    struct(MungedOps.FeedPublish, op)
   end
 
   def prepare_for_db(%CustomJson{json: json} = op) when is_binary(json) do
@@ -57,13 +57,13 @@ defmodule Golos.Ops.Transform do
   def prepare_for_db(%CustomJson{id: id, json: [op_name, op_data]}) when id == "follow" and op_name == "follow" do
     op = op_data
       |> AtomicMap.convert(safe: false)
-    struct(StructuredOps.Follow, op)
+    struct(MungedOps.Follow, op)
   end
 
   def prepare_for_db(%CustomJson{id: id, json: [op_name, op_data]}) when id == "follow" and op_name == "reblog" do
     op = op_data
       |> AtomicMap.convert(safe: false)
-    struct(StructuredOps.Reblog, op)
+    struct(MungedOps.Reblog, op)
   end
 
   def prepare_for_db(op), do: op

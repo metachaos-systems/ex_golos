@@ -1,4 +1,4 @@
-defmodule Golos.StructuredOps.Follow do
+defmodule Golos.MungedOps.Follow do
   @enforce_keys [:follower, :following, :what]
   defstruct [:follower, :following, :what]
 end
