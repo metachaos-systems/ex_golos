@@ -14,7 +14,7 @@ defmodule Golos.Stage.Supervisor do
       worker(blocks_producer, [[], [name: blocks_producer]]),
       worker(raw_ops_stage, [[subscribe_to: [blocks_producer]], [name: raw_ops_stage]]),
       worker(munged_ops_stage, [[subscribe_to: [raw_ops_stage]], [name: munged_ops_stage]]),
-      worker(Stage.MungedOps.ExampleConsumer, [[subscribe_to: [munged_ops_stage]]]),
+      # worker(Stage.MungedOps.ExampleConsumer, [[subscribe_to: [munged_ops_stage]]]),
     ]
 
     supervise(children, strategy: :one_for_all)
