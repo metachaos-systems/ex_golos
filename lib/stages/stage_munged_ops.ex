@@ -1,7 +1,7 @@
 defmodule Golos.Stage.MungedOps do
   use GenStage
   require Logger
-  alias Golos.Ops
+  alias Golos.RawOps
 
   def start_link(args, options) do
     GenStage.start_link(__MODULE__, args, options)
@@ -14,7 +14,7 @@ defmodule Golos.Stage.MungedOps do
 
   def handle_events(events, _from, number) do
     structured_events = for event <- List.flatten(events) do
-      Map.update!(event, :data, &Ops.Transform.prepare_for_db/1)
+      Map.update!(event, :data, &RawOps.Munger.parse/1)
     end
     {:noreply, structured_events, number}
   end
