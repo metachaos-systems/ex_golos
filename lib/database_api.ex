@@ -35,6 +35,7 @@ defmodule Golos.DatabaseApi do
   def get_block(height) do
     {:ok, block} = call("get_block", [height])
     block = Map.put(block, :height, height)
+      |> Golos.Block.parse_raw_data()
       |> Golos.Block.new()
     {:ok, block}
   end
