@@ -72,9 +72,13 @@ defmodule Golos do
       {:ws_response, {_, _, response}} -> response
     end
 
-    case response["error"] do
-      nil -> {:ok, AtomicMap.convert(response["result"], safe: false, underscore: false)}
-      _ -> {:error, response["error"]}
+    err = response["err"]
+    result = response["result"]
+    case {err, result} do
+      {_, nil} -> {:error, nil}
+      {nil, _} -> {:ok, AtomicMap.convert(result, safe: false, underscore: false)}
+      _ ->
+        {:error, err}
     end
   end
 
