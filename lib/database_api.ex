@@ -80,7 +80,10 @@ defmodule Golos.DatabaseApi do
   @spec get_content(String.t, String.t) :: map
   def get_content(author, permlink) do
     with {:ok, comment} <- call("get_content", [author, permlink]) do
-      {:ok, Golos.Cleaner.strip_token_names_and_convert_to_number(comment)}
+      cleaned =  comment
+        |> Golos.Cleaner.strip_token_names_and_convert_to_number()
+        |> Golos.Cleaner.prepare_tags()
+      {:ok, cleaned}
     else
       err -> err
     end
