@@ -1,6 +1,7 @@
 defmodule Golos.Stage.RawOps do
   use GenStage
   require Logger
+  alias Golos.Cleaner
 
   def start_link(args, options) do
     GenStage.start_link(__MODULE__, args, options)
@@ -25,18 +26,11 @@ defmodule Golos.Stage.RawOps do
   end
 
   def convert_to_event(op = [op_type, op_data], block) do
-    parse_json_strings = fn x, key ->
-      val = x[key] || "{}"
-      case Poison.Parser.parse(val) do
-         {:ok, map} -> put_in(x, [key], map)
-         {:error, _} -> %{}
-      end
-    end
     op_data = op_data
       |> AtomicMap.convert(safe: false)
-      |> parse_json_strings.(:json)
-      |> parse_json_strings.(:json_metadata)
-
+      |> Cleaner.parse_json_strings(:json_metadata)
+      |> Cleaner.parse_json_strings(:json)
+      
     op_struct = select_struct(op_type)
     op_data = if op_struct, do: struct(op_struct, op_data), else: op_data
     metadata = %{block_height: block.height, timestamp: block.timestamp, source: :blockchain, blockchain: :golos, type: String.to_atom(op_type) }

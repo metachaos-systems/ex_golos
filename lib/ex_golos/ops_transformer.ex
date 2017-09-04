@@ -33,8 +33,9 @@ defmodule Golos.RawOps.Munger do
       |> Map.delete(:__struct__)
       |> Map.update!(:title, &(if &1 == "", do: nil, else: &1))
       |> Map.update!(:parent_author, &(if &1 == "", do: nil, else: &1))
+      |> Cleaner.parse_json_strings(:json_metadata)
       |> AtomicMap.convert(safe: false)
-      |> Cleaner.parse_and_extract_fields()
+      |> Cleaner.extract_fields()
     struct(MungedOps.Comment, op)
   end
 
