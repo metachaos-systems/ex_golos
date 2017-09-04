@@ -1,6 +1,7 @@
 defmodule Golos.RawOps.Munger do
   alias Golos.RawOps.{Transfer,Comment, CustomJson, TransferToVesting, FeedPublish}
   alias Golos.MungedOps
+  alias Golos.Cleaner
 
   def parse(%Transfer{} = op) do
     parsed = %{token: _, amount: _} =
@@ -33,8 +34,7 @@ defmodule Golos.RawOps.Munger do
       |> Map.update!(:title, &(if &1 == "", do: nil, else: &1))
       |> Map.update!(:parent_author, &(if &1 == "", do: nil, else: &1))
       |> AtomicMap.convert(safe: false)
-      |> (&Map.put(&1, :tags, &1.json_metadata[:tags] || [])).()
-      |> (&Map.put(&1, :app, &1.json_metadata[:app] || nil)).()
+      |> Cleaner.parse_and_extract_fields()
     struct(MungedOps.Comment, op)
   end
 

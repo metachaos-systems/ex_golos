@@ -82,6 +82,7 @@ defmodule Golos.DatabaseApi do
     with {:ok, comment} <- call("get_content", [author, permlink]) do
       cleaned =  comment
         |> Golos.Cleaner.strip_token_names_and_convert_to_number()
+        |> Golos.Cleaner.parse_and_extract_fields()
         |> Golos.Cleaner.prepare_tags()
       {:ok, cleaned}
     else
