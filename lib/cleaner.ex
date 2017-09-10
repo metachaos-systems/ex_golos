@@ -25,6 +25,13 @@ defmodule Golos.Cleaner do
     end
   end
 
+  def parse_timedate_strings(data) do
+    to_parse = ~w(created last_payout cashout_time max_cashout_time active last_update)a
+    for {k, v} <- data, into: %{} do
+       {k, (if k in to_parse, do: NaiveDateTime.from_iso8601!(v), else: v)}
+    end
+  end
+
   def extract_fields(data = %{json_metadata: ""}) do
     data
     |> Map.put(:json_metadata, %{})

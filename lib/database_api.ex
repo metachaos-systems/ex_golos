@@ -85,6 +85,7 @@ defmodule Golos.DatabaseApi do
         |> Golos.Cleaner.parse_json_strings(:json_metadata)
         |> Golos.Cleaner.extract_fields()
         |> Golos.Cleaner.prepare_tags()
+        |> Golos.Cleaner.parse_timedate_strings()
       {:ok, cleaned}
     else
       err -> err
