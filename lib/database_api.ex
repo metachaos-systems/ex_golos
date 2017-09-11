@@ -86,6 +86,7 @@ defmodule Golos.DatabaseApi do
         |> Golos.Cleaner.extract_fields()
         |> Golos.Cleaner.prepare_tags()
         |> Golos.Cleaner.parse_timedate_strings()
+        |> Golos.Cleaner.parse_empty_strings()
       {:ok, cleaned}
     else
       err -> err

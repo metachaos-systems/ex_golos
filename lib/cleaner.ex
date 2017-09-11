@@ -13,6 +13,13 @@ defmodule Golos.Cleaner do
     update_in(data.tags, &List.wrap/1)
   end
 
+  def parse_empty_strings(data) do
+    data
+      |> Map.update!(:parent_author, &(if &1 == "", do: nil, else: &1) )
+      |> Map.update!(:author, &(if &1 == "", do: nil, else: &1))
+      |> Map.update!(:permlink, &(if &1 == "", do: nil, else: &1))
+  end
+
   def parse_json_strings(x, key) do
     if is_map(x[key]) do
       x
@@ -28,7 +35,7 @@ defmodule Golos.Cleaner do
   def parse_timedate_strings(data) do
     to_parse = ~w(created last_payout cashout_time max_cashout_time active last_update)a
     for {k, v} <- data, into: %{} do
-       {k, (if k in to_parse, do: NaiveDateTime.from_iso8601!(v), else: v)}
+       {k, (if k in to_pars e, do: NaiveDateTime.from_iso8601!(v), else: v)}
     end
   end
 
