@@ -30,10 +30,11 @@ defmodule Golos.Stage.RawOps do
       |> AtomicMap.convert(safe: false)
       |> Cleaner.parse_json_strings(:json_metadata)
       |> Cleaner.parse_json_strings(:json)
-      
+
     op_struct = select_struct(op_type)
     op_data = if op_struct, do: struct(op_struct, op_data), else: op_data
-    metadata = %{block_height: block.height, timestamp: block.timestamp, source: :blockchain, blockchain: :golos, type: String.to_atom(op_type) }
+    metadata = %{block_height: block.height, timestamp: block.timestamp, blockchain: :golos, type: String.to_atom(op_type) }
+    metadata = Map.put_new(metadata, :source, :naive_realtime)
     %Golos.Event{data: op_data, metadata: metadata}
   end
 
