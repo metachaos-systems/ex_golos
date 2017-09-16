@@ -35,7 +35,7 @@ defmodule Golos.Stage.RawOps do
     op_data = if op_struct, do: struct(op_struct, op_data), else: op_data
     new_metadata = %{block_height: block.height, timestamp: block.timestamp, blockchain: :golos, type: String.to_atom(op_type) }
 
-    metadata = Map.merge(new_metadata, metadata)
+    metadata = Map.merge(new_metadata, metadata || %{})
     metadata = Map.put_new(metadata, :source, :naive_realtime)
 
     %Golos.Event{data: op_data, metadata: metadata}

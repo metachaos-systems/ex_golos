@@ -24,6 +24,7 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_content("litvintech", "obyavlenie-kraudseil-i-sherdrop-distribyuciya")
     assert %{author: "litvintech", permlink: _} = data
     assert data.created.year === 2016
+    assert length(data.tags) > 0
   end
 
   test "get_content_replies" do
