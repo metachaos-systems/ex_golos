@@ -31,7 +31,7 @@ defmodule Golos.Stage.Blocks do
       if block do
         block = Map.put(block, :height, height)
         new_state = Map.put(state, :previous_height, height)
-        meta = %{source: :golos, type: :block}
+        meta = %{source: :naive_realtime, type: :block}
         events = [%Golos.Event{data: block, metadata: meta}]
         {:noreply, events, new_state}
       else
