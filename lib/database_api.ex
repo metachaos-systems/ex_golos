@@ -33,11 +33,14 @@ defmodule Golos.DatabaseApi do
   """
   @spec get_block(integer) :: map
   def get_block(height) do
-    {:ok, block} = call("get_block", [height])
-    block = Map.put(block, :height, height)
-      |> Golos.Block.parse_raw_data()
-      |> Golos.Block.new()
-    {:ok, block}
+    with {:ok, block} <- call("get_block", [height]) do
+      block = Map.put(block, :height, height)
+        |> Golos.Block.parse_raw_data()
+        |> Golos.Block.new()
+      {:ok, block}
+    else
+      err -> err
+    end
   end
 
   # CONTENT
