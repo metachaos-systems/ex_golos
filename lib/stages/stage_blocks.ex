@@ -38,7 +38,7 @@ defmodule Golos.Stage.Blocks do
           {:noreply, [], state}
         end
       else
-        {:noreply, [], state}
+        err -> {:noreply, [], state}
       end
     end
   end
