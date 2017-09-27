@@ -27,13 +27,16 @@ defmodule Golos.Stage.Blocks do
     if height === previous_height do
       {:noreply, [], state}
     else
-      {:ok, block} = Golos.get_block(height)
-      if block do
-        block = Map.put(block, :height, height)
-        new_state = Map.put(state, :previous_height, height)
-        meta = %{source: :naive_realtime, type: :block}
-        events = [%Golos.Event{data: block, metadata: meta}]
-        {:noreply, events, new_state}
+      with {:ok, block} <- Golos.get_block(height) do
+        if block do
+          block = Map.put(block, :height, height)
+          new_state = Map.put(state, :previous_height, height)
+          meta = %{source: :naive_realtime, type: :block}
+          events = [%Golos.Event{data: block, metadata: meta}]
+          {:noreply, events, new_state}
+        else
+          {:noreply, [], state}
+        end
       else
         {:noreply, [], state}
       end
