@@ -53,6 +53,7 @@ defmodule Golos do
     stages = if activate_stage_sup?, do: [supervisor(Stage.Supervisor, [])], else: []
 
     children = [
+      worker(Golos.IdStore, []),
       worker(Golos.WSNext, [url]),
     ]
     children = children ++ stages
