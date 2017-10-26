@@ -25,8 +25,8 @@ defmodule Golos.Cleaner do
       x
     else
       val = x[key] || "{}"
-      val = if is_boolean(val), do: val, else: "{}" # some comments have boolean values instead of json  
-      case Poison.Parser.parse(val) do
+      val = if !is_boolean(val), do: val, else: "{}" # some comments have boolean values instead of json, they are removed
+      case Poison.decode(val) do
          {:ok, map} -> put_in(x, [key], map)
          {:error, _} -> put_in(x, [key], %{})
       end
@@ -40,17 +40,17 @@ defmodule Golos.Cleaner do
     end
   end
 
-  def extract_fields(data = %{json_metadata: ""}) do
-    data
-    |> Map.put(:json_metadata, %{})
-    |> Map.put(:tags, [])
-    |> Map.put(:tags, nil)
-  end
+  # def extract_fields(data = %{json_metadata: ""}) do
+  #   data
+  #   |> Map.put(:json_metadata, %{})
+  #   |> Map.put(:tags, [])
+  #   |> Map.put(:tags, nil)
+  # end
 
   def extract_fields(data) do
     data
-      |> (&Map.put(&1, :tags, &1.json_metadata[:tags] || [])).()
-      |> (&Map.put(&1, :app, &1.json_metadata[:app] || nil)).()
+      |> Map.put(:tags, data.json_metadata[:tags] || [])
+      |> Map.put(:app, data.json_metadata[:app] || nil)
   end
 
 end
