@@ -1,6 +1,7 @@
 defmodule Golos do
   use Application
   alias Golos.{IdStore, Stage}
+  require Logger
 
   defdelegate get_current_median_history_price(), to: Golos.DatabaseApi
   defdelegate get_feed_history(), to: Golos.DatabaseApi
@@ -41,19 +42,18 @@ defmodule Golos do
   defdelegate get_following(account, start_following, follow_type, limit), to: Golos.DatabaseApi
 
   @db_api "database_api"
-  @default_ws_url "wss://ws.golos.io"
+  @default_ws_url "wss://ws.golos.io/"
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
     url = Application.get_env(:ex_golos, :url) || @default_ws_url
-
+    Logger.info("Golos WS url is set to #{url}")
     activate_stage_sup? = Application.get_env(:ex_golos, :activate_stage_sup)
     stages = if activate_stage_sup?, do: [supervisor(Stage.Supervisor, [])], else: []
 
     children = [
-      worker(IdStore, []),
-      worker(Golos.WS, [url]),
+      worker(Golos.WSNext, [url]),
     ]
     children = children ++ stages
     opts = [strategy: :one_for_one, name: Golos.Supervisor]
@@ -63,10 +63,7 @@ defmodule Golos do
   def call(params, opts \\ [])
 
   def call(params, []) do
-    id = gen_id()
-    IdStore.put(id, {self(), params})
-
-    send_jsonrpc_call(id, params)
+    :ok = send({self, params})
 
     response = receive do
       {:ws_response, {_, _, response}} -> response
@@ -83,16 +80,24 @@ defmodule Golos do
   end
 
 
+  def send({from, params}) do
+    # TODO: perhaps implement registry for a id => pid mapping?
+    id = gen_id()
+    message = %{jsonrpc: "2.0", id: id, params: params, method: "call"}
+    :ok = Golos.IdStore.put(id, {from, params})
+    WebSockex.send_frame(:golos_ws, {:text, Poison.encode!(message)})
+  end
+
 
   @doc """
   Sends an event to the WebSocket server
   """
-  defp send_jsonrpc_call(id, params) do
-    send Golos.WS, {:send, %{jsonrpc: "2.0", id: id, params: params, method: "call"}}
+  defp send_jsonrpc_call(params) do
+    Golos.WSNext.send({self, params})
   end
 
   defp gen_id do
-    round(:rand.uniform * 1.0e16)
+    round(:rand.uniform * 1.0e16) |> Integer.to_string
   end
 
 end

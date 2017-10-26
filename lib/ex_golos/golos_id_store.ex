@@ -1,4 +1,5 @@
 defmodule Golos.IdStore do
+  require Logger
   @moduledoc """
   Holds state with data linking jsonrpc call ids and params for pattern
   matching in the handler
@@ -9,14 +10,14 @@ defmodule Golos.IdStore do
   end
 
   def get(id) do
-    Agent.get_and_update(__MODULE__, fn map ->
-      map |> Map.pop(String.to_integer(id))
+    Agent.get_and_update(__MODULE__, fn store ->
+      Map.pop(store, id)
     end)
   end
 
   def put(id, {pid, params}) do
-    Agent.update(__MODULE__, fn map ->
-      Map.put(map, id, {pid, params})
+    Agent.update(__MODULE__, fn store ->
+      Map.put(store, id, {pid, params})
     end)
   end
 
