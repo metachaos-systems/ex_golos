@@ -16,7 +16,7 @@
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :exconstructor, :websocket_client],
+    [extra_applications: [],
     mod: {Golos, []}]
   end
 
@@ -31,19 +31,19 @@
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:websocket_client, "~> 1.2.0"},
       {:poison, "~> 2.0"},
       {:gen_stage, ">= 0.0.0"},
       {:atomic_map, ">= 0.0.0"},
       {:credo, ">= 0.0.0", only: [:test, :dev]},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:exconstructor, "~> 1.1.0"},
+      {:websockex, "~> 0.4.0"}
     ]
   end
 
   defp description do
     """
-    Elixir websockets library and utilities for GOLOS blockchain client
+    Elixir websockets library and utilities for GOLOS JSONRPC websocket interface
     """
   end
 
