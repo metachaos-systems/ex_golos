@@ -5,10 +5,8 @@ defmodule GolosTest do
 
   setup_all do
 
-    # url = Application.get_env(:ex_golos, :url)
-    # IO.inspect "Test GOLOS url is #{url}"
-    Golos.IdStore.start_link
-    Golos.WS.start_link("wss://ws.golos.io")
+    {:ok, pid} = Golos.WSNext.start_link("wss://ws.golos.io/")
+    {:ok, pid} = Golos.IdStore.start_link
 
     :ok
   end
