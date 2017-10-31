@@ -31,7 +31,7 @@
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:poison, "~> 2.0"},
+      {:poison, "~> 3.1.0"},
       {:gen_stage, ">= 0.0.0"},
       {:atomic_map, ">= 0.0.0"},
       {:credo, ">= 0.0.0", only: [:test, :dev]},

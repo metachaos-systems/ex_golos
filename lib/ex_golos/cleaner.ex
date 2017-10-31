@@ -28,7 +28,7 @@ defmodule Golos.Cleaner do
       val = if !is_boolean(val), do: val, else: "{}" # some comments have boolean values instead of json, they are removed
       case Poison.decode(val) do
          {:ok, map} -> put_in(x, [key], map)
-         {:error, _} -> put_in(x, [key], %{})
+         {:error, _, _} -> put_in(x, [key], %{})
       end
     end
   end
