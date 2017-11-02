@@ -1,4 +1,4 @@
-defmodule Golos.Stage.Supervisor do
+defmodule Golos.StageSupervisor do
   use Supervisor
   alias Golos.Stage
 

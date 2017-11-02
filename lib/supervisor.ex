@@ -1,6 +1,6 @@
 defmodule Golos.Supervisor do
   require Logger
-  alias Golos.Stage
+  alias Golos.StageSupervisor
   @default_ws_url "wss://ws.golos.io/"
 
   def start_link() do
@@ -13,7 +13,7 @@ defmodule Golos.Supervisor do
     url = Application.get_env(:ex_golos, :url) || @default_ws_url
     Logger.info("Golos WS url is set to #{url}")
     activate_stage_sup? = Application.get_env(:ex_golos, :activate_stage_sup)
-    stages = if activate_stage_sup?, do: [supervisor(Stage.Supervisor, [])], else: []
+    stages = if activate_stage_sup?, do: [supervisor(StageSupervisor, [])], else: []
 
     children = [
       worker(Golos.IdStore, []),
