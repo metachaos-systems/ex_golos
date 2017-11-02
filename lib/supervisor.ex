@@ -1,5 +1,6 @@
 defmodule Golos.Supervisor do
   require Logger
+  use Supervisor
   alias Golos.StageSupervisor
   @default_ws_url "wss://ws.golos.io/"
 
@@ -8,7 +9,6 @@ defmodule Golos.Supervisor do
   end
 
   def init(:ok) do
-    import Supervisor.Spec
     Logger.info("#{__MODULE__} is being initialized...")
     url = Application.get_env(:ex_golos, :url) || @default_ws_url
     Logger.info("Golos WS url is set to #{url}")
