@@ -42,23 +42,13 @@ defmodule Golos do
   defdelegate get_following(account, start_following, follow_type, limit), to: Golos.DatabaseApi
 
   @db_api "database_api"
-  @default_ws_url "wss://ws.golos.io/"
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
-
-    url = Application.get_env(:ex_golos, :url) || @default_ws_url
-    Logger.info("Golos WS url is set to #{url}")
-    activate_stage_sup? = Application.get_env(:ex_golos, :activate_stage_sup)
-    stages = if activate_stage_sup?, do: [supervisor(Stage.Supervisor, [])], else: []
-
     children = [
-      worker(Golos.IdStore, []),
-      worker(Golos.WSNext, [url]),
+      supervisor(Golos.Supervisor, [])
     ]
-    children = children ++ stages
-    opts = [strategy: :one_for_one, name: Golos.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link(children, strategy: :one_for_one, max_restarts: 10, max_seconds: 5)
   end
 
   def call(params, opts \\ [])
