@@ -16,7 +16,7 @@
   #
   # Type "mix help compile.app" for more information
   def application do
-    [extra_applications: [],
+    [extra_applications: [:websockex],
     mod: {Golos, []}]
   end
 

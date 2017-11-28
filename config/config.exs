@@ -31,7 +31,8 @@ use Mix.Config
 
 config :ex_golos,
   url: System.get_env("GOLOS_URL"),
-  activate_stage_sup: true
+  activate_stage_sup: true,
+  activate_ws_processes: true
 
 # Example config
 

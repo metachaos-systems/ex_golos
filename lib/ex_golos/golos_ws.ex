@@ -1,9 +1,8 @@
-defmodule Golos.WSNext do
+defmodule Golos.WS do
   use WebSockex
   require Logger
 
   def start_link(url, opts \\ []) do
-    uri = URI.parse(url)
     opts = Keyword.merge(opts, [name: :golos_ws])
     WebSockex.start_link(url, __MODULE__, %{}, opts)
   end
@@ -16,7 +15,7 @@ defmodule Golos.WSNext do
 
   def handle_frame({:text, msg}, state) do
     data = Poison.decode!(msg)
-    id = data["id"] 
+    id = data["id"]
     {from, params} = Golos.IdStore.get(id)
     send(from, {:ws_response, {id, params, data}})
     {:ok, state}

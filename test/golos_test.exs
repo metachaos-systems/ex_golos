@@ -5,7 +5,7 @@ defmodule GolosTest do
 
   setup_all do
 
-    {:ok, pid} = Golos.WSNext.start_link("wss://ws.golos.io/")
+    {:ok, pid} = Golos.WS.start_link("wss://ws.golos.io/")
     {:ok, pid} = Golos.IdStore.start_link
 
     :ok
