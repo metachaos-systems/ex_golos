@@ -13,6 +13,10 @@ defmodule Golos.WS do
     {:ok, state}
   end
 
+  def handle_info({:ssl_closed, _}, state) do
+    exit("Golos WS ssl connection closed")
+  end
+
   def handle_frame({:text, msg}, state) do
     data = Poison.decode!(msg)
     id = data["id"]
