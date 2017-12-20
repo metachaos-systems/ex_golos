@@ -51,10 +51,40 @@ defmodule Golos do
     Supervisor.start_link(children, strategy: :one_for_one, max_restarts: 10, max_seconds: 5)
   end
 
+  # def call(params, opts \\ [])
+
+  # def call(params, []) do
+  #   :ok = send({self, params})
+  #
+  #   response = receive do
+  #     {:ws_response, {_, _, response}} -> response
+  #   end
+  #
+  #   err = response["err"]
+  #   result = response["result"]
+  #   case {err, result} do
+  #     {_, nil} -> {:error, nil}
+  #     {nil, _} -> {:ok, AtomicMap.convert(result, safe: false, underscore: false)}
+  #     _ ->
+  #       {:error, err}
+  #   end
+  # end
+  #
+  #
+  # def send({from, params}) do
+  #   # TODO: perhaps implement registry for a id => pid mapping?
+  #   id = gen_id()
+  #   message = %{jsonrpc: "2.0", id: id, params: params, method: "call"}
+  #   :ok = Golos.IdStore.put(id, {from, params})
+  #   WebSockex.send_frame(:golos_ws, {:text, Poison.encode!(message)})
+  # end
   def call(params, opts \\ [])
 
   def call(params, []) do
-    :ok = send({self, params})
+    id = gen_id()
+    IdStore.put(id, {self(), params})
+
+    send_jsonrpc_call(id, params)
 
     response = receive do
       {:ws_response, {_, _, response}} -> response
@@ -71,21 +101,14 @@ defmodule Golos do
   end
 
 
-  def send({from, params}) do
-    # TODO: perhaps implement registry for a id => pid mapping?
-    id = gen_id()
-    message = %{jsonrpc: "2.0", id: id, params: params, method: "call"}
-    :ok = Golos.IdStore.put(id, {from, params})
-    WebSockex.send_frame(:golos_ws, {:text, Poison.encode!(message)})
-  end
-
 
   @doc """
   Sends an event to the WebSocket server
   """
-  defp send_jsonrpc_call(params) do
-    Golos.WSNext.send({self, params})
+  defp send_jsonrpc_call(id, params) do
+    send Golos.WS.Alt, {:send, %{jsonrpc: "2.0", id: id, params: params, method: "call"}}
   end
+
 
   defp gen_id do
     round(:rand.uniform * 1.0e16) |> Integer.to_string

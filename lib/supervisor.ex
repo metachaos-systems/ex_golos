@@ -20,7 +20,7 @@ defmodule Golos.Supervisor do
       if activate_ws_processes? do
         [
           worker(Golos.IdStore, []),
-          worker(Golos.WS, [url])
+          worker(Golos.WS.Alt, [url])
         ]
       else
         []
