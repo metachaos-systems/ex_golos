@@ -21,16 +21,17 @@ defmodule Golos.Cleaner do
   end
 
   def parse_json_strings(x, key) do
-    if is_map(x[key]) do
-      x
-    else
-      val = x[key] || "{}"
-      val = if !is_boolean(val), do: val, else: "{}" # some comments have boolean values instead of json, they are removed
-      case Poison.decode(val) do
-         {:ok, map} -> put_in(x, [key], map)
-         {:error, _, _} -> put_in(x, [key], %{})
-      end
+    parsed = case x[key] do
+       val when is_boolean(val) -> %{}
+       val when is_map(val) -> val
+       nil -> %{}
+       val ->
+          case Poison.decode(val) do
+             {:ok, map} -> map
+             {:error, _, _} -> %{}
+          end
     end
+    Map.put(x, key, parsed)
   end
 
   def parse_timedate_strings(data) do
