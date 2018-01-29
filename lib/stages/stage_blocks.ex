@@ -38,7 +38,9 @@ defmodule Golos.Stage.Blocks do
           {:noreply, [], state}
         end
       else
-        err -> {:noreply, [], state}
+        err -> 
+          Logger.error("ExGolos error: #{inspect err}")
+          {:noreply, [], state}
       end
     end
   end
