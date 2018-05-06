@@ -41,16 +41,4 @@ defmodule Golos.MarketHistoryApi do
     call("get_open_orders", [name])
   end
 
-  @doc """
-  Gets current GBG to GOLOS conversion requests for given account.
-  Example result:
-  ```
-  [%{"amount" => "100.000 GBG", "conversion_date" => "2017-02-17T18:59:42",
-     "id" => "2.15.696", "owner" => "ontofractal", "requestid" => 1486753166}]
-  ```
-  """
-  @spec get_conversion_requests() :: [map]
-  def get_conversion_requests() do
-    call("get_conversion_requests", ["ontofractal"])
-  end
 end

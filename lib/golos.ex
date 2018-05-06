@@ -1,7 +1,7 @@
 defmodule Golos do
   use Application
   alias Golos.{IdStore, Stage}
-  alias Golos.{DatabaseApi, SocialNetworkApi, MarketHistoryApi}
+  alias Golos.{DatabaseApi, SocialNetworkApi, MarketHistoryApi, FollowApi}
   require Logger
 
   defdelegate get_current_median_history_price(), to: Golos.DatabaseApi
@@ -39,8 +39,8 @@ defmodule Golos do
   defdelegate get_miner_queue(), to: Golos.DatabaseApi
   defdelegate get_account_votes(name), to: SocialNetworkApi
   defdelegate get_active_votes(author, permlink), to: SocialNetworkApi
-  defdelegate get_followers(account, start_follower, follow_type, limit), to: Golos.DatabaseApi
-  defdelegate get_following(account, start_following, follow_type, limit), to: Golos.DatabaseApi
+  defdelegate get_followers(account, start_follower, follow_type, limit), to: FollowApi
+  defdelegate get_following(account, start_following, follow_type, limit), to: FollowApi
 
 
   def start(_type, _args) do
