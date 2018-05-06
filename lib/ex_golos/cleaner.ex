@@ -43,8 +43,8 @@ defmodule Golos.Cleaner do
 
   def extract_fields(data) do
     data
-      |> Map.put(:tags, data.json_metadata[:tags] || [])
-      |> Map.put(:app, data.json_metadata[:app] || nil)
+      |> Map.put(:tags, data.json_metadata["tags"] || [])
+      |> Map.put(:app, data.json_metadata["app"] || nil)
   end
 
 end
