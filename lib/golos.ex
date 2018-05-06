@@ -89,12 +89,11 @@ defmodule Golos do
     response = receive do
       {:ws_response, {_, _, response}} -> response
     end
-    IO.inspect response
 
-    err = response["err"]
+    err = response["error"]
     result = response["result"]
     case {err, result} do
-      {_, nil} -> {:error, nil}
+      {_, nil} -> {:error, err}
       {nil, _} -> {:ok, AtomicMap.convert(result, safe: false, underscore: false)}
       _ ->
         {:error, err}
