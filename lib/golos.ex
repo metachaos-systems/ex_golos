@@ -1,7 +1,7 @@
 defmodule Golos do
   use Application
   alias Golos.{IdStore, Stage}
-  alias Golos.{DatabaseApi, SocialNetworkApi}
+  alias Golos.{DatabaseApi, SocialNetworkApi, MarketHistoryApi}
   require Logger
 
   defdelegate get_current_median_history_price(), to: Golos.DatabaseApi
@@ -28,16 +28,16 @@ defmodule Golos do
   defdelegate get_discussions_by_author_before_date(author, start_permlink, before_date, limit), to: SocialNetworkApi
   defdelegate get_replies_by_last_update(author, start_permlink, before_date, limit), to: SocialNetworkApi
   defdelegate get_owner_history(name), to: Golos.DatabaseApi
-  defdelegate get_conversion_requests(), to: Golos.DatabaseApi
-  defdelegate get_order_book(limit), to: Golos.DatabaseApi
-  defdelegate get_open_orders(name), to: Golos.DatabaseApi
+  defdelegate get_conversion_requests(), to: DatabaseApi
+  defdelegate get_order_book(limit), to: MarketHistoryApi
+  defdelegate get_open_orders(name), to: MarketHistoryApi
   defdelegate get_witnesses(names), to: Golos.DatabaseApi
   defdelegate get_witnesses_by_vote(from, limit), to: Golos.DatabaseApi
   defdelegate lookup_witness_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
   defdelegate get_witness_count(), to: Golos.DatabaseApi
   defdelegate get_active_witnesses(), to: Golos.DatabaseApi
   defdelegate get_miner_queue(), to: Golos.DatabaseApi
-  defdelegate get_account_votes(name), to: Golos.DatabaseApi
+  defdelegate get_account_votes(name), to: SocialNetworkApi
   defdelegate get_active_votes(author, permlink), to: SocialNetworkApi
   defdelegate get_followers(account, start_follower, follow_type, limit), to: Golos.DatabaseApi
   defdelegate get_following(account, start_following, follow_type, limit), to: Golos.DatabaseApi
