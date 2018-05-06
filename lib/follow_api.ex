@@ -1,9 +1,7 @@
 defmodule Golos.FollowApi do
-
   def call(method, params) do
     Golos.call(["follow", method, params])
   end
-
 
   @doc """
   Get followers. Accepts account, starting follower, follow type (blog, ignore), limit of results.
