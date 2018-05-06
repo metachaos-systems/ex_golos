@@ -1,6 +1,7 @@
 defmodule Golos do
   use Application
   alias Golos.{IdStore, Stage}
+  alias Golos.{DatabaseApi, SocialNetworkApi}
   require Logger
 
   defdelegate get_current_median_history_price(), to: Golos.DatabaseApi
@@ -9,7 +10,7 @@ defmodule Golos do
   defdelegate get_dynamic_global_properties(), to: Golos.DatabaseApi
   defdelegate get_block_header(height), to: Golos.DatabaseApi
   defdelegate get_accounts(accounts), to: Golos.DatabaseApi
-  defdelegate get_content(author, permlink), to: Golos.DatabaseApi
+  defdelegate get_content(author, permlink), to: SocialNetworkApi
   defdelegate get_witness_schedule(), to: Golos.DatabaseApi
   defdelegate get_config(), to: Golos.DatabaseApi
   defdelegate get_next_scheduled_hardfork(), to: Golos.DatabaseApi
@@ -19,13 +20,13 @@ defmodule Golos do
   defdelegate lookup_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
   defdelegate lookup_account_names(account_names), to: Golos.DatabaseApi
   defdelegate get_account_history(name, from, limit), to: Golos.DatabaseApi
-  defdelegate get_trending_tags(after_tag, limit), to: Golos.DatabaseApi
-  defdelegate get_discussions_by(metric, query), to: Golos.DatabaseApi
-  defdelegate get_categories(metric, after_category, query), to: Golos.DatabaseApi
-  defdelegate get_state(path), to: Golos.DatabaseApi
-  defdelegate get_content_replies(author,permlink), to: Golos.DatabaseApi
-  defdelegate get_discussions_by_author_before_date(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
-  defdelegate get_replies_by_last_update(author, start_permlink, before_date, limit), to: Golos.DatabaseApi
+  defdelegate get_trending_tags(after_tag, limit), to: SocialNetworkApi
+  defdelegate get_discussions_by(metric, query), to: SocialNetworkApi
+  defdelegate get_categories(metric, after_category, query), to: SocialNetworkApi
+  defdelegate get_state(path), to: SocialNetworkApi
+  defdelegate get_content_replies(author, permlink), to: SocialNetworkApi
+  defdelegate get_discussions_by_author_before_date(author, start_permlink, before_date, limit), to: SocialNetworkApi
+  defdelegate get_replies_by_last_update(author, start_permlink, before_date, limit), to: SocialNetworkApi
   defdelegate get_owner_history(name), to: Golos.DatabaseApi
   defdelegate get_conversion_requests(), to: Golos.DatabaseApi
   defdelegate get_order_book(limit), to: Golos.DatabaseApi
@@ -37,11 +38,10 @@ defmodule Golos do
   defdelegate get_active_witnesses(), to: Golos.DatabaseApi
   defdelegate get_miner_queue(), to: Golos.DatabaseApi
   defdelegate get_account_votes(name), to: Golos.DatabaseApi
-  defdelegate get_active_votes(author, permlink), to: Golos.DatabaseApi
+  defdelegate get_active_votes(author, permlink), to: SocialNetworkApi
   defdelegate get_followers(account, start_follower, follow_type, limit), to: Golos.DatabaseApi
   defdelegate get_following(account, start_following, follow_type, limit), to: Golos.DatabaseApi
 
-  @db_api "database_api"
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
@@ -89,6 +89,7 @@ defmodule Golos do
     response = receive do
       {:ws_response, {_, _, response}} -> response
     end
+    IO.inspect response
 
     err = response["err"]
     result = response["result"]
