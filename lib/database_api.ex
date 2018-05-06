@@ -531,30 +531,6 @@ defmodule Golos.DatabaseApi do
    call(method, [query])
   end
 
-  @doc"""
-  Get state for the provided path.
-  Example result:
-  ```
-  %{
-    "accounts" => ...,
-    "categories" => ...,
-    "category_idx" => ...,
-    "content" => ...,
-    "current_route" => ...,
-    "discussion_idx" => ...,
-    "error" => ...,
-    "feed_price" => ...,
-    "pow_queue" => ...,
-    "props" => ...,
-    "witness_schedule" => ...,
-    "witnesses" => ... }
-  ```
-  """
-  @spec get_state(String.t) :: map
-  def get_state(path) do
-   call("get_state", [path])
-  end
-
 
   @doc"""
   Get categories. Accepts wanted metric, after_category, limit.
@@ -746,32 +722,4 @@ defmodule Golos.DatabaseApi do
   end
 
 
-  # @doc"""
-  # Get *all* account votes
-
-  # Example response:
-  # ```
-  # [%{"authorperm" => "rusldv/programmiruem-na-php-vvedenie", "percent" => 10000,
-  #    "rshares" => 130036223, "time" => "2017-01-26T20:06:03", "weight" => 0},
-  #    %{...}, ...] ```
-  # """
-  # @spec get_account_votes(String.t) :: [map]
-  # def get_account_votes(name) do
-  #  call("get_account_votes", [name])
-  # end
-
-  # @doc"""
-  # Get active votes on the given content. Accepts author and permlink.
-
-  # Example response:
-  # ```
-  # [%{"percent" => 6900, "reputation" => "28759071217014",
-  #              "rshares" => "18897453242648", "time" => "2017-01-27T09:20:21",
-  #              "voter" => "hipster", "weight" => "51460692508758354"},
-  #    %{...}, ...] ```
-  # """
-  # @spec get_active_votes(String.t, String.t) :: [map]
-  # def get_active_votes(account, permlink) do
-  #  call("get_active_votes", [account, permlink])
-  # end
 end
