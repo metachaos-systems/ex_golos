@@ -3,6 +3,7 @@ defmodule Golos do
   alias Golos.{IdStore, Stage}
   alias Golos.{DatabaseApi, SocialNetworkApi, MarketHistoryApi, FollowApi}
   require Logger
+  @default_api :jsonrpc_ws_api
   @app :ex_golos
 
   defdelegate get_current_median_history_price(), to: Golos.DatabaseApi
@@ -72,7 +73,9 @@ defmodule Golos do
     end
   end
 
-  def call_http(params, []) do
+  def call_http(params, opts \\ []) do
+    {:ok, result} = Golos.HttpClient.call(params)
+    AtomicMap.convert(result, safe: false, underscore: false)
   end
 
   def call_ws(params, []) do

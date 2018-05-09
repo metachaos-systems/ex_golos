@@ -1,6 +1,6 @@
 use Mix.Config
 
 config :ex_golos,
-  api_url: "http://17.golos.cf",
-  api: :jsonrpc_http_api,
+  api: :jsonrpc_ws_api,
+  api_url: "http://ws.golos.io",
   activate_stage_sup: true
