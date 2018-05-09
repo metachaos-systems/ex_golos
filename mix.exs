@@ -38,7 +38,9 @@
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:exconstructor, "~> 1.1.0"},
       {:websockex, "~> 0.4.0"},
-      {:websocket_client, "~> 1.3.0"}
+      {:websocket_client, "~> 1.3.0"},
+      {:jsonrpc2, "~> 1.0"},
+      {:hackney, ">= 0.0.0"}
     ]
   end
 

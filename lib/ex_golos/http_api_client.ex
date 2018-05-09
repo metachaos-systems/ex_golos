@@ -1,4 +1,4 @@
-defmodule Steemex.HttpClient do
+defmodule Golos.HttpClient do
   alias JSONRPC2.Clients.HTTP
 
   @url Application.get_env(:ex_golos, :api_url)
