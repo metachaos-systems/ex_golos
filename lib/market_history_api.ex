@@ -40,5 +40,4 @@ defmodule Golos.MarketHistoryApi do
   def get_open_orders(name) do
     call("get_open_orders", [name])
   end
-
 end

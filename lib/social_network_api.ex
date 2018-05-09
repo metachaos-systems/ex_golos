@@ -139,9 +139,6 @@ defmodule Golos.SocialNetworkApi do
   #   call("get_replies_by_last_update", [author, start_permlink, before_date, limit])
   # end
 
-
-
-
   @doc """
   Get trending tags
 
@@ -381,5 +378,4 @@ defmodule Golos.SocialNetworkApi do
   def get_active_votes(account, permlink) do
     call("get_active_votes", [account, permlink])
   end
-
 end

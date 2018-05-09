@@ -1,23 +1,24 @@
-  defmodule Golos.Mixfile do
+defmodule Golos.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :ex_golos,
-     version: "0.10.0",
-     elixir: "~> 1.6",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps(),
-     description: description(),
-     package: package()]
+    [
+      app: :ex_golos,
+      version: "0.10.0",
+      elixir: "~> 1.6",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      description: description(),
+      package: package()
+    ]
   end
 
   # Configuration for the OTP application
   #
   # Type "mix help compile.app" for more information
   def application do
-    [extra_applications: [:websockex],
-    mod: {Golos, []}]
+    [extra_applications: [:websockex], mod: {Golos, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -52,11 +53,11 @@
 
   defp package do
     [
-     name: :ex_golos,
-     files: ["lib", "mix.exs", "README*", "LICENSE*"],
-     maintainers: ["ontofractal"],
-     licenses: ["MIT"],
-     links: %{"GitHub" => "https://github.com/cyberpunk-ventures/ex_golos"}
-   ]
+      name: :ex_golos,
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      maintainers: ["ontofractal"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/cyberpunk-ventures/ex_golos"}
+    ]
   end
 end
