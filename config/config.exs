@@ -29,13 +29,11 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :ex_golos,
-  url: System.get_env("GOLOS_URL"),
-  activate_stage_sup: true,
-  activate_ws_processes: true
 
 # Example config
 
 # config :ex_golos,
 #   url: System.get_env("GOLOS_URL")
 #   stream_to: Golos.OpsHandlerExample
+
+import_config "#{Mix.env}.exs"
