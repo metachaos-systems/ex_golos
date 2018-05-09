@@ -2,7 +2,7 @@
 
 Scroll down for English version of this readme.
 
-ExGolos -- это Elixir библиотека для взаимодействия с нодами GOLOS с использованием JSONRPC протокола по вебсокетам.
+ExGolos -- это Elixir библиотека для взаимодействия с нодами GOLOS с использованием JSONRPC протокола через HTTP/Websockets и Appbase API Steemit.
 
 ## Установка :ex_golos
 
@@ -10,30 +10,36 @@ ExGolos -- это Elixir библиотека для взаимодействи�
 
     ```elixir
     def deps do
-      [{:ex_golos, "~> 0.5.0"}]
-    end
-    ```
-
-  2. Добавьте ':golos' в список applications в `mix.exs`:
-    ```elixir
-    def application do
-      [applications: [:logger, :golos]]
+      [{:ex_golos, "~> 0.10.0"}]
     end
     ```
 
 ## Конфигурация
 
-Сначала пропишите вебсокет урл для ноды Голоса в конфиг. Если ожидаете высокие нагрузки используйте собственную ноду, в ином случае подойдет публичная нода Голоса `wss://ws.golos.io`. Для удобства можно использовать ENV переменные, например, GOLOS_URL.
+ExGolos не требует конфигурации по умолчанию. Если конфигурация не заданы, Steemex будет использовать конечную точку Steemit API (также известного как condenser или AppBase) http://api.steemit.com для всех  JSONRPC вызовов.
+
+Если вы хотите использовать другой транспорт, общедоступную или приватную ноду, установите соответствующие значения для api и api_url. Возможные значения api: steemit_api,: jsonrpc_ws_api,: jsonrpc_http_api.
+
+Если вы используете http или ws api, вам нужно задать url публичной ноды.
 
 Для того, чтобы запустить стриминг ивентов используйте опцию конфинга `activate_stage_sup: true`.
 
 ```elixir
-config :golos,
-  url: System.get_env("GOLOS_URL"),
-  activate_stage_sup: true
+config :steemex,
+  api: :jsonrpc_http_api,
+  api_url: System.get_env("GOLOS_API_URL"),
+  activate_stage_sup: false
 ```
 
 В модуле присутствует стракты для каждого типа операции. Операции записанные в блоке обрабатываются и превращаются в соостветсвующий struct с известными ключами (которые можно посмотреть в документации).
+
+## Пример использования
+
+Главная функция в модуле: `Golos.call`. Вызов функции блокирует процесс до возврата success tuple с результатом или ошибкой, полученными в результате обработки JSONRPC вызов нодой. Id для JSONRPC вызовов задавать не надо, модуль их назначает и обрабатывает автоматически.
+
+`Golos.call("database_api", "get_dynamic_global_properties", [])`
+
+Такие функции API как `get_dynamic_global_properties` также блокируют процесс и возвращают success tuple. Информация о поддерживаемых функциях API находится в документации.
 
 ## GenStage
 
@@ -49,19 +55,13 @@ config :golos,
 * Golos.Stage.RawOps получающий блоки и производящий необработанные операции
 * Golos.Stage.MungedOps подписанный на RawOps и производящий обработанные и очищенные операции
 
-## Пример использования
-
-Главная функция в модуле: `Golos.call`. Вызов функции блокирует процесс до возврата success tuple с результатом или ошибкой, полученными в результате обработки JSONRPC вызов нодой. Id для JSONRPC вызовов задавать не надо, модуль их назначает и обрабатывает автоматически.
-
-`Golos.call("database_api", "get_dynamic_global_properties", [])`
-
-Такие функции API как `get_dynamic_global_properties` также блокируют процесс и возвращают success tuple. Информация о поддерживаемых функциях API находится в документации.
 
 ## Пример GenStage consumer для обработки стрима операций
 
 ```
-defmodule Golos.Stage.Ops.ExampleConsumer do
+defmodule Golos.Stage.ExampleConsumer do
   use GenStage
+  alias Steemex.MungedOps
   require Logger
 
   def start_link(args, options \\ []) do
@@ -69,17 +69,33 @@ defmodule Golos.Stage.Ops.ExampleConsumer do
   end
 
   def init(state) do
-    {:consumer, state, subscribe_to: state.subscribe_to}
+    Logger.info("Example consumer is initializing...")
+    {:consumer, state, subscribe_to: state[:subscribe_to]}
   end
 
   def handle_events(events, _from, state) do
-    for %{data: data, metadata: meta} <- events do
+    for op <- events do
+      process_event(op)
+    end
+    {:noreply, [], state}
+  end
+
+  def process_event(%{data: %MungedOps.Reblog{} = data, metadata: %{height: h, timestamp: t} = metadata}) do
+      Logger.info """
+      New reblog:
+      #{inspect data}
+      with metadata
+      #{inspect metadata}
+      """
+  end
+
+  def process_event(%{data: data, metadata: %{block_height: h, timestamp: t} = metadata}) do
       Logger.info """
       New operation:
       #{inspect data}
+      with metadata
+      #{inspect metadata}
       """
-    end
-    {:noreply, [], state}
   end
 
 end
@@ -87,50 +103,7 @@ end
 
 ## Дорожная карта
 
-ExGolos находится в активной разработке.
 
-* ~~Исследовать использование GenStage~~
 * Улучшить документацию
 * Добавить оставшиеся стракты
 * Добавить возможность броадкаста транзакций
-
-# Golos
-
-Elixir websockets client for interaction with GOLOS nodes. Provides an interface to Golos JSONRPC protocol. Golos is a supervised application, so don't forget to add it to applications in mix.exs.
-
-## Installation
-
-  1. Add `golos` to your list of dependencies in `mix.exs`:
-
-    ```elixir
-    def deps do
-      [{:ex_golos, "~> 0.1.0"}]
-    end
-    ```
-
-  2. Add 'golos' to applications in `mix.exs`:
-    ```elixir
-    def application do
-      [applications: [:logger, :golos]]
-    end
-    ```
-
-## Example
-
-First, configure a websockets url for the golosd instance, for example, `http://127.0.0.1:8090` to the config.
-
-```elixir
-config :golos,
-  url: "GOLOS_URL"
-```
-
-The most imporant module function is `Golos.call`. It will block the calling process and return a success tuple with a "result" data from the JSONRPC call response. JSONRPC call ids are handled automatically.
-
-
-## Roadmap
-
-Golos is under active development.
-
-* Add more types and structs
-* Add more tests and docs
-* Add transaction broadcast
