@@ -18,8 +18,6 @@ defmodule Golos.Supervisor do
 
     processes =
       case api do
-        :jsonrpc_http_api ->
-          []
 
         :jsonrpc_ws_api ->
           if is_nil(url), do: throw("ExGolos: websockets JSONRPC api URL is NOT configured!")
@@ -29,7 +27,11 @@ defmodule Golos.Supervisor do
             worker(Golos.IdStore, []),
             worker(Golos.WS, [url])
           ]
-      end
+       
+       _ ->
+          []
+
+    end
 
     children = processes ++ stages
 
