@@ -57,7 +57,10 @@ defmodule Golos.Mixfile do
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["ontofractal"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/cyberpunk-ventures/ex_golos"}
+      links: %{
+        "GitHub" => "https://github.com/cyberpunk-ventures/ex_golos",
+        "Cyberpunk Ventures" => "http://cyberpunk.ventures"
+      }
     ]
   end
 end
