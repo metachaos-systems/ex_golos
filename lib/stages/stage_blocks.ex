@@ -10,7 +10,7 @@ defmodule Golos.Stage.Blocks do
     GenStage.start_link(__MODULE__, args, options)
   end
 
-  def init(state)  do
+  def init(state) do
     Logger.info("Golos blocks producer initializing...")
     :timer.send_interval(@tick_interval, :tick)
     state = if state === [], do: %{}
@@ -22,24 +22,33 @@ defmodule Golos.Stage.Blocks do
   end
 
   def handle_info(:tick, state) do
-    {:ok, %{head_block_number: height}} = Golos.get_dynamic_global_properties()
     previous_height = Map.get(state, :previous_height, nil)
+
+    height =
+      with {:ok, glob_props} <- Golos.get_dynamic_global_properties() do
+        glob_props.head_block_number
+      else
+        _ -> previous_height
+      end
+
     if height === previous_height do
       {:noreply, [], state}
     else
       with {:ok, block} <- Golos.get_block(height) do
-        if block do
-          block = Map.put(block, :height, height)
-          new_state = Map.put(state, :previous_height, height)
-          meta = %{source: :naive_realtime, type: :block}
-          events = [%Golos.Event{data: block, metadata: meta}]
-          {:noreply, events, new_state}
-        else
-          {:noreply, [], state}
+        case block do
+          %Golos.Block{} ->
+            block = Map.put(block, :height, height)
+            new_state = Map.put(state, :previous_height, height)
+            meta = %{source: :naive_realtime, type: :block}
+            events = [%Golos.Event{data: block, metadata: meta}]
+            {:noreply, events, new_state}
+
+          nil ->
+            {:noreply, [], state}
         end
       else
-        err -> 
-          Logger.error("ExGolos error: #{inspect err}")
+        err ->
+          Logger.error("ExGolos error: #{inspect(err)}")
           {:noreply, [], state}
       end
     end
