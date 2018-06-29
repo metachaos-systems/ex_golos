@@ -261,4 +261,5 @@ defmodule GolosTest do
     {:ok, data} = Golos.get_transaction(tx_id)
     assert %{:block_num => _, :operations => _} = data
   end
+
 end

@@ -27,6 +27,8 @@ defmodule Golos do
   defdelegate get_hardfork_version(), to: Golos.DatabaseApi
   defdelegate get_account_count(), to: Golos.DatabaseApi
   defdelegate get_block(height), to: Golos.DatabaseApi
+  defdelegate get_vesting_delegations(account, from, limit, type), to: Golos.DatabaseApi
+
   defdelegate lookup_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
   defdelegate lookup_account_names(account_names), to: Golos.DatabaseApi
   defdelegate get_account_history(name, from, limit), to: AccountHistoryApi

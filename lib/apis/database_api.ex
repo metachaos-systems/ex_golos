@@ -532,4 +532,17 @@ defmodule Golos.DatabaseApi do
   def get_open_orders(name) do
     call("get_open_orders", [name])
   end
+
+  @doc """
+  Returns the vesting delegations by an account. Parameters: delegator_account:string; start_account:string; limit:int up to 1000
+
+  ## Example response
+  [{id: 0, delegator: "zzz", delegatee: "zxcat", vesting_shares: "90.000000 GESTS", min_delegation_time: "2018-04-25T21:48:15"}].
+
+  """
+  @spec get_vesting_delegations(String.t(), String.t(), integer, String.t()) ::
+          {:ok, [map]} | {:error, any}
+  def get_vesting_delegations(account, from, limit, type) do
+    call("get_vesting_delegations", [account, from, limit, type])
+  end
 end

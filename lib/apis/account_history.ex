@@ -1,5 +1,4 @@
 defmodule Golos.AccountHistoryApi do
-  
   def call(method, params) do
     Golos.call(["account_history", method, params])
   end
