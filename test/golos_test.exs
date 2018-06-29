@@ -219,4 +219,10 @@ defmodule GolosTest do
     {:ok, data} =  Golos.get_following("ontofractal", "", "blog", 10)
     assert [%{:"follower" => _, :"following" => _}| _ ] = data
   end
+
+  test "get_transaction" do
+    tx_id = "d7abbd65b2c5b688e775bd90e784fa394c435fee"
+    {:ok, data} =  Golos.get_transaction(tx_id)
+    assert %{:block_num => _, :operations => _}  = data
+  end
 end

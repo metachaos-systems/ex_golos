@@ -9,7 +9,8 @@ defmodule Golos do
     SocialNetworkApi,
     AccountHistoryApi,
     MarketHistoryApi,
-    FollowApi
+    FollowApi,
+    OperationHistoryApi
   }
 
   require Logger
@@ -59,6 +60,8 @@ defmodule Golos do
   defdelegate get_active_votes(author, permlink), to: SocialNetworkApi
   defdelegate get_followers(account, start_follower, follow_type, limit), to: FollowApi
   defdelegate get_following(account, start_following, follow_type, limit), to: FollowApi
+
+  defdelegate get_transaction(tx_id), to: OperationHistoryApi
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
