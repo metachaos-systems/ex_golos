@@ -1,7 +1,7 @@
 defmodule Golos do
   use Application
   alias Golos.{IdStore, Stage}
-  alias Golos.{DatabaseApi, SocialNetworkApi, MarketHistoryApi, FollowApi}
+  alias Golos.{DatabaseApi, TagApi, SocialNetworkApi, MarketHistoryApi, FollowApi}
   require Logger
   @default_api :jsonrpc_ws_api
   @app :ex_golos
@@ -22,13 +22,13 @@ defmodule Golos do
   defdelegate lookup_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
   defdelegate lookup_account_names(account_names), to: Golos.DatabaseApi
   defdelegate get_account_history(name, from, limit), to: Golos.DatabaseApi
-  defdelegate get_trending_tags(after_tag, limit), to: SocialNetworkApi
-  defdelegate get_discussions_by(metric, query), to: SocialNetworkApi
+  defdelegate get_trending_tags(after_tag, limit), to: TagApi
+  defdelegate get_discussions_by(metric, query), to: TagApi
   defdelegate get_categories(metric, after_category, query), to: SocialNetworkApi
   defdelegate get_content_replies(author, permlink), to: SocialNetworkApi
 
   defdelegate get_discussions_by_author_before_date(author, start_permlink, before_date, limit),
-    to: SocialNetworkApi
+    to: TagApi
 
   defdelegate get_replies_by_last_update(author, start_permlink, before_date, limit),
     to: SocialNetworkApi
