@@ -1,7 +1,7 @@
 defmodule Golos do
   use Application
   alias Golos.{IdStore, Stage}
-  alias Golos.{DatabaseApi, TagApi, SocialNetworkApi, MarketHistoryApi, FollowApi}
+  alias Golos.{DatabaseApi, TagApi, WitnessApi, SocialNetworkApi, MarketHistoryApi, FollowApi}
   require Logger
   @default_api :jsonrpc_ws_api
   @app :ex_golos
@@ -13,7 +13,6 @@ defmodule Golos do
   defdelegate get_block_header(height), to: Golos.DatabaseApi
   defdelegate get_accounts(accounts), to: Golos.DatabaseApi
   defdelegate get_content(author, permlink), to: SocialNetworkApi
-  defdelegate get_witness_schedule(), to: Golos.DatabaseApi
   defdelegate get_config(), to: Golos.DatabaseApi
   defdelegate get_next_scheduled_hardfork(), to: Golos.DatabaseApi
   defdelegate get_hardfork_version(), to: Golos.DatabaseApi
@@ -37,11 +36,14 @@ defmodule Golos do
   defdelegate get_conversion_requests(), to: DatabaseApi
   defdelegate get_order_book(limit), to: MarketHistoryApi
   defdelegate get_open_orders(name), to: MarketHistoryApi
-  defdelegate get_witnesses(names), to: Golos.DatabaseApi
-  defdelegate get_witnesses_by_vote(from, limit), to: Golos.DatabaseApi
-  defdelegate lookup_witness_accounts(lower_bound_name, limit), to: Golos.DatabaseApi
-  defdelegate get_witness_count(), to: Golos.DatabaseApi
-  defdelegate get_active_witnesses(), to: Golos.DatabaseApi
+
+  defdelegate get_witness_schedule(), to: WitnessApi
+  defdelegate get_witnesses(names), to: WitnessApi
+  defdelegate get_witnesses_by_vote(from, limit), to: WitnessApi
+  defdelegate lookup_witness_accounts(lower_bound_name, limit), to: WitnessApi
+  defdelegate get_witness_count(), to: WitnessApi
+  defdelegate get_active_witnesses(), to: WitnessApi
+
   defdelegate get_miner_queue(), to: Golos.DatabaseApi
   defdelegate get_account_votes(name), to: SocialNetworkApi
   defdelegate get_active_votes(author, permlink), to: SocialNetworkApi
