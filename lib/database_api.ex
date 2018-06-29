@@ -475,34 +475,6 @@ defmodule Golos.DatabaseApi do
 
 
   @doc"""
-  Get categories. Accepts wanted metric, after_category, limit.
-  Example result:
-  ```
-  %{
-    "accounts" => ...,
-    "categories" => ...,
-    "category_idx" => ...,
-    "discussion_idx" => ...,
-    "error" => ...,
-    "feed_price" => ...,
-    "pow_queue" => ...,
-    "props" => ...,
-    "witness_schedule" => ...,
-    "current_virtual_time" => ...,
-    "id" => ...,
-    "majority_version" => ...,
-    "median_props" => ...,
-    "next_shuffle_block_num" => ...,
-    "witnesses" => ... }
-  ```
-  """
-  @spec get_categories(atom, String.t, integer) :: [map]
-  def get_categories(metric, after_category, limit) do
-   method = "get_" <> Atom.to_string(metric)  <> "_categories"
-   call(method, [after_category, limit])
-  end
-
-  @doc"""
   Gets current GBG to GOLOS conversion requests for given account.
   Example result:
   ```

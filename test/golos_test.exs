@@ -135,11 +135,6 @@ defmodule GolosTest do
     assert [%{:"title" => _, :"id" => _, :"created" => _} | _]  = data
   end
 
-  test "get_trending_categories" do
-    {:ok, data} = Golos.get_categories(:trending, "golos", 10)
-    assert [%{:"abs_rshares" => _, :"discussions" => _, :"id" => _, :"last_update" => _, :"name" => _, :"total_payouts" => _} | _ ]  = data
-  end
-
   test "get_conversion_requests" do
     {:ok, data} = Golos.get_conversion_requests()
     passes = case data do
