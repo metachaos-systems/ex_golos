@@ -1,10 +1,9 @@
 defmodule Golos.WitnessApi do
-
   def call(method, params) do
     Golos.call(["witness_api", method, params])
   end
 
-  @doc"""
+  @doc """
   Get witnesses by ids
 
   ## Example response
@@ -31,21 +30,20 @@ defmodule Golos.WitnessApi do
   %{...} ]
   ```
   """
-  @spec get_witnesses([String.t]) :: {:ok, [map]} | {:error, any}
+  @spec get_witnesses([String.t()]) :: {:ok, [map]} | {:error, any}
   def get_witnesses(ids) do
-   call("get_witnesses", [ids])
+    call("get_witnesses", [ids])
   end
 
-  @doc"""
+  @doc """
   Get witnesses by votes. Example response is the same as get_witnesses.
   """
   @spec get_witnesses_by_vote(integer, integer) :: {:ok, [map]} | {:error, any}
   def get_witnesses_by_vote(from, limit) do
-   call("get_witnesses_by_vote", [from, limit])
+    call("get_witnesses_by_vote", [from, limit])
   end
 
-
-  @doc"""
+  @doc """
   Lookup witness accounts
 
   Example response:
@@ -53,23 +51,22 @@ defmodule Golos.WitnessApi do
   ["creator", "creatorgalaxy", "crypto", "cryptocat", "cyberfounder", "cybertech-01", "d00m", "dacom", "dance", "danet"]
   ```
   """
-  @spec lookup_witness_accounts(String.t, integer) :: {:ok, [String.t]} | {:error, any}
+  @spec lookup_witness_accounts(String.t(), integer) :: {:ok, [String.t()]} | {:error, any}
   def lookup_witness_accounts(lower_bound_name, limit) do
-   call("lookup_witness_accounts", [lower_bound_name,  limit])
+    call("lookup_witness_accounts", [lower_bound_name, limit])
   end
 
-  @doc"""
+  @doc """
   Get witness count
 
   Example response: `997`
   """
-  @spec get_witness_count() :: {:ok, [String.t]} | {:error, any}
+  @spec get_witness_count() :: {:ok, [String.t()]} | {:error, any}
   def get_witness_count() do
-   call("get_witness_count", [])
+    call("get_witness_count", [])
   end
 
-
-  @doc"""
+  @doc """
   Get active witnesses
 
   Example response:
@@ -80,13 +77,12 @@ defmodule Golos.WitnessApi do
    "kuna", "creator"]
   ```
   """
-  @spec get_active_witnesses() :: {:ok, [String.t]} | {:error, any}
+  @spec get_active_witnesses() :: {:ok, [String.t()]} | {:error, any}
   def get_active_witnesses() do
-   call("get_active_witnesses", [])
+    call("get_active_witnesses", [])
   end
 
-
-  @doc"""
+  @doc """
   Returns witness schedule
 
   Example response:
@@ -104,11 +100,10 @@ defmodule Golos.WitnessApi do
   """
   @spec get_witness_schedule() :: {:ok, map} | {:error, any}
   def get_witness_schedule() do
-   call("get_witness_schedule", [])
+    call("get_witness_schedule", [])
   end
 
-
-  @doc"""
+  @doc """
   Returns feed history
   Example response:
   ```
@@ -125,8 +120,7 @@ defmodule Golos.WitnessApi do
     call("get_feed_history", [])
   end
 
-
-  @doc"""
+  @doc """
   Returns current median history price.
   Example response:
   ```
@@ -138,7 +132,7 @@ defmodule Golos.WitnessApi do
     call("get_current_median_history_price", [])
   end
 
-  @doc"""
+  @doc """
   Get miner queue
 
   Example response:
@@ -148,9 +142,8 @@ defmodule Golos.WitnessApi do
    "gtx-1080-sc-0023", "gtx-1080-sc-0080", ...]
   ```
   """
-  @spec get_miner_queue() :: {:ok, [String.t]} | {:error, any}
+  @spec get_miner_queue() :: {:ok, [String.t()]} | {:error, any}
   def get_miner_queue() do
-   call("get_miner_queue", [])
+    call("get_miner_queue", [])
   end
-
 end

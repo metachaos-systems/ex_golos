@@ -1,7 +1,17 @@
 defmodule Golos do
   use Application
   alias Golos.{IdStore, Stage}
-  alias Golos.{DatabaseApi, TagApi, WitnessApi, SocialNetworkApi, AccountHistoryApi, MarketHistoryApi, FollowApi}
+
+  alias Golos.{
+    DatabaseApi,
+    TagApi,
+    WitnessApi,
+    SocialNetworkApi,
+    AccountHistoryApi,
+    MarketHistoryApi,
+    FollowApi
+  }
+
   require Logger
   @default_api :jsonrpc_ws_api
   @app :ex_golos
@@ -44,7 +54,7 @@ defmodule Golos do
   defdelegate get_current_median_history_price(), to: WitnessApi
   defdelegate get_feed_history(), to: WitnessApi
   defdelegate get_miner_queue(), to: WitnessApi
-  
+
   defdelegate get_account_votes(name), to: SocialNetworkApi
   defdelegate get_active_votes(author, permlink), to: SocialNetworkApi
   defdelegate get_followers(account, start_follower, follow_type, limit), to: FollowApi
@@ -60,6 +70,7 @@ defmodule Golos do
     Supervisor.start_link(children, strategy: :one_for_one, max_restarts: 10, max_seconds: 5)
   end
 
+  @spec call(map, KeyWord.t()) :: {:ok, any} | {:error, any}
   def call(params, opts \\ [])
 
   def call(params, opts) do
@@ -75,12 +86,12 @@ defmodule Golos do
     end
   end
 
-  def call_http(params, opts \\ []) do
+  def call_http(params, _opts \\ []) do
     {:ok, result} = Golos.HttpClient.call(params)
     AtomicMap.convert(result, safe: false, underscore: false)
   end
 
-  def call_ws(params, []) do
+  def call_ws(params, _opts \\ []) do
     id = gen_id()
     IdStore.put(id, {self(), params})
 
@@ -106,9 +117,6 @@ defmodule Golos do
     end
   end
 
-  @doc """
-  Sends an event to the WebSocket server
-  """
   defp send_jsonrpc_call(id, params) do
     send(Golos.WS.Alt, {:send, %{jsonrpc: "2.0", id: id, params: params, method: "call"}})
   end

@@ -7,7 +7,7 @@ defmodule Golos.DatabaseApi do
     Golos.call(["database_api", method, params])
   end
 
-  @doc"""
+  @doc """
   Returns block data, accepts block height.
 
   Example response:
@@ -34,9 +34,11 @@ defmodule Golos.DatabaseApi do
   @spec get_block(integer) :: {:ok, map} | {:error, any}
   def get_block(height) do
     with {:ok, block} <- call("get_block", [height]) do
-      block = Map.put(block, :height, height)
+      block =
+        Map.put(block, :height, height)
         |> Golos.Block.parse_raw_data()
         |> Golos.Block.new()
+
       {:ok, block}
     else
       err -> err
@@ -45,7 +47,7 @@ defmodule Golos.DatabaseApi do
 
   # CONTENT
 
-  @doc"""
+  @doc """
   Returns content data, accepts author and permlink.
 
   Example response:
@@ -80,24 +82,25 @@ defmodule Golos.DatabaseApi do
     "author_reputation" => "22784203010137"}
   ```
   """
-  @spec get_content(String.t, String.t) :: {:ok, map} | {:error, any}
+  @spec get_content(String.t(), String.t()) :: {:ok, map} | {:error, any}
   def get_content(author, permlink) do
     with {:ok, comment} <- call("get_content", [author, permlink]) do
-      cleaned =  comment
+      cleaned =
+        comment
         |> Golos.Cleaner.strip_token_names_and_convert_to_number()
         |> Golos.Cleaner.parse_json_strings(:json_metadata)
         |> Golos.Cleaner.extract_fields()
         |> Golos.Cleaner.prepare_tags()
         |> Golos.Cleaner.parse_timedate_strings()
         |> Golos.Cleaner.parse_empty_strings()
+
       {:ok, cleaned}
     else
       err -> err
     end
   end
 
-
-  @doc"""
+  @doc """
   Returns a list of replies to the given content, accepts author and permlink.
 
   Example response:
@@ -136,13 +139,12 @@ defmodule Golos.DatabaseApi do
   ...]
   ```
   """
-  @spec get_content_replies(String.t, String.t) :: {:ok, map} | {:error, any}
+  @spec get_content_replies(String.t(), String.t()) :: {:ok, map} | {:error, any}
   def get_content_replies(author, permlink) do
     call("get_content_replies", [author, permlink])
   end
 
-
-  @doc"""
+  @doc """
   If start_permlink is empty then only before_date will be considered. If both are specified the earlier of the two metrics will be used.
   before_date format is: `2017-02-07T14:34:11`
   Example response:
@@ -153,7 +155,8 @@ defmodule Golos.DatabaseApi do
   [ContentResult, ContentResult, ...]
   ```
   """
-  @spec get_discussions_by_author_before_date(String.t, String.t, String.t, integer) :: {:ok, map} | {:error, any}
+  @spec get_discussions_by_author_before_date(String.t(), String.t(), String.t(), integer) ::
+          {:ok, map} | {:error, any}
   def get_discussions_by_author_before_date(author, start_permlink, before_date, limit) do
     call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit])
   end
@@ -177,7 +180,7 @@ defmodule Golos.DatabaseApi do
 
   # ACCOUNTS
 
-  @doc"""
+  @doc """
   Returns account data. Accepts a list of up to 1000 account names
 
   Example response:
@@ -224,12 +227,12 @@ defmodule Golos.DatabaseApi do
   %{...}]
   ```
   """
-  @spec get_accounts([String.t]) :: {:ok, [map]} | {:error, any}
+  @spec get_accounts([String.t()]) :: {:ok, [map]} | {:error, any}
   def get_accounts(accounts) when is_list(accounts) do
     call("get_accounts", [accounts])
   end
 
-  @doc"""
+  @doc """
   Returns block header data. Accepts block height.
 
   Example response:
@@ -245,7 +248,7 @@ defmodule Golos.DatabaseApi do
     call("get_block_header", [height])
   end
 
-  @doc"""
+  @doc """
   Unsurprisingly returns a map with dynamic global propeties.
   Example response:
 
@@ -275,7 +278,7 @@ defmodule Golos.DatabaseApi do
     call("get_dynamic_global_properties", [])
   end
 
-  @doc"""
+  @doc """
   Unsurprisingly returns a map with chain propeties.
   Example result:
   ```
@@ -287,8 +290,7 @@ defmodule Golos.DatabaseApi do
     call("get_chain_properties", [])
   end
 
-
-  @doc"""
+  @doc """
   Returns node client config
 
   Example response:
@@ -339,18 +341,17 @@ defmodule Golos.DatabaseApi do
     call("get_config", [])
   end
 
-
   # ACCOUNTS
-  @doc"""
+  @doc """
   Get account count
   Example response: 25290
   """
   @spec get_account_count() :: {:ok, integer} | {:error, any}
   def get_account_count() do
-   call("get_account_count", [])
+    call("get_account_count", [])
   end
 
-  @doc"""
+  @doc """
   Lookup accounts
   Example response:
   ```
@@ -358,10 +359,10 @@ defmodule Golos.DatabaseApi do
   ```
   """
   def lookup_accounts(lower_bound_name, limit) do
-   call("lookup_accounts", [lower_bound_name,  limit])
+    call("lookup_accounts", [lower_bound_name, limit])
   end
 
-  @doc"""
+  @doc """
   Returns list of maps of account data.
 
   Example response:
@@ -405,35 +406,32 @@ defmodule Golos.DatabaseApi do
        ...}, "witnesses_voted_for" => 10, "comment_count" => 0, ...}]
   ```
   """
-  @spec lookup_account_names([String.t]) :: {:ok, [map]} | {:error, any}
+  @spec lookup_account_names([String.t()]) :: {:ok, [map]} | {:error, any}
   def lookup_account_names(account_names) do
-   call("lookup_account_names", [account_names])
+    call("lookup_account_names", [account_names])
   end
 
-
-
-  @doc"""
+  @doc """
   Gets hardfork version
 
   Example response: `"0.14.0"`
   """
-  @spec get_hardfork_version() :: {:ok, String.t} | {:error, any}
+  @spec get_hardfork_version() :: {:ok, String.t()} | {:error, any}
   def get_hardfork_version() do
-   call("get_hardfork_version", [])
+    call("get_hardfork_version", [])
   end
 
-  @doc"""
+  @doc """
   Get next scheduled hardfork time
 
   Example result: `%{"hf_version" => "0.0.0", "live_time" => "2016-10-18T11:00:00"}`
   """
   @spec get_next_scheduled_hardfork() :: {:ok, map} | {:error, any}
   def get_next_scheduled_hardfork() do
-   call("get_next_scheduled_hardfork", [])
+    call("get_next_scheduled_hardfork", [])
   end
 
-
-  @doc"""
+  @doc """
   Get trending tags
 
   Example result:
@@ -454,12 +452,12 @@ defmodule Golos.DatabaseApi do
   ...]
   ```
   """
-  @spec get_trending_tags(String.t, integer) :: {:ok, [map]} | {:error, any}
+  @spec get_trending_tags(String.t(), integer) :: {:ok, [map]} | {:error, any}
   def get_trending_tags(after_tag, limit) do
-   call("get_trending_tags", [after_tag, limit])
+    call("get_trending_tags", [after_tag, limit])
   end
 
-  @doc"""
+  @doc """
   Get discussions by the wanted metric. Accepts a metric atom and a map with a following query params: %{tag: `String.t`, limit: `integer`}
   ContentResult has the same shape as a result returned by get_content.
   Example result:
@@ -469,12 +467,11 @@ defmodule Golos.DatabaseApi do
   """
   @spec get_discussions_by(atom, map) :: {:ok, [map]} | {:error, any}
   def get_discussions_by(metric, query) do
-   method = "get_discussions_by_" <> Atom.to_string(metric)
-   call(method, [query])
+    method = "get_discussions_by_" <> Atom.to_string(metric)
+    call(method, [query])
   end
 
-
-  @doc"""
+  @doc """
   Gets current GBG to GOLOS conversion requests for given account.
   Example result:
   ```
@@ -484,22 +481,21 @@ defmodule Golos.DatabaseApi do
   """
   @spec get_conversion_requests() :: {:ok, [map]} | {:error, any}
   def get_conversion_requests() do
-   call("get_conversion_requests", ["ontofractal"])
+    call("get_conversion_requests", ["ontofractal"])
   end
 
-
-  @doc"""
+  @doc """
   Returns past owner authorities that are valid for account recovery.
   Doesn't seem to work at this moment.
   ```
   ```
   """
-  @spec get_owner_history(String.t) :: {:ok, [map]} | {:error, any}
+  @spec get_owner_history(String.t()) :: {:ok, [map]} | {:error, any}
   def get_owner_history(name) do
-   call("get_owner_history", [name])
+    call("get_owner_history", [name])
   end
 
-  @doc"""
+  @doc """
   Returns order book.
 
   ## Example response
@@ -514,10 +510,10 @@ defmodule Golos.DatabaseApi do
   """
   @spec get_order_book(integer) :: {:ok, [map]} | {:error, any}
   def get_order_book(limit) do
-   call("get_order_book", [limit])
+    call("get_order_book", [limit])
   end
 
-  @doc"""
+  @doc """
   Returns open orders for the given account name.
 
   ## Example response
@@ -532,12 +528,8 @@ defmodule Golos.DatabaseApi do
        ...]
   ```
   """
-  @spec get_open_orders(String.t) :: {:ok, [map]} | {:error, any}
+  @spec get_open_orders(String.t()) :: {:ok, [map]} | {:error, any}
   def get_open_orders(name) do
-   call("get_open_orders", [name])
+    call("get_open_orders", [name])
   end
-
-
-
-
 end
