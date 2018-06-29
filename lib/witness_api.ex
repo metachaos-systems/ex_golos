@@ -108,4 +108,35 @@ defmodule Golos.WitnessApi do
    call("get_witness_schedule", [])
   end
 
+
+  @doc"""
+  Returns feed history
+  Example response:
+  ```
+    %{"current_median_history" => %{"base" => "1.000 GBG",
+    "quote" => "0.559 GOLOS"}, "id" => "2.14.0",
+    "price_history" => [%{"base" => "1.379 GBG", "quote" => "1.000 GOLOS"},
+     %{"base" => "1.379 GBG", "quote" => "1.000 GOLOS"},
+     %{"base" => "1.379 GBG", "quote" => "1.000 GOLOS"},
+     %{"base" => "1.000 GBG", ...}, %{...}, ...]}
+  ```
+  """
+  @spec get_feed_history() :: map
+  def get_feed_history do
+    call("get_feed_history", [])
+  end
+
+
+  @doc"""
+  Returns current median history price.
+  Example response:
+  ```
+    %{"base" => "1.000 GBG", "quote" => "0.559 GOLOS"}
+  ```
+  """
+  @spec get_current_median_history_price() :: map
+  def get_current_median_history_price() do
+    call("get_current_median_history_price", [])
+  end
+
 end

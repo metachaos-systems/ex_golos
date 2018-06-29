@@ -6,8 +6,6 @@ defmodule Golos do
   @default_api :jsonrpc_ws_api
   @app :ex_golos
 
-  defdelegate get_current_median_history_price(), to: Golos.DatabaseApi
-  defdelegate get_feed_history(), to: Golos.DatabaseApi
   defdelegate get_chain_properties(), to: Golos.DatabaseApi
   defdelegate get_dynamic_global_properties(), to: Golos.DatabaseApi
   defdelegate get_block_header(height), to: Golos.DatabaseApi
@@ -43,6 +41,8 @@ defmodule Golos do
   defdelegate lookup_witness_accounts(lower_bound_name, limit), to: WitnessApi
   defdelegate get_witness_count(), to: WitnessApi
   defdelegate get_active_witnesses(), to: WitnessApi
+  defdelegate get_current_median_history_price(), to: WitnessApi
+  defdelegate get_feed_history(), to: WitnessApi
 
   defdelegate get_miner_queue(), to: Golos.DatabaseApi
   defdelegate get_account_votes(name), to: SocialNetworkApi
