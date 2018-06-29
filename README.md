@@ -1,6 +1,6 @@
 # ExGolos
 
-ExGolos -- это Elixir библиотека для взаимодействия с нодами GOLOS с использованием JSONRPC протокола через HTTP/Websockets и Appbase API Steemit.
+ExGolos -- это Elixir библиотека для взаимодействия с нодами блокчейна GOLOS с использованием JSONRPC протокола через HTTP/Websockets.
 
 ## Установка :ex_golos
 
