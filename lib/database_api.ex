@@ -31,7 +31,7 @@ defmodule Golos.DatabaseApi do
     "witness_signature" => "2047ea30c48247a67ff553986f221092d32985eea3e341d684f2d4c0aa09a0ec402582b06619fc5dc40192e2c311eeea3c}
   ```
   """
-  @spec get_block(integer) :: map
+  @spec get_block(integer) :: {:ok, map} | {:error, any}
   def get_block(height) do
     with {:ok, block} <- call("get_block", [height]) do
       block = Map.put(block, :height, height)
@@ -80,7 +80,7 @@ defmodule Golos.DatabaseApi do
     "author_reputation" => "22784203010137"}
   ```
   """
-  @spec get_content(String.t, String.t) :: map
+  @spec get_content(String.t, String.t) :: {:ok, map} | {:error, any}
   def get_content(author, permlink) do
     with {:ok, comment} <- call("get_content", [author, permlink]) do
       cleaned =  comment
@@ -136,7 +136,7 @@ defmodule Golos.DatabaseApi do
   ...]
   ```
   """
-  @spec get_content_replies(String.t, String.t) :: map
+  @spec get_content_replies(String.t, String.t) :: {:ok, map} | {:error, any}
   def get_content_replies(author, permlink) do
     call("get_content_replies", [author, permlink])
   end
@@ -153,7 +153,7 @@ defmodule Golos.DatabaseApi do
   [ContentResult, ContentResult, ...]
   ```
   """
-  @spec get_discussions_by_author_before_date(String.t, String.t, String.t, integer) :: map
+  @spec get_discussions_by_author_before_date(String.t, String.t, String.t, integer) :: {:ok, map} | {:error, any}
   def get_discussions_by_author_before_date(author, start_permlink, before_date, limit) do
     call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit])
   end
@@ -170,7 +170,7 @@ defmodule Golos.DatabaseApi do
   # [ContentResult, ContentResult, ...]
   # ```
   # """
-  # @spec get_replies_by_last_update(String.t, String.t, String.t, integer) :: map
+  # @spec get_replies_by_last_update(String.t, String.t, String.t, integer) :: {:ok, map} | {:error, any}
   # def get_replies_by_last_update(author, start_permlink, before_date, limit) do
   #   call("get_replies_by_last_update", [author, start_permlink, before_date, limit])
   # end
@@ -224,7 +224,7 @@ defmodule Golos.DatabaseApi do
   %{...}]
   ```
   """
-  @spec get_accounts([String.t]) :: [map]
+  @spec get_accounts([String.t]) :: {:ok, [map]} | {:error, any}
   def get_accounts(accounts) when is_list(accounts) do
     call("get_accounts", [accounts])
   end
@@ -240,7 +240,7 @@ defmodule Golos.DatabaseApi do
    "witness" => "cyberfounder"}
   ```
   """
-  @spec get_block_header(pos_integer) :: map
+  @spec get_block_header(pos_integer) :: {:ok, map} | {:error, any}
   def get_block_header(height) do
     call("get_block_header", [height])
   end
@@ -270,7 +270,7 @@ defmodule Golos.DatabaseApi do
     "virtual_supply" => "96509712.230 GOLOS", "vote_regeneration_per_day" => 40}
   ```
   """
-  @spec get_dynamic_global_properties() :: map
+  @spec get_dynamic_global_properties() :: {:ok, map} | {:error, any}
   def get_dynamic_global_properties do
     call("get_dynamic_global_properties", [])
   end
@@ -282,7 +282,7 @@ defmodule Golos.DatabaseApi do
   %{"account_creation_fee" => "1.000 GOLOS", "maximum_block_size" => 131072, "sbd_interest_rate" => 1000}
   ```
   """
-  @spec get_chain_properties() :: map
+  @spec get_chain_properties() :: {:ok, map} | {:error, any}
   def get_chain_properties do
     call("get_chain_properties", [])
   end
@@ -334,7 +334,7 @@ defmodule Golos.DatabaseApi do
     "STEEMIT_FREE_TRANSACTIONS_WITH_NEW_ACCOUNT" => 100, ...}
   ```
   """
-  @spec get_config() :: map
+  @spec get_config() :: {:ok, map} | {:error, any}
   def get_config() do
     call("get_config", [])
   end
@@ -345,7 +345,7 @@ defmodule Golos.DatabaseApi do
   Get account count
   Example response: 25290
   """
-  @spec get_account_count() :: integer
+  @spec get_account_count() :: {:ok, integer} | {:error, any}
   def get_account_count() do
    call("get_account_count", [])
   end
@@ -405,7 +405,7 @@ defmodule Golos.DatabaseApi do
        ...}, "witnesses_voted_for" => 10, "comment_count" => 0, ...}]
   ```
   """
-  @spec lookup_account_names([String.t]) :: [map]
+  @spec lookup_account_names([String.t]) :: {:ok, [map]} | {:error, any}
   def lookup_account_names(account_names) do
    call("lookup_account_names", [account_names])
   end
@@ -417,7 +417,7 @@ defmodule Golos.DatabaseApi do
 
   Example response: `"0.14.0"`
   """
-  @spec get_hardfork_version() :: String.t
+  @spec get_hardfork_version() :: {:ok, String.t} | {:error, any}
   def get_hardfork_version() do
    call("get_hardfork_version", [])
   end
@@ -427,7 +427,7 @@ defmodule Golos.DatabaseApi do
 
   Example result: `%{"hf_version" => "0.0.0", "live_time" => "2016-10-18T11:00:00"}`
   """
-  @spec get_next_scheduled_hardfork() :: map
+  @spec get_next_scheduled_hardfork() :: {:ok, map} | {:error, any}
   def get_next_scheduled_hardfork() do
    call("get_next_scheduled_hardfork", [])
   end
@@ -454,7 +454,7 @@ defmodule Golos.DatabaseApi do
   ...]
   ```
   """
-  @spec get_trending_tags(String.t, integer) :: [map]
+  @spec get_trending_tags(String.t, integer) :: {:ok, [map]} | {:error, any}
   def get_trending_tags(after_tag, limit) do
    call("get_trending_tags", [after_tag, limit])
   end
@@ -467,7 +467,7 @@ defmodule Golos.DatabaseApi do
   [ContentResult, ContentResult, ...]
   ```
   """
-  @spec get_discussions_by(atom, map) :: [map]
+  @spec get_discussions_by(atom, map) :: {:ok, [map]} | {:error, any}
   def get_discussions_by(metric, query) do
    method = "get_discussions_by_" <> Atom.to_string(metric)
    call(method, [query])
@@ -482,7 +482,7 @@ defmodule Golos.DatabaseApi do
      "id" => "2.15.696", "owner" => "ontofractal", "requestid" => 1486753166}]
   ```
   """
-  @spec get_conversion_requests() :: [map]
+  @spec get_conversion_requests() :: {:ok, [map]} | {:error, any}
   def get_conversion_requests() do
    call("get_conversion_requests", ["ontofractal"])
   end
@@ -494,7 +494,7 @@ defmodule Golos.DatabaseApi do
   ```
   ```
   """
-  @spec get_owner_history(String.t) :: [map]
+  @spec get_owner_history(String.t) :: {:ok, [map]} | {:error, any}
   def get_owner_history(name) do
    call("get_owner_history", [name])
   end
@@ -512,7 +512,7 @@ defmodule Golos.DatabaseApi do
   "bids" => [%{...}, ...]
   ```
   """
-  @spec get_order_book(integer) :: [map]
+  @spec get_order_book(integer) :: {:ok, [map]} | {:error, any}
   def get_order_book(limit) do
    call("get_order_book", [limit])
   end
@@ -532,7 +532,7 @@ defmodule Golos.DatabaseApi do
        ...]
   ```
   """
-  @spec get_open_orders(String.t) :: [map]
+  @spec get_open_orders(String.t) :: {:ok, [map]} | {:error, any}
   def get_open_orders(name) do
    call("get_open_orders", [name])
   end

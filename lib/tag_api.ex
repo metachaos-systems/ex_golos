@@ -19,7 +19,7 @@ defmodule Golos.TagApi do
   [ContentResult, ContentResult, ...]
   ```
   """
-  @spec get_discussions_by_author_before_date(String.t(), String.t(), String.t(), integer) :: map
+  @spec get_discussions_by_author_before_date(String.t(), String.t(), String.t(), integer) :: {:ok, map} | {:error, any}
   def get_discussions_by_author_before_date(author, start_permlink, before_date, limit) do
     call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit])
   end
@@ -36,7 +36,7 @@ defmodule Golos.TagApi do
   # [ContentResult, ContentResult, ...]
   # ```
   # """
-  # @spec get_replies_by_last_update(String.t, String.t, String.t, integer) :: map
+  # @spec get_replies_by_last_update(String.t, String.t, String.t, integer) :: {:ok, map} | {:error, any}
   # def get_replies_by_last_update(author, start_permlink, before_date, limit) do
   #   call("get_replies_by_last_update", [author, start_permlink, before_date, limit])
   # end
@@ -62,7 +62,7 @@ defmodule Golos.TagApi do
   ...]
   ```
   """
-  @spec get_trending_tags(String.t(), integer) :: [map]
+  @spec get_trending_tags(String.t(), integer) :: {:ok, [map]} | {:error, any}
   def get_trending_tags(after_tag, limit) do
     call("get_trending_tags", [after_tag, limit])
   end
@@ -75,7 +75,7 @@ defmodule Golos.TagApi do
   [ContentResult, ContentResult, ...]
   ```
   """
-  @spec get_discussions_by(atom, map) :: [map]
+  @spec get_discussions_by(atom, map) :: {:ok, [map]} | {:error, any}
   def get_discussions_by(metric, query) do
     method = "get_discussions_by_" <> Atom.to_string(metric)
     call(method, [query])

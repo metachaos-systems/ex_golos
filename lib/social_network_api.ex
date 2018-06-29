@@ -44,7 +44,7 @@ defmodule Golos.SocialNetworkApi do
     "author_reputation" => "22784203010137"}
   ```
   """
-  @spec get_content(String.t(), String.t()) :: map
+  @spec get_content(String.t(), String.t()) :: {:ok, map} | {:error, any}
   def get_content(author, permlink) do
     with {:ok, comment} <- call("get_content", [author, permlink]) do
       cleaned =
@@ -101,7 +101,7 @@ defmodule Golos.SocialNetworkApi do
   ...]
   ```
   """
-  @spec get_content_replies(String.t(), String.t()) :: map
+  @spec get_content_replies(String.t(), String.t()) :: {:ok, map} | {:error, any}
   def get_content_replies(author, permlink) do
     call("get_content_replies", [author, permlink])
   end
@@ -126,7 +126,7 @@ defmodule Golos.SocialNetworkApi do
     "witnesses" => ... }
   ```
   """
-  @spec get_state(String.t()) :: map
+  @spec get_state(String.t()) :: {:ok, map} | {:error, any}
   def get_state(path) do
     call("get_state", [path])
   end
@@ -153,7 +153,7 @@ defmodule Golos.SocialNetworkApi do
     "witnesses" => ... }
   ```
   """
-  @spec get_categories(atom, String.t(), integer) :: [map]
+  @spec get_categories(atom, String.t(), integer) :: {:ok, [map]} | {:error, any}
   def get_categories(metric, after_category, limit) do
     method = "get_" <> Atom.to_string(metric) <> "_categories"
     call(method, [after_category, limit])
@@ -167,7 +167,7 @@ defmodule Golos.SocialNetworkApi do
      "id" => "2.15.696", "owner" => "ontofractal", "requestid" => 1486753166}]
   ```
   """
-  @spec get_conversion_requests() :: [map]
+  @spec get_conversion_requests() :: {:ok, [map]} | {:error, any}
   def get_conversion_requests() do
     call("get_conversion_requests", ["ontofractal"])
   end
@@ -178,7 +178,7 @@ defmodule Golos.SocialNetworkApi do
   ```
   ```
   """
-  @spec get_owner_history(String.t()) :: [map]
+  @spec get_owner_history(String.t()) :: {:ok, [map]} | {:error, any}
   def get_owner_history(name) do
     call("get_owner_history", [name])
   end
@@ -210,8 +210,7 @@ defmodule Golos.SocialNetworkApi do
   %{...} ]
   ```
   """
-  # FIXME: broken, investigate why
-  @spec get_witnesses([String.t]) :: [map]
+  @spec get_witnesses([String.t]) :: {:ok, [map]} | {:error, any}
   def get_witnesses(ids) do
    call("get_witnesses", [ids])
   end
@@ -219,7 +218,7 @@ defmodule Golos.SocialNetworkApi do
   @doc """
   Get witnesses by votes. Example response is the same as get_witnesses.
   """
-  @spec get_witnesses_by_vote(integer, integer) :: [map]
+  @spec get_witnesses_by_vote(integer, integer) :: {:ok, [map]} | {:error, any}
   def get_witnesses_by_vote(from, limit) do
     call("get_witnesses_by_vote", [from, limit])
   end
@@ -232,7 +231,7 @@ defmodule Golos.SocialNetworkApi do
   ["creator", "creatorgalaxy", "crypto", "cryptocat", "cyberfounder", "cybertech-01", "d00m", "dacom", "dance", "danet"]
   ```
   """
-  @spec lookup_witness_accounts(String.t(), integer) :: [String.t()]
+  @spec lookup_witness_accounts(String.t(), integer) :: {:ok, [String.t()]} | {:error, any}
   def lookup_witness_accounts(lower_bound_name, limit) do
     call("lookup_witness_accounts", [lower_bound_name, limit])
   end
@@ -242,7 +241,7 @@ defmodule Golos.SocialNetworkApi do
 
   Example response: `997`
   """
-  @spec get_witness_count() :: [String.t()]
+  @spec get_witness_count() :: {:ok, [String.t()]} | {:error, any}
   def get_witness_count() do
     call("get_witness_count", [])
   end
@@ -258,7 +257,7 @@ defmodule Golos.SocialNetworkApi do
    "kuna", "creator"]
   ```
   """
-  @spec get_active_witnesses() :: [String.t()]
+  @spec get_active_witnesses() :: {:ok, [String.t()]} | {:error, any}
   def get_active_witnesses() do
     call("get_active_witnesses", [])
   end
@@ -273,7 +272,7 @@ defmodule Golos.SocialNetworkApi do
    "gtx-1080-sc-0023", "gtx-1080-sc-0080", ...]
   ```
   """
-  @spec get_miner_queue() :: [String.t()]
+  @spec get_miner_queue() :: {:ok, [String.t()]} | {:error, any}
   def get_miner_queue() do
     call("get_miner_queue", [])
   end
@@ -287,7 +286,7 @@ defmodule Golos.SocialNetworkApi do
      "rshares" => 130036223, "time" => "2017-01-26T20:06:03", "weight" => 0},
      %{...}, ...] ```
   """
-  @spec get_account_votes(String.t()) :: [map]
+  @spec get_account_votes(String.t()) :: {:ok, [map]} | {:error, any}
   def get_account_votes(name) do
     call("get_account_votes", [name])
   end
@@ -302,7 +301,7 @@ defmodule Golos.SocialNetworkApi do
                "voter" => "hipster", "weight" => "51460692508758354"},
      %{...}, ...] ```
   """
-  @spec get_active_votes(String.t(), String.t()) :: [map]
+  @spec get_active_votes(String.t(), String.t()) :: {:ok, [map]} | {:error, any}
   def get_active_votes(account, permlink) do
     call("get_active_votes", [account, permlink])
   end

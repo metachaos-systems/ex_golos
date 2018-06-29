@@ -31,7 +31,7 @@ defmodule Golos.WitnessApi do
   %{...} ]
   ```
   """
-  @spec get_witnesses([String.t]) :: [map]
+  @spec get_witnesses([String.t]) :: {:ok, [map]} | {:error, any}
   def get_witnesses(ids) do
    call("get_witnesses", [ids])
   end
@@ -39,7 +39,7 @@ defmodule Golos.WitnessApi do
   @doc"""
   Get witnesses by votes. Example response is the same as get_witnesses.
   """
-  @spec get_witnesses_by_vote(integer, integer) :: [map]
+  @spec get_witnesses_by_vote(integer, integer) :: {:ok, [map]} | {:error, any}
   def get_witnesses_by_vote(from, limit) do
    call("get_witnesses_by_vote", [from, limit])
   end
@@ -53,7 +53,7 @@ defmodule Golos.WitnessApi do
   ["creator", "creatorgalaxy", "crypto", "cryptocat", "cyberfounder", "cybertech-01", "d00m", "dacom", "dance", "danet"]
   ```
   """
-  @spec lookup_witness_accounts(String.t, integer) :: [String.t]
+  @spec lookup_witness_accounts(String.t, integer) :: {:ok, [String.t]} | {:error, any}
   def lookup_witness_accounts(lower_bound_name, limit) do
    call("lookup_witness_accounts", [lower_bound_name,  limit])
   end
@@ -63,7 +63,7 @@ defmodule Golos.WitnessApi do
 
   Example response: `997`
   """
-  @spec get_witness_count() :: [String.t]
+  @spec get_witness_count() :: {:ok, [String.t]} | {:error, any}
   def get_witness_count() do
    call("get_witness_count", [])
   end
@@ -80,7 +80,7 @@ defmodule Golos.WitnessApi do
    "kuna", "creator"]
   ```
   """
-  @spec get_active_witnesses() :: [String.t]
+  @spec get_active_witnesses() :: {:ok, [String.t]} | {:error, any}
   def get_active_witnesses() do
    call("get_active_witnesses", [])
   end
@@ -102,7 +102,7 @@ defmodule Golos.WitnessApi do
     "next_shuffle_block_num" => 3108273}
   ```
   """
-  @spec get_witness_schedule() :: map
+  @spec get_witness_schedule() :: {:ok, map} | {:error, any}
   def get_witness_schedule() do
    call("get_witness_schedule", [])
   end
@@ -120,7 +120,7 @@ defmodule Golos.WitnessApi do
      %{"base" => "1.000 GBG", ...}, %{...}, ...]}
   ```
   """
-  @spec get_feed_history() :: map
+  @spec get_feed_history() :: {:ok, map} | {:error, any}
   def get_feed_history do
     call("get_feed_history", [])
   end
@@ -133,7 +133,7 @@ defmodule Golos.WitnessApi do
     %{"base" => "1.000 GBG", "quote" => "0.559 GOLOS"}
   ```
   """
-  @spec get_current_median_history_price() :: map
+  @spec get_current_median_history_price() :: {:ok, map} | {:error, any}
   def get_current_median_history_price() do
     call("get_current_median_history_price", [])
   end
@@ -148,7 +148,7 @@ defmodule Golos.WitnessApi do
    "gtx-1080-sc-0023", "gtx-1080-sc-0080", ...]
   ```
   """
-  @spec get_miner_queue() :: [String.t]
+  @spec get_miner_queue() :: {:ok, [String.t]} | {:error, any}
   def get_miner_queue() do
    call("get_miner_queue", [])
   end

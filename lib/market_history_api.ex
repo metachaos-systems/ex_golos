@@ -16,7 +16,7 @@ defmodule Golos.MarketHistoryApi do
   "bids" => [%{...}, ...]
   ```
   """
-  @spec get_order_book(integer) :: [map]
+  @spec get_order_book(integer) :: {:ok, [map]} | {:error, any}
   def get_order_book(limit) do
     call("get_order_book", [limit])
   end
@@ -36,7 +36,7 @@ defmodule Golos.MarketHistoryApi do
        ...]
   ```
   """
-  @spec get_open_orders(String.t()) :: [map]
+  @spec get_open_orders(String.t()) :: {:ok, [map]} | {:error, any}
   def get_open_orders(name) do
     call("get_open_orders", [name])
   end

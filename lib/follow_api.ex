@@ -15,7 +15,7 @@ defmodule Golos.FollowApi do
             "id" => "8.0.20183", "what" => ["blog"]},
      %{...}, ...] ```
   """
-  @spec get_followers(String.t(), String.t(), String.t(), integer) :: [map]
+  @spec get_followers(String.t(), String.t(), String.t(), integer) :: {:ok, [map]} | {:error, any}
   def get_followers(account, start_follower, follow_type, limit) do
     call("get_followers", [account, start_follower, follow_type, limit])
   end
@@ -26,7 +26,7 @@ defmodule Golos.FollowApi do
 
   Example response is the same as in get_followers.
   """
-  @spec get_following(String.t(), String.t(), String.t(), integer) :: [map]
+  @spec get_following(String.t(), String.t(), String.t(), integer) :: {:ok, [map]} | {:error, any}
   def get_following(account, start_follower, follow_type, limit) do
     call("get_following", [account, start_follower, follow_type, limit])
   end
