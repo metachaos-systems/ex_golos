@@ -43,8 +43,8 @@ defmodule Golos do
   defdelegate get_active_witnesses(), to: WitnessApi
   defdelegate get_current_median_history_price(), to: WitnessApi
   defdelegate get_feed_history(), to: WitnessApi
-
-  defdelegate get_miner_queue(), to: Golos.DatabaseApi
+  defdelegate get_miner_queue(), to: WitnessApi
+  
   defdelegate get_account_votes(name), to: SocialNetworkApi
   defdelegate get_active_votes(author, permlink), to: SocialNetworkApi
   defdelegate get_followers(account, start_follower, follow_type, limit), to: FollowApi

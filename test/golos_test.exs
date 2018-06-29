@@ -172,10 +172,10 @@ defmodule GolosTest do
     assert passes
   end
 
-  # test "get_witnesses" do
-  #   {:ok, data} = Golos.get_witnesses(["2.3.101","2.3.149"])
-  #   assert [%{:"owner" => _, :"signing_key" => _, :"pow_worker" => _} | _] = data
-  # end
+  test "get_witnesses" do
+    {:ok, data} = Golos.get_witnesses(["101"])
+    assert [%{:"owner" => _, :"signing_key" => _, :"pow_worker" => _} | _] = data
+  end
 
   test "get_witnesses_by_vote" do
     {:ok, data} = Golos.get_witnesses_by_vote("hipster", 2)

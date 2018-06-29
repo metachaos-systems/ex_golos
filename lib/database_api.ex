@@ -566,20 +566,6 @@ defmodule Golos.DatabaseApi do
   end
 
 
-  @doc"""
-  Get miner queue
-
-  Example response:
-  ```
-  ["gtx-1080-sc-0083", "gtx-1080-sc-0016", "gtx-1080-sc-0084", "gtx-1080-sc-0017",
-   "gtx-1080-sc-0085", "gtx-1080-sc-0018", "penguin-11", "gtx-1080-sc-0028",
-   "gtx-1080-sc-0023", "gtx-1080-sc-0080", ...]
-  ```
-  """
-  @spec get_miner_queue() :: [String.t]
-  def get_miner_queue() do
-   call("get_miner_queue", [])
-  end
 
 
 end

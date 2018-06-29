@@ -31,11 +31,10 @@ defmodule Golos.WitnessApi do
   %{...} ]
   ```
   """
-  # FIXME: broken, investigate why
-  # @spec get_witnesses([String.t]) :: [map]
-  # def get_witnesses(ids) do
-  #  call("get_witnesses", [ids])
-  # end
+  @spec get_witnesses([String.t]) :: [map]
+  def get_witnesses(ids) do
+   call("get_witnesses", [ids])
+  end
 
   @doc"""
   Get witnesses by votes. Example response is the same as get_witnesses.
@@ -137,6 +136,21 @@ defmodule Golos.WitnessApi do
   @spec get_current_median_history_price() :: map
   def get_current_median_history_price() do
     call("get_current_median_history_price", [])
+  end
+
+  @doc"""
+  Get miner queue
+
+  Example response:
+  ```
+  ["gtx-1080-sc-0083", "gtx-1080-sc-0016", "gtx-1080-sc-0084", "gtx-1080-sc-0017",
+   "gtx-1080-sc-0085", "gtx-1080-sc-0018", "penguin-11", "gtx-1080-sc-0028",
+   "gtx-1080-sc-0023", "gtx-1080-sc-0080", ...]
+  ```
+  """
+  @spec get_miner_queue() :: [String.t]
+  def get_miner_queue() do
+   call("get_miner_queue", [])
   end
 
 end

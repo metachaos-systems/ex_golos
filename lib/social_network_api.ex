@@ -211,10 +211,10 @@ defmodule Golos.SocialNetworkApi do
   ```
   """
   # FIXME: broken, investigate why
-  # @spec get_witnesses([String.t]) :: [map]
-  # def get_witnesses(ids) do
-  #  call("get_witnesses", [ids])
-  # end
+  @spec get_witnesses([String.t]) :: [map]
+  def get_witnesses(ids) do
+   call("get_witnesses", [ids])
+  end
 
   @doc """
   Get witnesses by votes. Example response is the same as get_witnesses.
