@@ -16,21 +16,24 @@ defmodule Golos.Stage.MungedOps.ExampleConsumer do
     for op <- events do
       process_event(op)
     end
+
     {:noreply, [], state}
   end
 
-  def process_event(%{data: %MungedOps.Reblog{} = op_data, metadata: op_metadata = %{block_height: h, timestamp: t}}) do
-      Logger.info """
-      Новый реблог:
-      #{inspect op_data} в блоке #{h}, время: #{t}
-      """
+  def process_event(%{
+        data: %MungedOps.Reblog{} = op_data,
+        metadata: op_metadata = %{block_height: h, timestamp: t}
+      }) do
+    Logger.info("""
+    Новый реблог:
+    #{inspect(op_data)} в блоке #{h}, время: #{t}
+    """)
   end
 
-  def process_event(%{data: op_data, metadata: %{block_height: h, timestamp: t} =  op_metadata}) do
-      Logger.info """
-      Новая операция:
-      #{inspect op_data} в блоке #{h}, время: #{t}
-      """
+  def process_event(%{data: op_data, metadata: %{block_height: h, timestamp: t} = op_metadata}) do
+    Logger.info("""
+    Новая операция:
+    #{inspect(op_data)} в блоке #{h}, время: #{t}
+    """)
   end
-
 end
