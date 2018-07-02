@@ -21,7 +21,13 @@ defmodule Golos.TagApi do
   """
   @spec get_discussions_by_author_before_date(String.t(), String.t(), String.t(), integer) :: {:ok, map} | {:error, any}
   def get_discussions_by_author_before_date(author, start_permlink, before_date, limit) do
-    call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit])
+    with {:ok, contents} <- call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit]) do
+      {:ok, for content <- contents do
+        Golos.Cleaner.parse_timedate_strings(content)
+      end}
+    else
+      e -> e
+    end
   end
 
   # UNKNOWN parse error

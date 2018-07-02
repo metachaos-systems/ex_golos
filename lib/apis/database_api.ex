@@ -144,22 +144,6 @@ defmodule Golos.DatabaseApi do
     call("get_content_replies", [author, permlink])
   end
 
-  @doc """
-  If start_permlink is empty then only before_date will be considered. If both are specified the earlier of the two metrics will be used.
-  before_date format is: `2017-02-07T14:34:11`
-  Example response:
-  ```
-  ContentResult has the same shape as a result returned by get_content.
-  Example result:
-  ```
-  [ContentResult, ContentResult, ...]
-  ```
-  """
-  @spec get_discussions_by_author_before_date(String.t(), String.t(), String.t(), integer) ::
-          {:ok, map} | {:error, any}
-  def get_discussions_by_author_before_date(author, start_permlink, before_date, limit) do
-    call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit])
-  end
 
   # UNKNOWN parse error
   # @doc"""
