@@ -4,7 +4,16 @@ defmodule Golos.TagApi do
   """
 
   def call(method, params) do
-    Golos.call(["tags", method, params])
+    with {:ok, contents} <- Golos.call(["tags", method, params]) do
+      {:ok,
+       for content <- contents do
+         content
+         |> Golos.Cleaner.parse_timedate_strings()
+         |> Golos.Cleaner.strip_token_names_and_convert_to_number()
+       end}
+    else
+      e -> e
+    end
   end
 
   @doc """
@@ -37,14 +46,7 @@ defmodule Golos.TagApi do
       limit
     ]
 
-    with {:ok, contents} <- call("get_discussions_by_author_before_date", params) do
-      {:ok,
-       for content <- contents do
-          Golos.Cleaner.parse_timedate_strings(content)
-       end}
-    else
-      e -> e
-    end
+    call("get_discussions_by_author_before_date", params)
   end
 
   # UNKNOWN parse error

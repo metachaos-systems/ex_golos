@@ -144,7 +144,6 @@ defmodule Golos.DatabaseApi do
     call("get_content_replies", [author, permlink])
   end
 
-
   # UNKNOWN parse error
   # @doc"""
   # If start_permlink is empty then only before_date will be considered. If both are specified the earlier of the two metrics will be used.
