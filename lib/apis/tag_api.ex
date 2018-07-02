@@ -22,18 +22,25 @@ defmodule Golos.TagApi do
   """
   @spec get_discussions_by_author_before_date(String.t(), String.t(), NaiveDateTime.t(), integer) ::
           {:ok, map} | {:error, any}
-  def get_discussions_by_author_before_date(author, start_permlink, before_date, limit) do
+  def get_discussions_by_author_before_date(
+        author,
+        start_permlink,
+        %NaiveDateTime{} = before_date,
+        limit
+      ) do
     timestamp_str = NaiveDateTime.to_iso8601(before_date)
-    with {:ok, contents} <-
-           call("get_discussions_by_author_before_date", [
-             author,
-             start_permlink,
-             timestamp_str,
-             limit
-           ]) do
+
+    params = [
+      author,
+      start_permlink,
+      timestamp_str,
+      limit
+    ]
+
+    with {:ok, contents} <- call("get_discussions_by_author_before_date", params) do
       {:ok,
        for content <- contents do
-         Golos.Cleaner.parse_timedate_strings(content)
+          Golos.Cleaner.parse_timedate_strings(content)
        end}
     else
       e -> e
