@@ -32,11 +32,12 @@ defmodule GolosTest do
   end
 
   test "get_discussions_by_author_before_update" do
+
     {:ok, data} =
       Golos.get_discussions_by_author_before_date(
         "ontofractal",
         "zapusk-razumgolosa-com-v0-1-beta-statistika-i-instrumenty-dlya-kollektivnogo-razuma-golosa",
-        "2017-02-01T12:00:00",
+        ~N[2017-02-01T12:00:00],
         10
       )
 

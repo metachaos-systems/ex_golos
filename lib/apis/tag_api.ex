@@ -1,5 +1,4 @@
 defmodule Golos.TagApi do
-
   @moduledoc """
   Contains all functions to call Golos database_api methods
   """
@@ -10,7 +9,9 @@ defmodule Golos.TagApi do
 
   @doc """
   If start_permlink is empty then only before_date will be considered. If both are specified the earlier of the two metrics will be used.
-  before_date format is: `2017-02-07T14:34:11`
+  before_date format is: `2017-02-07T14:34:11`.
+
+
   Example response:
   ```
   ContentResult has the same shape as a result returned by get_content.
@@ -19,12 +20,21 @@ defmodule Golos.TagApi do
   [ContentResult, ContentResult, ...]
   ```
   """
-  @spec get_discussions_by_author_before_date(String.t(), String.t(), String.t(), integer) :: {:ok, map} | {:error, any}
+  @spec get_discussions_by_author_before_date(String.t(), String.t(), NaiveDateTime.t(), integer) ::
+          {:ok, map} | {:error, any}
   def get_discussions_by_author_before_date(author, start_permlink, before_date, limit) do
-    with {:ok, contents} <- call("get_discussions_by_author_before_date", [author, start_permlink, before_date, limit]) do
-      {:ok, for content <- contents do
-        Golos.Cleaner.parse_timedate_strings(content)
-      end}
+    timestamp_str = NaiveDateTime.to_iso8601(before_date)
+    with {:ok, contents} <-
+           call("get_discussions_by_author_before_date", [
+             author,
+             start_permlink,
+             timestamp_str,
+             limit
+           ]) do
+      {:ok,
+       for content <- contents do
+         Golos.Cleaner.parse_timedate_strings(content)
+       end}
     else
       e -> e
     end
