@@ -1,16 +1,27 @@
 defmodule Golos.TagApi do
+  alias Golos.Cleaner
+
   @moduledoc """
   Contains all functions to call Golos database_api methods
   """
 
   def call(method, params) do
     with {:ok, contents} <- Golos.call(["tags", method, params]) do
-      {:ok,
-       for content <- contents do
-         content
-         |> Golos.Cleaner.parse_timedate_strings()
-         |> Golos.Cleaner.strip_token_names_and_convert_to_number()
-       end}
+      cleaned_contents =
+        cond do
+          method =~ "get_discussions" ->
+            for content <- contents do
+              content
+              |> Cleaner.parse_timedate_strings()
+              |> Cleaner.strip_token_names_and_convert_to_number()
+              |> Cleaner.parse_votes()
+            end
+
+          true ->
+            contents
+        end
+
+      {:ok, cleaned_contents}
     else
       e -> e
     end
