@@ -49,7 +49,7 @@ defmodule Golos.SocialNetworkApi do
     with {:ok, comment} <- call("get_content", [author, permlink]) do
       cleaned =
         comment
-        |> Golos.Cleaner.strip_token_names_and_convert_to_number()
+        |> Golos.Cleaner.strip_token_names_and_parse(:float)
         |> Golos.Cleaner.parse_json_strings(:json_metadata)
         |> Golos.Cleaner.extract_fields()
         |> Golos.Cleaner.prepare_tags()

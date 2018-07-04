@@ -45,61 +45,6 @@ defmodule Golos.DatabaseApi do
     end
   end
 
-  # CONTENT
-
-  @doc """
-  Returns content data, accepts author and permlink.
-
-  Example response:
-  ```
-    %{"max_accepted_payout" => "1000000.000 GBG",
-    "title" => "[объявление] Краудсейл и Шэрдроп. Дистрибьюция",
-    "category" => "ru--kraudseijl", "promoted" => "0.000 GBG",
-    "last_update" => "2016-12-06T15:36:54", "created" => "2016-12-05T16:43:03",
-    "parent_permlink" => "ru--kraudseijl", "total_vote_weight" => 0,
-    "json_metadata" => "{"tags":["ru--kraudseijl","ru--shyerdrop","ru--golos"],"users":["golos","crowdsale","cyberdrop","misha","ether","bender","hipster","litvintech","vitaly-lvov"],"image":["https://dl.dropboxusercontent.com/u/52209381/golos/golos.png","https://dl.dropboxusercontent.com/u/52209381/golos/Screenshot%202016-12-05%2018.30.00.png","https://dl.dropboxusercontent.com/u/52209381/golos/ico_final-min.jpg","https://dl.dropboxusercontent.com/u/52209381/golos/Screenshot%202016-12-06%2002.25.05.png","https://dl.dropboxusercontent.com/u/52209381/golos/card.png"],"links":["https://docs.google.com/spreadsheets/d/1JwCAeRwsu4NzCG20UDM_CnEEsskl0wtvQ7VYjqi233A/edit?usp=sharing","https://golos.io/@litvintech"]}",
-    "last_payout" => "2017-01-15T11:00:06",
-    "total_payout_value" => "2412.784 GBG", "allow_replies" => true,
-    "children_rshares2" => "0", "id" => "2.8.30160",
-    "pending_payout_value" => "0.000 GBG", "children" => 15, "replies" => [],
-    "body" => "...",
-    "active" => "2016-12-06T22:23:06", "net_rshares" => 0,
-    "author_rewards" => 10011558, "total_pending_payout_value" => "0.000 GBG",
-    "root_comment" => "2.8.30160", "max_cashout_time" => "1969-12-31T23:59:59",
-    "root_title" => "[объявление] Краудсейл и Шэрдроп. Дистрибьюция",
-    "allow_votes" => true, "percent_steem_dollars" => 10000,
-    "children_abs_rshares" => 0, "net_votes" => 90, "author" => "litvintech",
-    "curator_payout_value" => "112.100 GBG",
-    "permlink" => "obyavlenie-kraudseil-i-sherdrop-distribyuciya",
-    "url" => "/ru--kraudseijl/@litvintech/obyavlenie-kraudseil-i-sherdrop-distribyuciya",
-    "cashout_time" => "2017-02-14T11:00:06", "parent_author" => "",
-    "allow_curation_rewards" => true, "vote_rshares" => 0,
-    "reward_weight" => 10000,
-    "active_votes" => [%{"percent" => 1000, "reputation" => "15928643268388",
-       "rshares" => "1974529666496", "time" => "2016-12-05T17:02:39",
-       "voter" => "val", "weight" => "99631990926249375"}, %{...}, ...], "depth" => 0,
-    "mode" => "second_payout", "abs_rshares" => 0,
-    "author_reputation" => "22784203010137"}
-  ```
-  """
-  @spec get_content(String.t(), String.t()) :: {:ok, map} | {:error, any}
-  def get_content(author, permlink) do
-    with {:ok, comment} <- call("get_content", [author, permlink]) do
-      cleaned =
-        comment
-        |> Golos.Cleaner.strip_token_names_and_convert_to_number()
-        |> Golos.Cleaner.parse_json_strings(:json_metadata)
-        |> Golos.Cleaner.extract_fields()
-        |> Golos.Cleaner.prepare_tags()
-        |> Golos.Cleaner.parse_timedate_strings()
-        |> Golos.Cleaner.parse_empty_strings()
-
-      {:ok, cleaned}
-    else
-      err -> err
-    end
-  end
-
   @doc """
   Returns a list of replies to the given content, accepts author and permlink.
 
