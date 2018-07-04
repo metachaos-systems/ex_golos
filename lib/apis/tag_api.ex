@@ -13,7 +13,7 @@ defmodule Golos.TagApi do
             for content <- contents do
               content
               |> Cleaner.parse_timedate_strings()
-              |> Cleaner.strip_token_names_and_convert_to_number()
+              |> Cleaner.strip_token_names_and_parse()
               |> Cleaner.parse_votes()
             end
 

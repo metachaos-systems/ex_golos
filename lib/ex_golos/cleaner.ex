@@ -1,5 +1,11 @@
 defmodule Golos.Cleaner do
-  def strip_token_names_and_convert_to_number(data) do
+  def strip_token_names_and_parse(data, int_or_float \\ :float) when is_atom(int_or_float) do
+    parser =
+      case int_or_float do
+        :float -> &Float.parse/1
+        :integer -> &Integer.parse/1
+      end
+
     to_clean =
       ~w(max_accepted_payout promoted total_payout_value pending_payout_value total_pending_payout_value
     curator_payout_value promoted balance vesting_withdraw_rate rshares weight
@@ -9,7 +15,7 @@ defmodule Golos.Cleaner do
       {k,
        if(
          k in to_clean and !is_float(v) and !is_integer(v),
-         do: v |> Float.parse() |> elem(0),
+         do: v |> parser.() |> elem(0),
          else: v
        )}
     end
@@ -67,7 +73,7 @@ defmodule Golos.Cleaner do
     Map.update!(data, :active_votes, fn active_votes ->
       for vote <- active_votes do
         vote
-        |> strip_token_names_and_convert_to_number()
+        |> strip_token_names_and_parse(:integer)
         |> parse_timedate_strings()
       end
     end)
