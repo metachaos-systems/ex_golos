@@ -1,3 +1,34 @@
+# English docs
+
+ExGolos is an Elixir/Erlang library for HTTP/WS JSONRPC calls to Golos blockchain nodes.
+
+## Installation
+
+  1. Add `:ex_golos` to the list of dependencies  in `mix.exs`:
+
+    ```elixir
+    def deps do
+      [{:ex_golos, "~> 0.10"}]
+    end
+    ```
+
+## Configuration
+
+No configuration is required by default, ExGolos with use a default golos.io public node. To use a different node, configure `api_url` in your config.exs files.
+
+## Documentation
+
+Most functions are documented. Documentation is available on [hexdocs](https://hexdocs.pm/ex_golos/api-reference.html)
+
+```elixir
+config :ex_golos,
+  api: :jsonrpc_http_api,
+  api_url: System.get_env("GOLOS_API_URL"),
+  activate_stage_sup: false
+```
+
+# Russian docs
+
 # ExGolos
 
 ExGolos -- это Elixir библиотека для взаимодействия с нодами блокчейна GOLOS с использованием JSONRPC протокола через HTTP/Websockets.
@@ -24,7 +55,7 @@ ExGolos не требует конфигурации по умолчанию. Е
 
 
 ```elixir
-config :steemex,
+config :ex_golos,
   api: :jsonrpc_http_api,
   api_url: System.get_env("GOLOS_API_URL"),
   activate_stage_sup: false
